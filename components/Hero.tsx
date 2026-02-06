@@ -22,7 +22,7 @@ const Hero: React.FC = () => {
         </div>
         
         <h1 className="text-[14vw] md:text-[11rem] font-black tracking-tighter leading-[0.8] text-black dark:text-white select-none">
-          Gopal <span className="text-gray-200 dark:text-gray-800 transition-colors">Jha</span>
+          Gopal Jha
         </h1>
         
         <div className="space-y-6 max-w-3xl mx-auto px-4">
