@@ -5,12 +5,9 @@ import {
   Database, 
   Cloud, 
   Zap, 
-  Code2, 
   ShieldCheck, 
   Cpu, 
-  Terminal,
   Layout,
-  Cpu as CpuIcon,
   Bot
 } from 'lucide-react';
 
@@ -33,9 +30,9 @@ const skillCategories = [
     skills: ["AWS", "Docker", "Kubernetes", "GitHub Actions", "Nginx", "Linux"]
   },
   {
-    name: "Web3 + Gen AI",
+    name: "Web3 & GenAI",
     icon: <Zap size={20} className="text-purple-500" />,
-    skills: ["Solidity", "Ether.js", "OpenAI", "LangChain", "Pinecone", "Web3.js"]
+    skills: ["Solidity", "Ethers.js", "OpenAI", "LangChain", "Pinecone", "Web3.js"]
   }
 ];
 

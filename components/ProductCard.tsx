@@ -1,7 +1,6 @@
-
-import React, { useRef } from 'react';
-import { motion as motionBase, useMotionTemplate, useMotionValue } from 'framer-motion';
-import { ExternalLink, ArrowUpRight } from 'lucide-react';
+import React, { useState } from "react";
+import { motion as motionBase } from "framer-motion";
+import { ArrowUpRight, ImageOff } from "lucide-react";
 
 const motion = motionBase as any;
 
@@ -14,93 +13,86 @@ interface ProductCardProps {
   tags?: string[];
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ title, tagline, image, color, link, tags = [] }) => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
-  }
+const ProductCard: React.FC<ProductCardProps> = ({
+  title,
+  tagline,
+  image,
+  color,
+  link,
+  tags = [],
+}) => {
+  const [hasImageError, setHasImageError] = useState(false);
+  const isExternalLink = /^https?:\/\//.test(link);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
+    <motion.article
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      onMouseMove={handleMouseMove}
-      className="group relative w-full aspect-[16/10] rounded-[2rem] overflow-hidden bg-black/5 dark:bg-white/5 cursor-pointer border border-black/5 dark:border-white/5 hover:border-black/10 dark:hover:border-white/10 transition-colors"
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.45, ease: "easeOut" }}
+      className="group relative overflow-hidden rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/65 dark:bg-white/[0.02] backdrop-blur-xl shadow-xl shadow-black/5 dark:shadow-black/30"
     >
-      {/* Dynamic Highlight Effect */}
-      <motion.div
-        className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition duration-300 group-hover:opacity-100 z-30"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              650px circle at ${mouseX}px ${mouseY}px,
-              rgba(255,255,255,0.1),
-              transparent 80%
-            )
-          `,
-        }}
-      />
-
-      {/* Main Image Layer */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-        />
-        {/* Subtle dark overlay for contrast */}
-        <div className="absolute inset-0 bg-black/10 dark:bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
-      </div>
-
-      {/* Content Overlay - Minimal Bottom Gradient */}
-      <div className="absolute inset-x-0 bottom-0 z-20 pt-32 pb-8 px-8 bg-gradient-to-t from-black/90 via-black/50 to-transparent">
-        <div className="flex items-end justify-between translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-          <div className="space-y-3 max-w-[70%]">
-            {/* Title & Badge */}
-            <div className="flex items-center gap-3">
-              <h3 className="text-3xl font-bold tracking-tight text-white">{title}</h3>
-              <div className={`h-1.5 w-1.5 rounded-full bg-gradient-to-r ${color}`} />
-            </div>
-
-            {/* Description - Hides/Shows based on hover preference or keeps it nice and subtle */}
-            <p className="text-gray-300 text-sm font-medium leading-relaxed line-clamp-2 opacity-90 group-hover:opacity-100 transition-opacity">
-              {tagline}
-            </p>
-
-            {/* Tags - Slide up reveal */}
-            <div className="flex flex-wrap gap-2 pt-1 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-75">
-              {tags.map((tag, index) => (
-                <span 
-                  key={index} 
-                  className="px-2.5 py-1 rounded-md bg-white/10 border border-white/10 text-[10px] font-semibold uppercase tracking-wider text-white/80 backdrop-blur-md"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
+      <div className="p-4 md:p-5 bg-gradient-to-b from-black/[0.04] to-transparent dark:from-white/[0.02] dark:to-transparent">
+        <div className="relative h-[240px] sm:h-[280px] md:h-[300px] overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-[#05070f]">
+        {!hasImageError ? (
+          <img
+            src={image}
+            alt={`${title} project preview`}
+            loading="lazy"
+            onError={() => setHasImageError(true)}
+            className="h-full w-full object-contain object-center transition-transform duration-500 group-hover:scale-[1.01]"
+          />
+        ) : (
+          <div className="h-full w-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 flex flex-col items-center justify-center gap-3 text-white/80">
+            <ImageOff size={28} />
+            <span className="text-xs font-semibold uppercase tracking-widest">
+              Preview unavailable
+            </span>
           </div>
-
-          {/* Action Icon */}
-          <div className="flex-shrink-0 mb-1">
-             <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all duration-300">
-                <ArrowUpRight size={20} className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-             </div>
-          </div>
+        )}
         </div>
       </div>
 
-      {/* Top right detailed badge (optional, for 'Project' context) */}
-      <div className="absolute top-6 right-6 z-20 px-3 py-1.5 rounded-full bg-black/20 backdrop-blur-xl border border-white/10 text-[10px] font-bold uppercase tracking-widest text-white/90">
-        Project
-      </div>
+      <div className="px-5 pb-5 md:px-6 md:pb-6 space-y-5">
+        <div className="flex items-start justify-between gap-4">
+          <div className="space-y-1.5">
+            <h3 className="text-2xl md:text-[1.9rem] font-bold tracking-tight text-black dark:text-white">
+              {title}
+            </h3>
+            <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+              {tagline}
+            </p>
+          </div>
+          <span
+            className={`inline-block rounded-full bg-gradient-to-r ${color} px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white/95`}
+          >
+            Product
+          </span>
+        </div>
 
-    </motion.div>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-md border border-black/10 dark:border-white/15 bg-black/[0.03] dark:bg-white/[0.07] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-gray-700 dark:text-gray-200"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        <a
+          href={link}
+          target={isExternalLink ? "_blank" : undefined}
+          rel={isExternalLink ? "noopener noreferrer" : undefined}
+          className="inline-flex items-center gap-2 rounded-xl bg-black text-white dark:bg-white dark:text-black px-4 py-2.5 text-[11px] font-black uppercase tracking-[0.14em] transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
+        >
+          View Project
+          <ArrowUpRight size={16} />
+        </a>
+        </div>
+      </div>
+    </motion.article>
   );
 };
 

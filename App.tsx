@@ -3,10 +3,12 @@ import { motion as motionBase, AnimatePresence } from "framer-motion";
 import {
   Github,
   Linkedin,
+  Twitter,
   Mail,
+  ArrowUpRight,
+  MessageSquare,
   Code2,
   Globe,
-  Zap,
   Cloud,
   Bot,
   Layers,
@@ -21,7 +23,7 @@ import BuildProcess from "./components/BuildProcess";
 import Footer from "./components/Footer";
 import CodexaImage from "./images/Codexa.png";
 import ElevareImage from "./images/Elevare.png";
-import LyknrImage from "./images/Lyknr.png";
+import LynkrImage from "./images/Lyknr.png";
 
 const motion = motionBase as any;
 
@@ -78,7 +80,6 @@ const App: React.FC = () => {
       <main className="container mx-auto px-6 lg:px-20 pt-12 space-y-40">
         <Hero />
 
-        {/* Services Section */}
         <section id="services" className="space-y-16 relative">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-black/5 dark:border-white/5 pb-12">
             <div className="space-y-4">
@@ -111,52 +112,62 @@ const App: React.FC = () => {
             <FeatureCard
               icon={<Code2 className="w-6 h-6" />}
               title="Full-Stack Engineering"
-              description="High-throughput systems using MERN & Next.js with sub-second response times."
+              description="High-throughput systems using MERN and Next.js with sub-second response times."
             />
             <FeatureCard
               icon={<Globe className="w-6 h-6" />}
               title="Web3 Architectures"
-              description="Secure dApps and smart contracts on Ethereum, Solana, and Polygon networks."
+              description="Secure dApps and smart contracts on Ethereum, Solana, and Polygon."
             />
             <FeatureCard
               icon={<Cloud className="w-6 h-6" />}
               title="Infrastructure & Ops"
-              description="Automated CI/CD pipelines, Dockerized scaling, and distributed messaging systems."
+              description="Automated CI/CD pipelines, Dockerized workloads, and distributed messaging systems."
             />
             <FeatureCard
               icon={<Bot className="w-6 h-6" />}
               title="GenAI Solutions"
-              description="Custom LLM workflows, RAG systems, and AI-driven business process automation."
+              description="Custom LLM workflows, RAG systems, and AI-driven process automation."
             />
           </div>
         </section>
 
-        {/* Products Section */}
-        <section id="products" className="space-y-16">
-          <div className="space-y-6">
+        <section id="products" className="space-y-12">
+          <div className="space-y-4">
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              className="flex items-center gap-2 text-accent-secondary font-black text-[10px] uppercase tracking-[0.3em]"
+              className="flex items-center gap-2 text-accent-secondary font-black text-[10px] uppercase tracking-[0.3em] justify-center md:justify-start"
             >
               <Sparkles size={14} /> Production Lab
             </motion.div>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-5xl md:text-8xl font-bold tracking-tighter text-black dark:text-white"
+              className="text-4xl md:text-7xl font-bold tracking-tighter text-black dark:text-white text-center md:text-left"
             >
-              Real World <span className="italic font-light">Products</span>
+              Real-World <span className="italic font-light">Products</span>
             </motion.h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-2xl text-center md:text-left">
+              Selected products designed for scale, speed, and a strong user experience.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <ProductCard
+              title="Quibly"
+              tagline="Real-time communication platform for communities, similar to Discord."
+              image="https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&q=80&w=1400"
+              color="from-cyan-600/30 to-blue-600/30"
+              link="#contact"
+              tags={["Realtime", "Chat", "Voice", "WebSocket"]}
+            />
             <ProductCard
               title="Codexa"
               tagline="Collaborative IDE for high-growth teams."
               image={CodexaImage}
               color="from-indigo-600/20 to-violet-600/20"
-              link="#"
+              link="#contact"
               tags={["IDE", "React", "Collaboration"]}
             />
             <ProductCard
@@ -164,15 +175,15 @@ const App: React.FC = () => {
               tagline="AI-native recruitment OS."
               image={ElevareImage}
               color="from-purple-600/20 to-pink-600/20"
-              link="#"
+              link="#contact"
               tags={["AI", "Recruitment", "Automation"]}
             />
             <ProductCard
               title="Lynkr"
               tagline="Decentralized identity for the creator economy."
-              image={LyknrImage}
+              image={LynkrImage}
               color="from-emerald-600/20 to-teal-600/20"
-              link="#"
+              link="#contact"
               tags={["Web3", "Identity", "Blockchain"]}
             />
             <ProductCard
@@ -180,13 +191,12 @@ const App: React.FC = () => {
               tagline="Next-gen institutional crypto dashboard."
               image="https://images.unsplash.com/photo-1621416848440-d369283f2f03?auto=format&fit=crop&q=80&w=1200"
               color="from-amber-600/20 to-orange-600/20"
-              link="#"
+              link="#contact"
               tags={["Crypto", "Dashboard", "Fintech"]}
             />
           </div>
         </section>
 
-        {/* Skills Section */}
         <section
           id="stack"
           className="py-24 border-y border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.005]"
@@ -194,7 +204,6 @@ const App: React.FC = () => {
           <TechStack />
         </section>
 
-        {/* Process Section */}
         <section className="space-y-24 py-12">
           <div className="text-center space-y-4">
             <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-black dark:text-white">
@@ -207,7 +216,6 @@ const App: React.FC = () => {
           <BuildProcess />
         </section>
 
-        {/* Philosophy Section */}
         <section className="relative group">
           <div className="absolute inset-0 bg-accent-primary/5 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
           <div className="glass-card rounded-[3rem] p-12 md:p-24 relative overflow-hidden border-black/5 dark:border-white/5">
@@ -217,9 +225,8 @@ const App: React.FC = () => {
               </h2>
               <p className="text-3xl md:text-5xl font-bold leading-[1.1] text-black dark:text-white">
                 I engineer{" "}
-                <span className="text-gray-400">scalable digital assets</span>{" "}
-                that bridge the gap between complex logic and human emotion.
-                Focused on{" "}
+                <span className="text-gray-400">scalable digital products</span>{" "}
+                that bridge complex logic with human experience. Focused on{" "}
                 <span className="underline decoration-accent-primary/50 underline-offset-8">
                   systems
                 </span>{" "}
@@ -232,44 +239,86 @@ const App: React.FC = () => {
               <div className="flex gap-4 items-center pt-6">
                 <div className="w-12 h-px bg-black/10 dark:bg-white/10" />
                 <span className="text-gray-500 uppercase tracking-widest text-[10px] font-black">
-                  Building for the 1%
+                  Building for impact
                 </span>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Contact Section */}
-        <section id="contact" className="py-40 text-center space-y-16">
-          <div className="space-y-6">
-            <motion.h2
-              initial={{ opacity: 0, scale: 0.98 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              className="text-6xl md:text-[9rem] font-black tracking-tighter leading-[0.8] text-black dark:text-white"
-            >
-              Let’s <span className="text-accent-primary italic">launch</span>{" "}
-              <br />
-              something new.
-            </motion.h2>
-          </div>
+        <section id="contact" className="py-24 md:py-32">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="relative overflow-hidden rounded-[2.5rem] border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/[0.02] backdrop-blur-xl"
+          >
+            <div className="absolute -top-24 -left-24 w-72 h-72 bg-accent-primary/20 blur-3xl rounded-full" />
+            <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-accent-secondary/20 blur-3xl rounded-full" />
 
-          <div className="flex flex-wrap justify-center gap-6">
-            <SocialButton
-              icon={<Github size={20} />}
-              label="GitHub"
-              href="https://github.com"
-            />
-            <SocialButton
-              icon={<Linkedin size={20} />}
-              label="LinkedIn"
-              href="https://linkedin.com"
-            />
-            <SocialButton
-              icon={<Mail size={20} />}
-              label="Email"
-              href="mailto:gopal@example.com"
-            />
-          </div>
+            <div className="relative z-10 p-8 md:p-14 grid grid-cols-1 lg:grid-cols-[1.35fr_1fr] gap-10 items-center">
+              <div className="space-y-6">
+                <p className="text-[10px] font-black uppercase tracking-[0.35em] text-accent-primary">
+                  Ready to collaborate
+                </p>
+                <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-black dark:text-white leading-[1]">
+                  Let&apos;s build your next
+                  <span className="text-accent-primary italic"> product</span>.
+                </h2>
+                <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
+                  Open to freelance, full-time, and product consulting work.
+                  Tell me your idea, timeline, and goals.
+                </p>
+
+                <div className="flex flex-wrap gap-4">
+                  <a
+                    href="mailto:gopaljha1677@gmail.com"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-black text-white dark:bg-white dark:text-black text-[11px] font-black uppercase tracking-[0.16em] hover:opacity-90 transition-opacity"
+                  >
+                    <MessageSquare size={16} />
+                    Start a Conversation
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/gopal-jha-229a2b243/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-black/15 dark:border-white/20 text-[11px] font-black uppercase tracking-[0.16em] text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                  >
+                    Connect on LinkedIn
+                    <ArrowUpRight size={16} />
+                  </a>
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-black/25 p-6 md:p-7">
+                <p className="text-xs uppercase tracking-[0.25em] font-black text-gray-500 dark:text-gray-400">
+                  Quick links
+                </p>
+                <div className="mt-5 grid grid-cols-1 gap-3">
+                  <SocialButton
+                    icon={<Github size={18} />}
+                    label="GitHub"
+                    href="https://github.com/gopaljha16"
+                  />
+                  <SocialButton
+                    icon={<Linkedin size={18} />}
+                    label="LinkedIn"
+                    href="https://www.linkedin.com/in/gopal-jha-229a2b243/"
+                  />
+                  <SocialButton
+                    icon={<Twitter size={18} />}
+                    label="X"
+                    href="https://x.com/Gopaljha04"
+                  />
+                  <SocialButton
+                    icon={<Mail size={18} />}
+                    label="Email"
+                    href="mailto:gopaljha1677@gmail.com"
+                  />
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </section>
       </main>
 
@@ -287,11 +336,14 @@ const SocialButton: React.FC<{
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    whileHover={{ y: -5, backgroundColor: "rgba(0,0,0,0.05)" }}
-    className="glass px-8 py-5 rounded-2xl flex items-center gap-3 font-bold uppercase tracking-widest text-[10px] transition-all border-black/5 dark:border-white/5 dark:hover:bg-white/5 shadow-lg dark:text-white"
+    whileHover={{ y: -2 }}
+    className="glass px-4 py-3 rounded-xl flex items-center justify-between gap-3 font-bold uppercase tracking-widest text-[10px] transition-all border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 dark:text-white"
   >
-    {icon}
-    <span>{label}</span>
+    <span className="flex items-center gap-3">
+      {icon}
+      <span>{label}</span>
+    </span>
+    <ArrowUpRight size={14} />
   </motion.a>
 );
 
