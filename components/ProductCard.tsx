@@ -77,11 +77,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 Active
               </span>
             )}
-            <span
-              className={`inline-block rounded-full bg-gradient-to-r ${color} px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white/95`}
-            >
-              Product
-            </span>
           </div>
         </div>
 
