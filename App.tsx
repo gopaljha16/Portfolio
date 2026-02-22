@@ -27,7 +27,7 @@ import BuildProcess from "./components/BuildProcess";
 import Footer from "./components/Footer";
 import CodexaImage from "./images/Codexa.png";
 import ElevareImage from "./images/Elevare.png";
-import LynkrImage from "./images/Lyknr.png";
+import LynkrImage from "./images/lynkr-landing.png";
 
 const motion = motionBase as any;
 
