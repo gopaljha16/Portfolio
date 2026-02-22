@@ -11,6 +11,7 @@ interface ProductCardProps {
   color: string;
   link: string;
   tags?: string[];
+  featured?: boolean;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -20,6 +21,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   color,
   link,
   tags = [],
+  featured = false,
 }) => {
   const [hasImageError, setHasImageError] = useState(false);
   const isExternalLink = /^https?:\/\//.test(link);
@@ -30,26 +32,26 @@ const ProductCard: React.FC<ProductCardProps> = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.45, ease: "easeOut" }}
-      className="group relative overflow-hidden rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/65 dark:bg-white/[0.02] backdrop-blur-xl shadow-xl shadow-black/5 dark:shadow-black/30"
+      className={`group relative overflow-hidden rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/65 dark:bg-white/[0.02] backdrop-blur-xl shadow-xl shadow-black/5 dark:shadow-black/30 ${featured ? "md:col-span-2" : ""}`}
     >
       <div className="p-4 md:p-5 bg-gradient-to-b from-black/[0.04] to-transparent dark:from-white/[0.02] dark:to-transparent">
         <div className="relative h-[240px] sm:h-[280px] md:h-[300px] overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-[#05070f]">
-        {!hasImageError ? (
-          <img
-            src={image}
-            alt={`${title} project preview`}
-            loading="lazy"
-            onError={() => setHasImageError(true)}
-            className="h-full w-full object-contain object-center transition-transform duration-500 group-hover:scale-[1.01]"
-          />
-        ) : (
-          <div className="h-full w-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 flex flex-col items-center justify-center gap-3 text-white/80">
-            <ImageOff size={28} />
-            <span className="text-xs font-semibold uppercase tracking-widest">
-              Preview unavailable
-            </span>
-          </div>
-        )}
+          {!hasImageError ? (
+            <img
+              src={image}
+              alt={`${title} project preview`}
+              loading="lazy"
+              onError={() => setHasImageError(true)}
+              className="h-full w-full object-contain object-center transition-transform duration-500 group-hover:scale-[1.01]"
+            />
+          ) : (
+            <div className="h-full w-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 flex flex-col items-center justify-center gap-3 text-white/80">
+              <ImageOff size={28} />
+              <span className="text-xs font-semibold uppercase tracking-widest">
+                Preview unavailable
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -70,7 +72,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </span>
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
               <span
@@ -81,15 +83,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
               </span>
             ))}
           </div>
-        <a
-          href={link}
-          target={isExternalLink ? "_blank" : undefined}
-          rel={isExternalLink ? "noopener noreferrer" : undefined}
-          className="inline-flex items-center gap-2 rounded-xl bg-black text-white dark:bg-white dark:text-black px-4 py-2.5 text-[11px] font-black uppercase tracking-[0.14em] transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
-        >
-          View Project
-          <ArrowUpRight size={16} />
-        </a>
+          <a
+            href={link}
+            target={isExternalLink ? "_blank" : undefined}
+            rel={isExternalLink ? "noopener noreferrer" : undefined}
+            className="inline-flex items-center gap-2 rounded-xl bg-black text-white dark:bg-white dark:text-black px-4 py-2.5 text-[11px] font-black uppercase tracking-[0.14em] transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
+          >
+            View Project
+            <ArrowUpRight size={16} />
+          </a>
         </div>
       </div>
     </motion.article>

@@ -7,6 +7,10 @@ import {
   Mail,
   ArrowUpRight,
   MessageSquare,
+  BadgeCheck,
+  BriefcaseBusiness,
+  Clock3,
+  MapPin,
   Code2,
   Globe,
   Cloud,
@@ -77,10 +81,48 @@ const App: React.FC = () => {
 
       <Navbar toggleTheme={toggleTheme} currentTheme={theme} />
 
-      <main className="container mx-auto px-6 lg:px-20 pt-12 space-y-40">
+      <main className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 pt-24 md:pt-28 space-y-28 md:space-y-36">
         <Hero />
 
-        <section id="services" className="space-y-16 relative">
+        <section id="about" className="space-y-10">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-6 md:gap-8 items-stretch">
+            <div className="glass-card rounded-[2rem] p-7 md:p-10 border border-black/5 dark:border-white/10 space-y-5">
+              <p className="text-[10px] font-black uppercase tracking-[0.35em] text-accent-primary">
+                About Me
+              </p>
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black dark:text-white leading-[1.05]">
+                Full-stack engineer building fast, scalable, and user-first products.
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 text-base md:text-lg leading-relaxed max-w-3xl">
+                I work across frontend, backend, DevOps, and AI integrations. I focus on clean architecture,
+                strong product thinking, and shipping features that users actually love.
+              </p>
+              <div className="flex flex-wrap gap-3 pt-2">
+                <span className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/15 text-gray-700 dark:text-gray-200">
+                  Product Engineering
+                </span>
+                <span className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/15 text-gray-700 dark:text-gray-200">
+                  System Design
+                </span>
+                <span className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/15 text-gray-700 dark:text-gray-200">
+                  AI + Web3
+                </span>
+              </div>
+            </div>
+
+            <div className="glass-card rounded-[2rem] p-7 md:p-8 border border-black/5 dark:border-white/10 space-y-4">
+              <h3 className="text-lg font-bold tracking-tight text-black dark:text-white">Quick Snapshot</h3>
+              <div className="grid grid-cols-1 gap-3">
+                <SnapshotItem icon={<BadgeCheck size={16} />} label="Projects Built" value="10+" />
+                <SnapshotItem icon={<BriefcaseBusiness size={16} />} label="Domains" value="EdTech, AI, SaaS, Web3" />
+                <SnapshotItem icon={<Clock3 size={16} />} label="Typical Response" value="Within 24 hours" />
+                <SnapshotItem icon={<MapPin size={16} />} label="Location" value="India (Remote Worldwide)" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="services" className="space-y-12 md:space-y-16 relative">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-black/5 dark:border-white/5 pb-12">
             <div className="space-y-4">
               <motion.div
@@ -108,7 +150,7 @@ const App: React.FC = () => {
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 md:gap-6">
             <FeatureCard
               icon={<Code2 className="w-6 h-6" />}
               title="Full-Stack Engineering"
@@ -132,28 +174,28 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        <section id="products" className="space-y-12">
+        <section id="products" className="space-y-10 md:space-y-12">
           <div className="space-y-4">
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               className="flex items-center gap-2 text-accent-secondary font-black text-[10px] uppercase tracking-[0.3em] justify-center md:justify-start"
             >
-              <Sparkles size={14} /> Production Lab
+              <Sparkles size={14} /> Projects
             </motion.div>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               className="text-4xl md:text-7xl font-bold tracking-tighter text-black dark:text-white text-center md:text-left"
             >
-              Real-World <span className="italic font-light">Products</span>
+              My <span className="italic font-light">Projects</span>
             </motion.h2>
             <p className="text-gray-500 dark:text-gray-400 max-w-2xl text-center md:text-left">
               Selected products designed for scale, speed, and a strong user experience.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             <ProductCard
               title="Quibly"
               tagline="Real-time communication platform for communities, similar to Discord."
@@ -161,30 +203,31 @@ const App: React.FC = () => {
               color="from-cyan-600/30 to-blue-600/30"
               link="#contact"
               tags={["Realtime", "Chat", "Voice", "WebSocket"]}
+              featured
             />
             <ProductCard
               title="Codexa"
-              tagline="Collaborative IDE for high-growth teams."
+              tagline="Coding and DSA learning platform with contests, interview prep, and interactive problem-solving."
               image={CodexaImage}
               color="from-indigo-600/20 to-violet-600/20"
               link="#contact"
-              tags={["IDE", "React", "Collaboration"]}
+              tags={["Coding", "DSA", "Contests"]}
             />
             <ProductCard
               title="Elevare"
-              tagline="AI-native recruitment OS."
+              tagline="AI resume builder that helps create ATS-friendly resumes and professional portfolios."
               image={ElevareImage}
               color="from-purple-600/20 to-pink-600/20"
               link="#contact"
-              tags={["AI", "Recruitment", "Automation"]}
+              tags={["AI", "Resume", "Portfolio"]}
             />
             <ProductCard
-              title="Lynkr"
-              tagline="Decentralized identity for the creator economy."
+              title="Lynktr"
+              tagline="Linktree-style profile with custom slug, built-in URL shortener, and QR code generation."
               image={LynkrImage}
               color="from-emerald-600/20 to-teal-600/20"
               link="#contact"
-              tags={["Web3", "Identity", "Blockchain"]}
+              tags={["Links", "Shortener", "QR"]}
             />
             <ProductCard
               title="Wallet Web"
@@ -199,12 +242,12 @@ const App: React.FC = () => {
 
         <section
           id="stack"
-          className="py-24 border-y border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.005]"
+          className="py-20 md:py-24 border-y border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.005] rounded-[2rem]"
         >
           <TechStack />
         </section>
 
-        <section className="space-y-24 py-12">
+        <section className="space-y-16 md:space-y-24 py-6 md:py-12">
           <div className="text-center space-y-4">
             <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-black dark:text-white">
               The Engineering <span className="text-accent-primary">DNA</span>
@@ -216,14 +259,44 @@ const App: React.FC = () => {
           <BuildProcess />
         </section>
 
+        <section id="experience" className="space-y-10">
+          <div className="space-y-4 text-center">
+            <p className="text-[10px] font-black uppercase tracking-[0.35em] text-accent-primary">
+              Professional Experience
+            </p>
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-black dark:text-white">
+              Experience
+            </h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+              Professional work summary in a standard resume-style format.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-5 md:gap-6 max-w-5xl mx-auto">
+            <ExperienceCard
+              role="Freelance Full-Stack Developer"
+              company="Self-Employed"
+              employmentType="Freelance"
+              duration="Aug 2025 - Present"
+              location="Remote"
+              highlights={[
+                "Delivered end-to-end web products from planning to live deployment for client and personal builds.",
+                "Shipped an e-commerce platform with product catalog, checkout flow, admin panel, and production hosting.",
+                "Built ad-tech and SaaS solutions with responsive frontend, scalable backend APIs, and deployment pipelines.",
+                "Handled maintenance, feature iteration, and performance improvements after launch.",
+              ]}
+            />
+          </div>
+        </section>
+
         <section className="relative group">
           <div className="absolute inset-0 bg-accent-primary/5 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="glass-card rounded-[3rem] p-12 md:p-24 relative overflow-hidden border-black/5 dark:border-white/5">
+          <div className="glass-card rounded-[2rem] md:rounded-[3rem] p-8 md:p-20 relative overflow-hidden border-black/5 dark:border-white/5">
             <div className="max-w-4xl space-y-12 relative z-10">
               <h2 className="text-[10px] font-black text-accent-primary uppercase tracking-[0.5em]">
                 Vision
               </h2>
-              <p className="text-3xl md:text-5xl font-bold leading-[1.1] text-black dark:text-white">
+              <p className="text-2xl md:text-5xl font-bold leading-[1.1] text-black dark:text-white">
                 I engineer{" "}
                 <span className="text-gray-400">scalable digital products</span>{" "}
                 that bridge complex logic with human experience. Focused on{" "}
@@ -246,7 +319,7 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        <section id="contact" className="py-24 md:py-32">
+        <section id="contact" className="py-16 md:py-24">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -345,6 +418,62 @@ const SocialButton: React.FC<{
     </span>
     <ArrowUpRight size={14} />
   </motion.a>
+);
+
+const SnapshotItem: React.FC<{
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+}> = ({ icon, label, value }) => (
+  <div className="rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] px-4 py-3.5 flex items-start gap-3">
+    <span className="text-accent-primary pt-0.5">{icon}</span>
+    <span className="space-y-1">
+      <span className="block text-[10px] font-black uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">
+        {label}
+      </span>
+      <span className="block text-sm font-bold text-black dark:text-white">
+        {value}
+      </span>
+    </span>
+  </div>
+);
+
+const ExperienceCard: React.FC<{
+  role: string;
+  company: string;
+  employmentType: string;
+  duration: string;
+  location: string;
+  highlights: string[];
+}> = ({ role, company, employmentType, duration, location, highlights }) => (
+  <div className="glass-card rounded-[1.5rem] p-6 md:p-8 border border-black/5 dark:border-white/10 space-y-5">
+    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+      <div className="space-y-1">
+        <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-black dark:text-white">{role}</h3>
+        <p className="text-base font-semibold text-gray-700 dark:text-gray-200">{company}</p>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/15 text-gray-600 dark:text-gray-300">
+          {employmentType}
+        </span>
+        <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/15 text-gray-600 dark:text-gray-300">
+          {duration}
+        </span>
+        <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/15 text-gray-600 dark:text-gray-300">
+          {location}
+        </span>
+      </div>
+    </div>
+
+    <ul className="space-y-2.5">
+      {highlights.map((item) => (
+        <li key={item} className="flex items-start gap-3 text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+          <span className="w-1.5 h-1.5 rounded-full bg-accent-primary mt-2.5 shrink-0" />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
 );
 
 export default App;

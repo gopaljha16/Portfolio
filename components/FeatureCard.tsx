@@ -21,7 +21,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       initial={{ opacity: 0, scale: 0.98 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
-      className="glass-card p-10 rounded-[2.5rem] space-y-6 group cursor-default flex flex-col h-full bg-white/[0.02] hover:bg-white/[0.04] dark:bg-white/[0.02] dark:hover:bg-white/[0.04] border-black/5 dark:border-white/5"
+      className="glass-card p-7 md:p-8 rounded-[1.75rem] space-y-5 group cursor-default flex flex-col h-full bg-white/[0.02] hover:bg-white/[0.04] dark:bg-white/[0.02] dark:hover:bg-white/[0.04] border-black/5 dark:border-white/5"
     >
       {image && (
         <div className="w-full h-48 rounded-2xl overflow-hidden border border-black/5 dark:border-white/5">
@@ -32,11 +32,11 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
           />
         </div>
       )}
-      <div className="w-14 h-14 rounded-2xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 flex items-center justify-center transition-all group-hover:bg-accent-primary/10 group-hover:border-accent-primary/20 group-hover:scale-105 shadow-inner text-accent-primary">
+      <div className="w-12 h-12 rounded-xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 flex items-center justify-center transition-all group-hover:bg-accent-primary/10 group-hover:border-accent-primary/20 group-hover:scale-105 shadow-inner text-accent-primary">
         {icon}
       </div>
       <div className="space-y-4">
-        <h3 className="text-2xl font-bold tracking-tight text-black dark:text-white group-hover:text-accent-primary transition-colors">
+        <h3 className="text-xl md:text-2xl font-bold tracking-tight text-black dark:text-white group-hover:text-accent-primary transition-colors">
           {title}
         </h3>
         <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed font-medium transition-colors">

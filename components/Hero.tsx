@@ -1,70 +1,78 @@
-
-import React from 'react';
-import { motion as motionBase } from 'framer-motion';
-import { ArrowUpRight, Orbit } from 'lucide-react';
+import React from "react";
+import { motion as motionBase } from "framer-motion";
+import { ArrowUpRight, Orbit, Sparkles } from "lucide-react";
 
 const motion = motionBase as any;
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative min-h-[90vh] flex flex-col items-center justify-center text-center py-20">
+    <section className="relative min-h-[88vh] flex items-center justify-center py-24 md:py-28">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute left-1/2 top-24 h-44 w-44 -translate-x-1/2 rounded-full bg-accent-primary/20 blur-3xl" />
+        <div className="absolute right-1/4 bottom-20 h-36 w-36 rounded-full bg-accent-secondary/15 blur-3xl" />
+      </div>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="space-y-10 max-w-5xl relative"
+        transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full max-w-6xl mx-auto text-center space-y-10"
       >
-        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-40 h-40 bg-accent-primary/10 blur-[80px] -z-10" />
-        
-        <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full glass border-black/5 dark:border-white/5 text-[9px] font-black uppercase tracking-[0.4em] text-accent-primary mb-2 animate-float bg-white/50 dark:bg-white/5">
-          <Orbit size={14} className="animate-pulse" />
+        <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full glass border-black/10 dark:border-white/10 text-[10px] font-black uppercase tracking-[0.35em] text-accent-primary bg-white/60 dark:bg-white/5">
+          <Orbit size={13} />
           Internet Product Engineer
         </div>
-        
-        <h1 className="text-[14vw] md:text-[11rem] font-black tracking-tighter leading-[0.8] text-black dark:text-white select-none">
-          Gopal Jha
-        </h1>
-        
-        <div className="space-y-6 max-w-3xl mx-auto px-4">
-          <h2 className="text-2xl md:text-4xl font-bold tracking-tight text-gray-800 dark:text-white/90 transition-colors">
-            Engineering <span className="text-accent-primary underline decoration-accent-primary/20">Scalable Systems</span>
+
+        <div className="space-y-6">
+          <h1 className="text-[clamp(3rem,10vw,8.5rem)] leading-[0.9] font-black tracking-[-0.04em] text-black dark:text-white">
+            Gopal Jha
+          </h1>
+
+          <h2 className="text-[clamp(1.5rem,3.6vw,3.25rem)] font-bold tracking-tight text-gray-900 dark:text-white">
+            Building{" "}
+            <span className="text-accent-primary underline decoration-accent-primary/30 underline-offset-8">
+              scalable products
+            </span>{" "}
+            for real users
           </h2>
-          <p className="text-gray-500 dark:text-gray-400 font-medium text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
-            Specializing in Web3, DevOps, and Full-Stack GenAI systems.
-            Architecture that scales. UI that connects. Code that performs.
+
+          <p className="max-w-3xl mx-auto text-base md:text-xl leading-relaxed text-gray-600 dark:text-gray-300">
+            Full-stack engineer focused on Web3, DevOps, and GenAI systems.
+            Fast architecture, clean UI, and production-grade delivery.
           </p>
         </div>
 
-        <motion.div 
-          className="flex flex-wrap justify-center gap-5 pt-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
-          <a 
-            href="#products" 
-            className="group px-10 py-5 bg-black dark:bg-white text-white dark:text-black font-black text-[11px] uppercase tracking-[0.2em] rounded-2xl flex items-center gap-3 transition-all hover:scale-[1.03] active:scale-95 shadow-xl shadow-black/10 dark:shadow-white/5"
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <a
+            href="#products"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-black dark:bg-white text-white dark:text-black font-black text-[11px] uppercase tracking-[0.18em] transition-transform hover:scale-[1.02] active:scale-[0.98]"
           >
-            My Products
-            <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+            Explore Projects
+            <ArrowUpRight size={16} />
           </a>
-          
-          <a 
-            href="#contact" 
-            className="px-10 py-5 glass text-black dark:text-white font-black text-[11px] uppercase tracking-[0.2em] rounded-2xl transition-all hover:bg-black/5 dark:hover:bg-white/5 border-black/10 dark:border-white/10 active:scale-95"
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border border-black/15 dark:border-white/20 text-black dark:text-white font-black text-[11px] uppercase tracking-[0.18em] hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
           >
             Hire Me
           </a>
-        </motion.div>
-      </motion.div>
+        </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 2 }}
-        className="absolute bottom-4 left-1/2 -translate-x-1/2"
-      >
-        <div className="w-px h-16 bg-gradient-to-b from-accent-primary/80 to-transparent" />
+        <div className="flex flex-wrap justify-center gap-3 pt-2">
+          <span className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/15 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-gray-600 dark:text-gray-300">
+            <Sparkles size={12} className="text-accent-primary" />
+            Web3
+          </span>
+          <span className="rounded-full border border-black/10 dark:border-white/15 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-gray-600 dark:text-gray-300">
+            DevOps
+          </span>
+          <span className="rounded-full border border-black/10 dark:border-white/15 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-gray-600 dark:text-gray-300">
+            GenAI
+          </span>
+          <span className="rounded-full border border-black/10 dark:border-white/15 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-gray-600 dark:text-gray-300">
+            Full-stack
+          </span>
+        </div>
       </motion.div>
     </section>
   );

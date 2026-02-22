@@ -2,13 +2,13 @@ import React from "react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="container mx-auto px-6 py-12 border-t border-black/5 dark:border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 transition-colors">
+    <footer className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 py-12 border-t border-black/5 dark:border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 transition-colors">
       <div className="flex items-center gap-4">
         <span className="font-heading font-black text-2xl tracking-tighter text-black dark:text-white">
           GJ<span className="text-accent-primary">.</span>
         </span>
         <span className="text-gray-400 text-xs font-bold uppercase tracking-widest italic">
-          © {new Date().getFullYear()} Gopal Jha
+          &copy; {new Date().getFullYear()} Gopal Jha
         </span>
       </div>
 

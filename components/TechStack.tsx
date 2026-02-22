@@ -38,7 +38,7 @@ const skillCategories = [
 
 const TechStack: React.FC = () => {
   return (
-    <div className="space-y-24 py-12">
+    <div className="space-y-20 py-8 md:py-12">
       <div className="text-center space-y-4 max-w-3xl mx-auto px-4">
         <motion.h3 
           initial={{ opacity: 0, y: 10 }}
@@ -65,7 +65,7 @@ const TechStack: React.FC = () => {
         </motion.p>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 px-4">
         {skillCategories.map((cat, idx) => (
           <motion.div
             key={cat.name}
@@ -73,21 +73,21 @@ const TechStack: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
             viewport={{ once: true }}
-            className="glass-card p-8 rounded-[2.5rem] space-y-8 flex flex-col bg-white/5 dark:bg-white/[0.01] border-black/5 dark:border-white/5 hover:border-accent-primary/20 dark:hover:border-accent-primary/20 transition-all duration-500 group"
+            className="glass-card p-6 md:p-7 rounded-[1.75rem] space-y-6 flex flex-col bg-white/5 dark:bg-white/[0.01] border-black/5 dark:border-white/5 hover:border-accent-primary/20 dark:hover:border-accent-primary/20 transition-all duration-500 group"
           >
             <div className="flex items-center gap-4 border-b border-black/5 dark:border-white/5 pb-6">
               <div className="p-3 bg-black/[0.03] dark:bg-white/5 rounded-2xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-inner">
                 {cat.icon}
               </div>
-              <h4 className="font-bold tracking-tight text-xl text-black dark:text-white">{cat.name}</h4>
+              <h4 className="font-bold tracking-tight text-lg md:text-xl text-black dark:text-white">{cat.name}</h4>
             </div>
             
             <div className="flex flex-col gap-3">
               {cat.skills.map((skill, sIdx) => (
-                <motion.div 
+                <motion.div
                   key={skill}
                   whileHover={{ x: 5 }}
-                  className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 text-sm font-bold text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/[0.05] transition-all cursor-default shadow-sm group/skill"
+                  className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 text-sm font-bold text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/[0.05] transition-all cursor-default shadow-sm group/skill"
                 >
                   <div className="w-1.5 h-1.5 rounded-full bg-accent-primary/40 group-hover/skill:bg-accent-primary transition-colors" />
                   {skill}
@@ -98,11 +98,10 @@ const TechStack: React.FC = () => {
         ))}
       </div>
 
-      {/* Marquee Performance Banner */}
-      <div className="relative overflow-hidden py-10 border-y border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.005]">
+      <div className="relative overflow-hidden py-8 border-y border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.005]">
         <motion.div 
-          animate={{ x: [0, -1500] }}
-          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+          animate={{ x: [0, -1200] }}
+          transition={{ duration: 34, repeat: Infinity, ease: "linear" }}
           className="flex whitespace-nowrap gap-24 items-center"
         >
           {[...Array(4)].map((_, i) => (

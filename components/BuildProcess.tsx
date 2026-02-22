@@ -28,7 +28,7 @@ const steps = [
 
 const BuildProcess: React.FC = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative max-w-6xl mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 relative max-w-6xl mx-auto">
       <div className="hidden md:block absolute top-[60px] left-0 right-0 h-px bg-gradient-to-r from-transparent via-black/10 dark:via-white/10 to-transparent z-0" />
       
       {steps.map((step, idx) => (
@@ -38,11 +38,11 @@ const BuildProcess: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: idx * 0.2, duration: 0.6 }}
           viewport={{ once: true }}
-          className="relative z-10 flex flex-col items-center text-center space-y-8 group"
+          className="relative z-10 flex flex-col items-center text-center space-y-6 group glass-card rounded-[1.75rem] p-7 md:p-8 border border-black/5 dark:border-white/10"
         >
           <div className="relative">
             <div className="absolute inset-0 bg-accent-primary/5 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div className="w-24 h-24 rounded-3xl glass-card flex items-center justify-center border-black/5 dark:border-white/10 dark:bg-white/[0.02] bg-white/50 group-hover:-translate-y-1 transition-all shadow-xl">
+            <div className="w-20 h-20 rounded-2xl glass-card flex items-center justify-center border-black/5 dark:border-white/10 dark:bg-white/[0.02] bg-white/50 group-hover:-translate-y-1 transition-all shadow-xl">
               {React.cloneElement(step.icon as React.ReactElement<any>, { size: 36, strokeWidth: 1.5 })}
             </div>
           </div>
