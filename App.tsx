@@ -28,6 +28,8 @@ import Footer from "./components/Footer";
 import CodexaImage from "./images/Codexa.png";
 import ElevareImage from "./images/Elevare.png";
 import LynkrImage from "./images/lynkr-landing.png";
+import QuiblyImage from "./images/Quibly-landing.png"
+import ConsoleMeImage from "./images/consoleme-landing.png"
 
 const motion = motionBase as any;
 
@@ -197,20 +199,28 @@ const App: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             <ProductCard
+              title="Console Me"
+              tagline="Currently working project. Active development mode."
+              image={ConsoleMeImage}
+              color="from-emerald-600/20 to-teal-600/20"
+              link="#"
+              tags={["Active", "WIP"]}
+              active={true}
+            />
+            <ProductCard
               title="Quibly"
               tagline="Real-time communication platform for communities, similar to Discord."
-              image="https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&q=80&w=1400"
+              image={QuiblyImage}
               color="from-cyan-600/30 to-blue-600/30"
-              link="#contact"
+              link="https://quiblyy.vercel.app/"
               tags={["Realtime", "Chat", "Voice", "WebSocket"]}
-              featured
             />
             <ProductCard
               title="Codexa"
               tagline="Coding and DSA learning platform with contests, interview prep, and interactive problem-solving."
               image={CodexaImage}
               color="from-indigo-600/20 to-violet-600/20"
-              link="#contact"
+              link="https://codexa.live"
               tags={["Coding", "DSA", "Contests"]}
             />
             <ProductCard
@@ -218,24 +228,16 @@ const App: React.FC = () => {
               tagline="AI resume builder that helps create ATS-friendly resumes and professional portfolios."
               image={ElevareImage}
               color="from-purple-600/20 to-pink-600/20"
-              link="#contact"
+              link="https://elevare-seven.vercel.app/"
               tags={["AI", "Resume", "Portfolio"]}
             />
             <ProductCard
-              title="Lynktr"
+              title="Lynkr"
               tagline="Linktree-style profile with custom slug, built-in URL shortener, and QR code generation."
               image={LynkrImage}
               color="from-emerald-600/20 to-teal-600/20"
-              link="#contact"
+              link="https://lynkr-iota.vercel.app/"
               tags={["Links", "Shortener", "QR"]}
-            />
-            <ProductCard
-              title="Wallet Web"
-              tagline="Next-gen institutional crypto dashboard."
-              image="https://images.unsplash.com/photo-1621416848440-d369283f2f03?auto=format&fit=crop&q=80&w=1200"
-              color="from-amber-600/20 to-orange-600/20"
-              link="#contact"
-              tags={["Crypto", "Dashboard", "Fintech"]}
             />
           </div>
         </section>

@@ -12,6 +12,7 @@ interface ProductCardProps {
   link: string;
   tags?: string[];
   featured?: boolean;
+  active?: boolean;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -22,6 +23,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   link,
   tags = [],
   featured = false,
+  active = false,
 }) => {
   const [hasImageError, setHasImageError] = useState(false);
   const isExternalLink = /^https?:\/\//.test(link);
@@ -65,11 +67,22 @@ const ProductCard: React.FC<ProductCardProps> = ({
               {tagline}
             </p>
           </div>
-          <span
-            className={`inline-block rounded-full bg-gradient-to-r ${color} px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white/95`}
-          >
-            Product
-          </span>
+          <div className="flex items-center gap-2">
+            {active && (
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 dark:bg-emerald-500/20 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                Active
+              </span>
+            )}
+            <span
+              className={`inline-block rounded-full bg-gradient-to-r ${color} px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white/95`}
+            >
+              Product
+            </span>
+          </div>
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-4">
@@ -83,15 +96,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
               </span>
             ))}
           </div>
-          <a
-            href={link}
-            target={isExternalLink ? "_blank" : undefined}
-            rel={isExternalLink ? "noopener noreferrer" : undefined}
-            className="inline-flex items-center gap-2 rounded-xl bg-black text-white dark:bg-white dark:text-black px-4 py-2.5 text-[11px] font-black uppercase tracking-[0.14em] transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
-          >
-            View Project
-            <ArrowUpRight size={16} />
-          </a>
+          {link && link !== "#" && (
+            <a
+              href={link}
+              target={isExternalLink ? "_blank" : undefined}
+              rel={isExternalLink ? "noopener noreferrer" : undefined}
+              className="inline-flex items-center gap-2 rounded-xl bg-black text-white dark:bg-white dark:text-black px-4 py-2.5 text-[11px] font-black uppercase tracking-[0.14em] transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
+            >
+              View Project
+              <ArrowUpRight size={16} />
+            </a>
+          )}
         </div>
       </div>
     </motion.article>
