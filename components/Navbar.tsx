@@ -6,7 +6,7 @@ import { Sun, Moon } from 'lucide-react';
 const motion = motionBase as any;
 
 interface NavbarProps {
-  toggleTheme: () => void;
+  toggleTheme: (event: React.MouseEvent<HTMLButtonElement>) => void;
   currentTheme: 'dark' | 'light';
 }
 
