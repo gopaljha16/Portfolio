@@ -30,6 +30,7 @@ import ElevareImage from "./images/Elevare.png";
 import LynkrImage from "./images/lynkr-landing.png";
 import QuiblyImage from "./images/Quibly-landing.png"
 import ConsoleMeImage from "./images/consoleme-landing.png"
+import ElyraImage from "./images/elyra-preview.svg"
 
 const motion = motionBase as any;
 
@@ -200,11 +201,19 @@ const App: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             <ProductCard
               title="Console Me"
-              tagline="Currently working project. Active development mode."
+              tagline="Completed product build with a polished landing experience and production-ready UI."
               image={ConsoleMeImage}
               color="from-emerald-600/20 to-teal-600/20"
+              link="https://gopaldev.in/"
+              tags={["Completed", "Product", "UI"]}
+            />
+            <ProductCard
+              title="Elyra"
+              tagline="Currently active project. Building a refined product experience with modern full-stack architecture."
+              image={ElyraImage}
+              color="from-fuchsia-600/20 to-rose-600/20"
               link="#"
-              tags={["Active", "WIP"]}
+              tags={["Active", "WIP", "Full Stack"]}
               active={true}
             />
             <ProductCard
