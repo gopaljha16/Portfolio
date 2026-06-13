@@ -20,10 +20,10 @@ import {
 } from "lucide-react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import ClickEffect from "./components/ClickEffect";
 import FeatureCard from "./components/FeatureCard";
 import ProductCard from "./components/ProductCard";
 import TechStack from "./components/TechStack";
-import BuildProcess from "./components/BuildProcess";
 import Footer from "./components/Footer";
 import CodexaImage from "./images/Codexa.png";
 import ElevareImage from "./images/Elevare.png";
@@ -102,6 +102,7 @@ const App: React.FC = () => {
       className={`relative min-h-screen selection:bg-accent-primary/30 overflow-x-hidden ${theme}`}
     >
       <div className="mesh-gradient" />
+      <ClickEffect />
 
       <AnimatePresence>
         {!isLoaded && (
@@ -168,58 +169,38 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        <section id="services" className="space-y-12 md:space-y-16 relative">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-black/5 dark:border-white/5 pb-12">
-            <div className="space-y-4">
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                className="flex items-center gap-2 text-accent-primary font-black text-[10px] uppercase tracking-[0.3em]"
-              >
-                <Layers size={14} /> Domain
-              </motion.div>
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                className="text-4xl md:text-6xl font-bold tracking-tight text-black dark:text-white"
-              >
-                Core <span className="text-accent-primary">Capabilities</span>
-              </motion.h2>
-            </div>
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              className="text-gray-500 dark:text-gray-400 max-w-sm font-medium leading-relaxed"
-            >
-              Solving complex architectural challenges with modern engineering
-              paradigms.
-            </motion.p>
+        
+        <section id="experience" className="space-y-10">
+          <div className="space-y-4 text-center">
+            <p className="text-[10px] font-black uppercase tracking-[0.35em] text-accent-primary">
+              Professional Experience
+            </p>
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-black dark:text-white">
+              Experience
+            </h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+              A track record of building robust software and delivering impactful products.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 md:gap-6">
-            <FeatureCard
-              icon={<Code2 className="w-6 h-6" />}
-              title="Full-Stack Engineering"
-              description="High-throughput systems using MERN and Next.js with sub-second response times."
-            />
-            <FeatureCard
-              icon={<Globe className="w-6 h-6" />}
-              title="Web3 Architectures"
-              description="Secure dApps and smart contracts on Ethereum, Solana, and Polygon."
-            />
-            <FeatureCard
-              icon={<Cloud className="w-6 h-6" />}
-              title="Infrastructure & Ops"
-              description="Automated CI/CD pipelines, Dockerized workloads, and distributed messaging systems."
-            />
-            <FeatureCard
-              icon={<Bot className="w-6 h-6" />}
-              title="GenAI Solutions"
-              description="Custom LLM workflows, RAG systems, and AI-driven process automation."
+          <div className="grid grid-cols-1 gap-5 md:gap-6 max-w-5xl mx-auto">
+            <ExperienceCard
+              role="Freelance Full-Stack Developer"
+              company="Self-Employed"
+              employmentType="Freelance"
+              duration="Aug 2025 - Feb 2026"
+              location="Remote"
+              highlights={[
+                "Delivered end-to-end web products from planning to live deployment for client and personal builds.",
+                "Shipped an e-commerce platform with product catalog, checkout flow, admin panel, and production hosting.",
+                "Built ad-tech and SaaS solutions with responsive frontend, scalable backend APIs, and deployment pipelines.",
+                "Handled maintenance, feature iteration, and performance improvements after launch.",
+              ]}
             />
           </div>
         </section>
 
+        
         <section id="products" className="space-y-10 md:space-y-12">
           <div className="space-y-4">
             <motion.div
@@ -294,6 +275,60 @@ const App: React.FC = () => {
           </div>
         </section>
 
+        
+        <section id="services" className="space-y-12 md:space-y-16 relative">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-black/5 dark:border-white/5 pb-12">
+            <div className="space-y-4">
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                className="flex items-center gap-2 text-accent-primary font-black text-[10px] uppercase tracking-[0.3em]"
+              >
+                <Layers size={14} /> Domain
+              </motion.div>
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                className="text-4xl md:text-6xl font-bold tracking-tight text-black dark:text-white"
+              >
+                Core <span className="text-accent-primary">Capabilities</span>
+              </motion.h2>
+            </div>
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              className="text-gray-500 dark:text-gray-400 max-w-sm font-medium leading-relaxed"
+            >
+              Solving complex architectural challenges with modern engineering
+              paradigms.
+            </motion.p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 md:gap-6">
+            <FeatureCard
+              icon={<Code2 className="w-6 h-6" />}
+              title="Full-Stack Engineering"
+              description="High-throughput systems using MERN and Next.js with sub-second response times."
+            />
+            <FeatureCard
+              icon={<Globe className="w-6 h-6" />}
+              title="Web3 Architectures"
+              description="Secure dApps and smart contracts on Ethereum, Solana, and Polygon."
+            />
+            <FeatureCard
+              icon={<Cloud className="w-6 h-6" />}
+              title="Infrastructure & Ops"
+              description="Automated CI/CD pipelines, Dockerized workloads, and distributed messaging systems."
+            />
+            <FeatureCard
+              icon={<Bot className="w-6 h-6" />}
+              title="GenAI Solutions"
+              description="Custom LLM workflows, RAG systems, and AI-driven process automation."
+            />
+          </div>
+        </section>
+
+        
         <section
           id="stack"
           className="py-20 md:py-24 border-y border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.005] rounded-[2rem]"
@@ -301,48 +336,8 @@ const App: React.FC = () => {
           <TechStack />
         </section>
 
-        <section className="space-y-16 md:space-y-24 py-6 md:py-12">
-          <div className="text-center space-y-4">
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-black dark:text-white">
-              The Engineering <span className="text-accent-primary">DNA</span>
-            </h2>
-            <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto font-medium">
-              A systematic approach to building resilient, beautiful software.
-            </p>
-          </div>
-          <BuildProcess />
-        </section>
 
-        <section id="experience" className="space-y-10">
-          <div className="space-y-4 text-center">
-            <p className="text-[10px] font-black uppercase tracking-[0.35em] text-accent-primary">
-              Professional Experience
-            </p>
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-black dark:text-white">
-              Experience
-            </h2>
-            <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
-              Professional work summary in a standard resume-style format.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-5 md:gap-6 max-w-5xl mx-auto">
-            <ExperienceCard
-              role="Freelance Full-Stack Developer"
-              company="Self-Employed"
-              employmentType="Freelance"
-              duration="Aug 2025 - Present"
-              location="Remote"
-              highlights={[
-                "Delivered end-to-end web products from planning to live deployment for client and personal builds.",
-                "Shipped an e-commerce platform with product catalog, checkout flow, admin panel, and production hosting.",
-                "Built ad-tech and SaaS solutions with responsive frontend, scalable backend APIs, and deployment pipelines.",
-                "Handled maintenance, feature iteration, and performance improvements after launch.",
-              ]}
-            />
-          </div>
-        </section>
-
+        
         <section className="relative group">
           <div className="absolute inset-0 bg-accent-primary/5 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
           <div className="glass-card rounded-[2rem] md:rounded-[3rem] p-8 md:p-20 relative overflow-hidden border-black/5 dark:border-white/5">
@@ -373,6 +368,7 @@ const App: React.FC = () => {
           </div>
         </section>
 
+        
         <section id="contact" className="py-16 md:py-24">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -447,6 +443,7 @@ const App: React.FC = () => {
             </div>
           </motion.div>
         </section>
+      
       </main>
 
       <Footer />
@@ -500,29 +497,31 @@ const ExperienceCard: React.FC<{
   location: string;
   highlights: string[];
 }> = ({ role, company, employmentType, duration, location, highlights }) => (
-  <div className="glass-card rounded-[1.5rem] p-6 md:p-8 border border-black/5 dark:border-white/10 space-y-5">
-    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-      <div className="space-y-1">
+  <div className="glass-card rounded-[1.5rem] p-6 md:p-8 border border-black/5 dark:border-white/10 space-y-6 md:space-y-8">
+    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-5">
+      <div className="space-y-1.5">
         <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-black dark:text-white">{role}</h3>
-        <p className="text-base font-semibold text-gray-700 dark:text-gray-200">{company}</p>
+        <p className="text-base font-semibold text-accent-primary">{company}</p>
       </div>
-      <div className="flex flex-wrap gap-2">
-        <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/15 text-gray-600 dark:text-gray-300">
+      <div className="flex flex-wrap gap-2 pt-1 md:pt-0">
+        <span className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-gray-700 dark:text-gray-300">
           {employmentType}
         </span>
-        <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/15 text-gray-600 dark:text-gray-300">
+        <span className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-gray-700 dark:text-gray-300">
           {duration}
         </span>
-        <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/15 text-gray-600 dark:text-gray-300">
+        <span className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-gray-700 dark:text-gray-300">
           {location}
         </span>
       </div>
     </div>
 
-    <ul className="space-y-2.5">
+    <div className="h-px w-full bg-gradient-to-r from-transparent via-black/10 dark:via-white/10 to-transparent opacity-50" />
+
+    <ul className="space-y-3.5">
       {highlights.map((item) => (
-        <li key={item} className="flex items-start gap-3 text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
-          <span className="w-1.5 h-1.5 rounded-full bg-accent-primary mt-2.5 shrink-0" />
+        <li key={item} className="flex items-start gap-4 text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+          <span className="w-2 h-2 rounded-full bg-accent-primary mt-[0.4rem] shrink-0 shadow-[0_0_8px_#6366f1]" />
           <span>{item}</span>
         </li>
       ))}
