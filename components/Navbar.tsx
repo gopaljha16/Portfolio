@@ -23,10 +23,10 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, currentTheme }) => {
           
           <div className="hidden md:flex items-center gap-6">
             <NavLink href="#about">About</NavLink>
-            <NavLink href="#services">Capabilities</NavLink>
-            <NavLink href="#products">Projects</NavLink>
-            <NavLink href="#stack">Stack</NavLink>
             <NavLink href="#experience">Experience</NavLink>
+            <NavLink href="#products">Projects</NavLink>
+            <NavLink href="#services">Capabilities</NavLink>
+            <NavLink href="#stack">Stack</NavLink>
             <NavLink href="#contact">Contact</NavLink>
           </div>
 
