@@ -1,13 +1,16 @@
+"use client";
+
 import React, { useState } from "react";
 import { motion as motionBase } from "framer-motion";
 import { ArrowUpRight, ImageOff } from "lucide-react";
+import Image, { StaticImageData } from "next/image";
 
 const motion = motionBase as any;
 
 interface ProductCardProps {
   title: string;
   tagline: string;
-  image: string;
+  image: StaticImageData | string;
   color: string;
   link: string;
   tags?: string[];
@@ -34,17 +37,19 @@ const ProductCard: React.FC<ProductCardProps> = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.45, ease: "easeOut" }}
-      className={`group relative overflow-hidden rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/65 dark:bg-white/[0.02] backdrop-blur-xl shadow-xl shadow-black/5 dark:shadow-black/30 ${featured ? "md:col-span-2" : ""}`}
+      className={`group relative overflow-hidden rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/65 dark:bg-white/[0.02] backdrop-blur-xl shadow-xl shadow-black/5 dark:shadow-black/30 ${
+        featured ? "md:col-span-2" : ""
+      }`}
     >
       <div className="p-4 md:p-5 bg-gradient-to-b from-black/[0.04] to-transparent dark:from-white/[0.02] dark:to-transparent">
         <div className="relative h-[240px] sm:h-[280px] md:h-[300px] overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-[#05070f]">
           {!hasImageError ? (
-            <img
+            <Image
               src={image}
               alt={`${title} project preview`}
-              loading="lazy"
+              fill
+              className="object-contain object-center transition-transform duration-500 group-hover:scale-[1.01]"
               onError={() => setHasImageError(true)}
-              className="h-full w-full object-contain object-center transition-transform duration-500 group-hover:scale-[1.01]"
             />
           ) : (
             <div className="h-full w-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 flex flex-col items-center justify-center gap-3 text-white/80">
