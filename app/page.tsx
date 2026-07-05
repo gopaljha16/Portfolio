@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { motion as motionBase, AnimatePresence } from "framer-motion";
 import {
@@ -18,19 +20,22 @@ import {
   Layers,
   Sparkles,
 } from "lucide-react";
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import ClickEffect from "./components/ClickEffect";
-import FeatureCard from "./components/FeatureCard";
-import ProductCard from "./components/ProductCard";
-import TechStack from "./components/TechStack";
-import Footer from "./components/Footer";
-import CodexaImage from "./images/Codexa.png";
-import ElevareImage from "./images/Elevare.png";
-import LynkrImage from "./images/lynkr-landing.png";
-import QuiblyImage from "./images/Quibly-landing.png"
-import ConsoleMeImage from "./images/consoleme-landing.png"
-import ElyraImage from "./images/elyra-preview.svg"
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import ClickEffect from "@/components/ClickEffect";
+import FeatureCard from "@/components/FeatureCard";
+import ProductCard from "@/components/ProductCard";
+import TechStack from "@/components/TechStack";
+import Footer from "@/components/Footer";
+import Image from "next/image";
+
+// Project images
+import CodexaImage from "@/images/Codexa.png";
+import ElevareImage from "@/images/Elevare.png";
+import LynkrImage from "@/images/lynkr-landing.png";
+import QuiblyImage from "@/images/Quibly-landing.png";
+import ConsoleMeImage from "@/images/consoleme-landing.png";
+import ElyraImage from "@/images/elyra-preview.svg";
 
 const motion = motionBase as any;
 
@@ -40,7 +45,7 @@ type ViewTransitionDocument = Document & {
   };
 };
 
-const App: React.FC = () => {
+export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
@@ -49,6 +54,8 @@ const App: React.FC = () => {
     if (savedTheme) {
       setTheme(savedTheme);
       document.body.className = savedTheme;
+    } else {
+      document.body.className = "dark";
     }
     setIsLoaded(true);
   }, []);
@@ -131,6 +138,7 @@ const App: React.FC = () => {
       <main className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 pt-24 md:pt-28 space-y-28 md:space-y-36">
         <Hero />
 
+        {/* ── About ── */}
         <section id="about" className="space-y-10">
           <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-6 md:gap-8 items-stretch">
             <div className="glass-card rounded-[2rem] p-7 md:p-10 border border-black/5 dark:border-white/10 space-y-5">
@@ -138,38 +146,59 @@ const App: React.FC = () => {
                 About Me
               </p>
               <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black dark:text-white leading-[1.05]">
-                Full-stack engineer building fast, scalable, and user-first products.
+                Full-stack engineer building fast, scalable, and user-first
+                products.
               </h2>
               <p className="text-gray-600 dark:text-gray-300 text-base md:text-lg leading-relaxed max-w-3xl">
-                I work across frontend, backend, DevOps, and AI integrations. I focus on clean architecture,
-                strong product thinking, and shipping features that users actually love.
+                I work across frontend, backend, DevOps, and AI integrations. I
+                focus on clean architecture, strong product thinking, and
+                shipping features that users actually love.
               </p>
               <div className="flex flex-wrap gap-3 pt-2">
-                <span className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/15 text-gray-700 dark:text-gray-200">
-                  Product Engineering
-                </span>
-                <span className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/15 text-gray-700 dark:text-gray-200">
-                  System Design
-                </span>
-                <span className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/15 text-gray-700 dark:text-gray-200">
-                  AI + Web3
-                </span>
+                {["Product Engineering", "System Design", "AI + Web3"].map(
+                  (tag) => (
+                    <span
+                      key={tag}
+                      className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/15 text-gray-700 dark:text-gray-200"
+                    >
+                      {tag}
+                    </span>
+                  )
+                )}
               </div>
             </div>
 
             <div className="glass-card rounded-[2rem] p-7 md:p-8 border border-black/5 dark:border-white/10 space-y-4">
-              <h3 className="text-lg font-bold tracking-tight text-black dark:text-white">Quick Snapshot</h3>
+              <h3 className="text-lg font-bold tracking-tight text-black dark:text-white">
+                Quick Snapshot
+              </h3>
               <div className="grid grid-cols-1 gap-3">
-                <SnapshotItem icon={<BadgeCheck size={16} />} label="Projects Built" value="10+" />
-                <SnapshotItem icon={<BriefcaseBusiness size={16} />} label="Domains" value="EdTech, AI, SaaS, Web3" />
-                <SnapshotItem icon={<Clock3 size={16} />} label="Typical Response" value="Within 24 hours" />
-                <SnapshotItem icon={<MapPin size={16} />} label="Location" value="India (Remote Worldwide)" />
+                <SnapshotItem
+                  icon={<BadgeCheck size={16} />}
+                  label="Projects Built"
+                  value="10+"
+                />
+                <SnapshotItem
+                  icon={<BriefcaseBusiness size={16} />}
+                  label="Domains"
+                  value="EdTech, AI, SaaS, Web3"
+                />
+                <SnapshotItem
+                  icon={<Clock3 size={16} />}
+                  label="Typical Response"
+                  value="Within 24 hours"
+                />
+                <SnapshotItem
+                  icon={<MapPin size={16} />}
+                  label="Location"
+                  value="India (Remote Worldwide)"
+                />
               </div>
             </div>
           </div>
         </section>
 
-        
+        {/* ── Experience ── */}
         <section id="experience" className="space-y-10">
           <div className="space-y-4 text-center">
             <p className="text-[10px] font-black uppercase tracking-[0.35em] text-accent-primary">
@@ -179,7 +208,8 @@ const App: React.FC = () => {
               Experience
             </h2>
             <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
-              A track record of building robust software and delivering impactful products.
+              A track record of building robust software and delivering
+              impactful products.
             </p>
           </div>
 
@@ -200,7 +230,7 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        
+        {/* ── Projects ── */}
         <section id="products" className="space-y-10 md:space-y-12">
           <div className="space-y-4">
             <motion.div
@@ -218,7 +248,8 @@ const App: React.FC = () => {
               My <span className="italic font-light">Projects</span>
             </motion.h2>
             <p className="text-gray-500 dark:text-gray-400 max-w-2xl text-center md:text-left">
-              Selected products designed for scale, speed, and a strong user experience.
+              Selected products designed for scale, speed, and a strong user
+              experience.
             </p>
           </div>
 
@@ -275,7 +306,7 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        
+        {/* ── Services ── */}
         <section id="services" className="space-y-12 md:space-y-16 relative">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-black/5 dark:border-white/5 pb-12">
             <div className="space-y-4">
@@ -328,7 +359,7 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        
+        {/* ── Tech Stack ── */}
         <section
           id="stack"
           className="py-20 md:py-24 border-y border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.005] rounded-[2rem]"
@@ -336,8 +367,7 @@ const App: React.FC = () => {
           <TechStack />
         </section>
 
-
-        
+        {/* ── Vision ── */}
         <section className="relative group">
           <div className="absolute inset-0 bg-accent-primary/5 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
           <div className="glass-card rounded-[2rem] md:rounded-[3rem] p-8 md:p-20 relative overflow-hidden border-black/5 dark:border-white/5">
@@ -368,7 +398,7 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        
+        {/* ── Contact ── */}
         <section id="contact" className="py-16 md:py-24">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -443,13 +473,14 @@ const App: React.FC = () => {
             </div>
           </motion.div>
         </section>
-      
       </main>
 
       <Footer />
     </div>
   );
-};
+}
+
+/* ── Sub-components ──────────────────────────── */
 
 const SocialButton: React.FC<{
   icon: React.ReactNode;
@@ -500,19 +531,20 @@ const ExperienceCard: React.FC<{
   <div className="glass-card rounded-[1.5rem] p-6 md:p-8 border border-black/5 dark:border-white/10 space-y-6 md:space-y-8">
     <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-5">
       <div className="space-y-1.5">
-        <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-black dark:text-white">{role}</h3>
+        <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-black dark:text-white">
+          {role}
+        </h3>
         <p className="text-base font-semibold text-accent-primary">{company}</p>
       </div>
       <div className="flex flex-wrap gap-2 pt-1 md:pt-0">
-        <span className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-gray-700 dark:text-gray-300">
-          {employmentType}
-        </span>
-        <span className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-gray-700 dark:text-gray-300">
-          {duration}
-        </span>
-        <span className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-gray-700 dark:text-gray-300">
-          {location}
-        </span>
+        {[employmentType, duration, location].map((badge) => (
+          <span
+            key={badge}
+            className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-gray-700 dark:text-gray-300"
+          >
+            {badge}
+          </span>
+        ))}
       </div>
     </div>
 
@@ -520,7 +552,10 @@ const ExperienceCard: React.FC<{
 
     <ul className="space-y-3.5">
       {highlights.map((item) => (
-        <li key={item} className="flex items-start gap-4 text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+        <li
+          key={item}
+          className="flex items-start gap-4 text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed"
+        >
           <span className="w-2 h-2 rounded-full bg-accent-primary mt-[0.4rem] shrink-0 shadow-[0_0_8px_#6366f1]" />
           <span>{item}</span>
         </li>
@@ -528,5 +563,3 @@ const ExperienceCard: React.FC<{
     </ul>
   </div>
 );
-
-export default App;

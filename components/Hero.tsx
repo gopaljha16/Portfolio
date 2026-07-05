@@ -1,6 +1,8 @@
+"use client";
+
 import React from "react";
 import { motion as motionBase } from "framer-motion";
-import { ArrowUpRight, ShieldCheck, Users, LineChart, Home } from "lucide-react";
+import { ArrowUpRight, ShieldCheck, Users, LineChart } from "lucide-react";
 
 const motion = motionBase as any;
 
@@ -32,8 +34,9 @@ const Hero: React.FC = () => {
 
           {/* Description */}
           <p className="max-w-lg text-base md:text-lg leading-relaxed text-gray-600 dark:text-gray-400 font-medium">
-            Full-stack engineer focused on Web3, DevOps, and GenAI systems.<br/>
-            I build fast, reliable, and user-first products with clean architecture and modern design.
+            Full-stack engineer focused on Web3, DevOps, and GenAI systems.
+            <br />I build fast, reliable, and user-first products with clean
+            architecture and modern design.
           </p>
 
           {/* Buttons */}
@@ -59,46 +62,64 @@ const Hero: React.FC = () => {
               Tech I Work With
             </p>
             <div className="flex flex-wrap items-center gap-6">
-              {/* Next.js */}
               <div className="flex items-center gap-2">
-                <div className="w-6 h-6 rounded-full bg-black dark:bg-white dark:text-black text-white flex items-center justify-center text-[10px] font-bold">N</div>
-                <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">Next.js</span>
+                <div className="w-6 h-6 rounded-full bg-black dark:bg-white dark:text-black text-white flex items-center justify-center text-[10px] font-bold">
+                  N
+                </div>
+                <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">
+                  Next.js
+                </span>
               </div>
-              {/* TypeScript */}
               <div className="flex items-center gap-2">
-                <div className="w-5 h-5 rounded bg-[#3178C6] flex items-center justify-center text-white text-[8px] font-bold">TS</div>
-                <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">TypeScript</span>
+                <div className="w-5 h-5 rounded bg-[#3178C6] flex items-center justify-center text-white text-[8px] font-bold">
+                  TS
+                </div>
+                <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">
+                  TypeScript
+                </span>
               </div>
-              {/* Node.js */}
               <div className="flex items-center gap-2">
-                <div className="w-5 h-5 rounded bg-[#339933] flex items-center justify-center text-white text-[8px] font-bold">JS</div>
-                <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">Node.js</span>
+                <div className="w-5 h-5 rounded bg-[#339933] flex items-center justify-center text-white text-[8px] font-bold">
+                  JS
+                </div>
+                <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">
+                  Node.js
+                </span>
               </div>
-              {/* PostgreSQL */}
               <div className="flex items-center gap-2">
-                <div className="text-[#336791] font-bold text-lg leading-none">🐘</div>
-                <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">PostgreSQL</span>
+                <div className="text-[#336791] font-bold text-lg leading-none">
+                  🐘
+                </div>
+                <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">
+                  PostgreSQL
+                </span>
               </div>
-              {/* AWS */}
               <div className="flex items-center gap-2">
                 <span className="text-xs font-black text-[#FF9900]">AWS</span>
-                <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">AWS</span>
+                <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">
+                  AWS
+                </span>
               </div>
-              {/* Docker */}
               <div className="flex items-center gap-2">
-                 <div className="w-5 h-5 rounded bg-[#2496ED] flex items-center justify-center text-white text-[8px] font-bold">🐳</div>
-                <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">Docker</span>
+                <div className="w-5 h-5 rounded bg-[#2496ED] flex items-center justify-center text-white text-[8px] font-bold">
+                  🐳
+                </div>
+                <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">
+                  Docker
+                </span>
               </div>
-              {/* GitHub */}
               <div className="flex items-center gap-2">
-                <div className="w-5 h-5 rounded-full bg-black dark:bg-white dark:text-black text-white flex items-center justify-center text-[8px] font-bold">Git</div>
-                <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">GitHub</span>
+                <div className="w-5 h-5 rounded-full bg-black dark:bg-white dark:text-black text-white flex items-center justify-center text-[8px] font-bold">
+                  Git
+                </div>
+                <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">
+                  GitHub
+                </span>
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Right Side Illustration */}
         {/* Right Side Illustration */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -136,11 +157,14 @@ const Hero: React.FC = () => {
                 { w: "35%", c: "bg-white/[0.04]" },
                 { w: "20%", c: "bg-indigo-600/30" },
                 { w: "60%", c: "bg-[#282a47]" },
-                { w: "80%", c: "bg-white/[0.04]" }
+                { w: "80%", c: "bg-white/[0.04]" },
               ].map((line, i) => (
                 <div key={i} className="flex gap-4 items-center">
-                  <span className="text-white/10 text-xs w-4">{i+1}</span>
-                  <div className={`h-[6px] rounded-full ${line.c}`} style={{ width: line.w }}></div>
+                  <span className="text-white/10 text-xs w-4">{i + 1}</span>
+                  <div
+                    className={`h-[6px] rounded-full ${line.c}`}
+                    style={{ width: line.w }}
+                  ></div>
                 </div>
               ))}
             </div>
@@ -153,55 +177,95 @@ const Hero: React.FC = () => {
             className="absolute -top-6 -right-2 bg-[#12131c] border border-white/5 rounded-xl p-5 w-64 shadow-[0_20px_40px_rgba(0,0,0,0.4)] z-20"
           >
             <div className="flex gap-3 items-center mb-4">
-              <div className="bg-[#1e1b4b] p-2 rounded-lg"><LineChart className="text-indigo-400" size={16} /></div>
-              <span className="text-white text-[14px] font-semibold tracking-wide">Performance</span>
+              <div className="bg-[#1e1b4b] p-2 rounded-lg">
+                <LineChart className="text-indigo-400" size={16} />
+              </div>
+              <span className="text-white text-[14px] font-semibold tracking-wide">
+                Performance
+              </span>
             </div>
-            {/* Line Chart Graphic */}
             <div className="h-12 w-full flex items-end px-1 relative overflow-hidden">
-               <svg className="w-full h-full drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]" preserveAspectRatio="none" viewBox="0 0 100 30">
-                 <path d="M0 22 C 15 25, 25 25, 35 20 C 45 15, 55 10, 70 15 C 85 20, 95 10, 100 5" fill="none" stroke="#6366f1" strokeWidth="2.5" strokeLinecap="round" />
-               </svg>
+              <svg
+                className="w-full h-full drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]"
+                preserveAspectRatio="none"
+                viewBox="0 0 100 30"
+              >
+                <path
+                  d="M0 22 C 15 25, 25 25, 35 20 C 45 15, 55 10, 70 15 C 85 20, 95 10, 100 5"
+                  fill="none"
+                  stroke="#6366f1"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
+              </svg>
             </div>
-            <div className="text-[#34d399] text-[12px] font-bold text-right mt-2 tracking-wider">↑ 98.6%</div>
+            <div className="text-[#34d399] text-[12px] font-bold text-right mt-2 tracking-wider">
+              ↑ 98.6%
+            </div>
           </motion.div>
 
           {/* Floating Card: Reliability */}
           <motion.div
             animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1,
+            }}
             className="absolute top-1/2 -left-12 -translate-y-1/2 bg-[#12131c] border border-white/5 rounded-xl p-5 w-64 shadow-[0_20px_40px_rgba(0,0,0,0.4)] z-20"
           >
             <div className="flex gap-4 items-center">
-              <div className="bg-[#1e1b4b] p-2 rounded-lg"><ShieldCheck className="text-indigo-400" size={16} /></div>
+              <div className="bg-[#1e1b4b] p-2 rounded-lg">
+                <ShieldCheck className="text-indigo-400" size={16} />
+              </div>
               <div>
-                <div className="text-white text-[14px] font-semibold tracking-wide">Reliability</div>
-                <div className="text-gray-400 text-[11px]">Production Ready</div>
+                <div className="text-white text-[14px] font-semibold tracking-wide">
+                  Reliability
+                </div>
+                <div className="text-gray-400 text-[11px]">
+                  Production Ready
+                </div>
               </div>
             </div>
             <div className="mt-5 flex items-center gap-3">
               <div className="flex-1 bg-white/5 h-2 rounded-full overflow-hidden">
                 <div className="bg-gradient-to-r from-blue-600 to-indigo-500 w-[99%] h-full rounded-full"></div>
               </div>
-              <span className="text-[#34d399] text-[12px] font-bold">99.99%</span>
+              <span className="text-[#34d399] text-[12px] font-bold">
+                99.99%
+              </span>
             </div>
           </motion.div>
 
           {/* Floating Card: Users */}
           <motion.div
             animate={{ y: [0, -4, 0] }}
-            transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+            transition={{
+              duration: 4.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 0.5,
+            }}
             className="absolute -bottom-8 right-4 bg-[#12131c] border border-white/5 rounded-xl p-5 w-56 shadow-[0_20px_40px_rgba(0,0,0,0.4)] z-20"
           >
             <div className="flex gap-4 items-center mb-2">
-              <div className="bg-[#1e1b4b] p-2 rounded-lg"><Users className="text-indigo-400" size={16} /></div>
+              <div className="bg-[#1e1b4b] p-2 rounded-lg">
+                <Users className="text-indigo-400" size={16} />
+              </div>
               <div>
-                <div className="text-white text-[14px] font-semibold tracking-wide">Users</div>
-                <div className="text-gray-400 text-[11px]">Built for Real Impact</div>
+                <div className="text-white text-[14px] font-semibold tracking-wide">
+                  Users
+                </div>
+                <div className="text-gray-400 text-[11px]">
+                  Built for Real Impact
+                </div>
               </div>
             </div>
-            <div className="text-[#6366f1] text-2xl font-bold text-right tracking-tight">10K+</div>
+            <div className="text-[#6366f1] text-2xl font-bold text-right tracking-tight">
+              10K+
+            </div>
           </motion.div>
-
         </motion.div>
       </div>
     </section>
