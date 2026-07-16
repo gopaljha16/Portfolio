@@ -3,70 +3,16 @@
 import React from "react";
 import { motion as motionBase } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
-
 const motion = motionBase as any;
-
-interface NavbarProps {
-  toggleTheme: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  currentTheme: "dark" | "light";
-}
-
-const Navbar: React.FC<NavbarProps> = ({ toggleTheme, currentTheme }) => {
-  return (
-    <motion.nav
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      className="fixed top-4 left-0 right-0 z-50 px-4 sm:px-6"
-    >
-      <div className="container mx-auto">
-        <div className="glass w-full max-w-5xl mx-auto px-4 sm:px-6 py-2.5 rounded-full flex items-center justify-between gap-4 shadow-xl border-black/10 dark:border-white/10 dark:bg-white/[0.02] bg-white/70 backdrop-blur-xl">
-          <a
-            href="#"
-            className="font-heading font-black text-xl tracking-tighter text-black dark:text-white"
-          >
-            GJ<span className="text-accent-primary">.</span>
-          </a>
-
-          <div className="hidden md:flex items-center gap-6">
-            <NavLink href="#about">About</NavLink>
-            <NavLink href="#experience">Experience</NavLink>
-            <NavLink href="#products">Projects</NavLink>
-            <NavLink href="#services">Capabilities</NavLink>
-            <NavLink href="#stack">Stack</NavLink>
-            <NavLink href="#contact">Contact</NavLink>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              onClick={toggleTheme}
-              className="p-2.5 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-black dark:text-white"
-              aria-label="Toggle theme"
-            >
-              {currentTheme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
-            <a
-              href="#contact"
-              className="bg-black dark:bg-white text-white dark:text-black px-4 sm:px-5 py-2 rounded-full text-[11px] font-black uppercase tracking-wider hover:opacity-80 transition-opacity"
-            >
-              Hire Me
-            </a>
-          </div>
-        </div>
-      </div>
-    </motion.nav>
-  );
-};
-
-const NavLink: React.FC<{ href: string; children: React.ReactNode }> = ({
-  href,
-  children,
-}) => (
-  <a
-    href={href}
-    className="text-[11px] font-black uppercase tracking-[0.15em] text-gray-500 hover:text-black dark:hover:text-white transition-colors"
-  >
-    {children}
-  </a>
+interface NavbarProps { toggleTheme: (event: React.MouseEvent<HTMLButtonElement>) => void; currentTheme: "dark" | "light"; }
+const Navbar: React.FC<NavbarProps> = ({ toggleTheme, currentTheme }) => (
+  <motion.nav initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="fixed left-0 right-0 top-4 z-50 px-4 sm:px-7">
+    <div className="mx-auto flex max-w-[1160px] items-center justify-between rounded-full border border-white/10 bg-[#12100f]/85 px-5 py-3 backdrop-blur-xl md:px-7">
+      <a href="#" className="font-heading text-sm font-bold tracking-[-0.06em] text-[#f7f2ec]">Gopal<span className="text-[#ef7840]">.</span></a>
+      <div className="hidden items-center gap-6 md:flex"><NavLink href="#about">About</NavLink><NavLink href="#experience">Experience</NavLink><NavLink href="#products">Work</NavLink><NavLink href="#services">Services</NavLink></div>
+      <div className="flex items-center gap-3"><button onClick={toggleTheme} className="text-white/65 transition-colors hover:text-white" aria-label="Toggle theme">{currentTheme === "dark" ? <Sun size={15} /> : <Moon size={15} />}</button><a href="#contact" className="rounded-full bg-[#f7f2ec] px-4 py-2 text-[10px] font-bold text-[#171413] transition-transform hover:scale-[1.03]">Let&apos;s talk</a></div>
+    </div>
+  </motion.nav>
 );
-
+const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => <a href={href} className="text-[10px] font-medium text-white/50 transition-colors hover:text-white">{children}</a>;
 export default Navbar;
