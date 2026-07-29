@@ -1,216 +1,24 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   Custom theme tokens (Tailwind v4 CSS-first config)
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 @theme {
-  --color-accent-primary: #ef7840;
-  --color-accent-secondary: #f2bd78;
-
-  --font-family-sans: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
-  --font-family-heading: var(--font-space-grotesk), "Space Grotesk", sans-serif;
+    --font-sans: Arial, Helvetica, sans-serif;
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   Base / Reset
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+* {
+    box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 body {
-  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
-  margin: 0;
-  overflow-x: hidden;
-  letter-spacing: -0.01em;
-  transition: background-color 0.5s ease, color 0.5s ease;
+    margin: 0;
+    background: #10100f;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-body.dark {
-  background-color: #030303;
-  color: #ffffff;
+::selection {
+    background: #ed7941;
+    color: white;
 }
-
-body:not(.dark) {
-  background-color: #fcfcfc;
-  color: #1a1a1a;
-}
-
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   View Transition (theme toggle animation)
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-
-::view-transition-new(root) {
-  z-index: 1;
-}
-
-::view-transition-old(root) {
-  z-index: 0;
-}
-
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   Typography
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-h1,
-h2,
-h3,
-.font-heading {
-  font-family: var(--font-space-grotesk), "Space Grotesk", sans-serif;
-  letter-spacing: -0.03em;
-}
-
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   Glass Utilities
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.glass {
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-
-.dark .glass {
-  background: rgba(255, 255, 255, 0.015);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.glass:not(.dark .glass) {
-  background: rgba(0, 0, 0, 0.01);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.glass-card {
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.dark .glass-card {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.03) 0%,
-    rgba(255, 255, 255, 0.01) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.glass-card:not(.dark .glass-card) {
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.01) 0%,
-    rgba(0, 0, 0, 0.005) 100%
-  );
-  border: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   Text Gradient
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.text-gradient {
-  background: linear-gradient(
-    to bottom right,
-    #fff 30%,
-    rgba(255, 255, 255, 0.5)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-body.dark .text-gradient {
-  background: linear-gradient(
-    to bottom right,
-    #1a1a1a 30%,
-    rgba(26, 26, 26, 0.6)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   Mesh Gradient Background
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.mesh-gradient {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  transition: opacity 0.8s ease;
-}
-
-.dark .mesh-gradient {
-  background: radial-gradient(
-      circle at 0% 0%,
-      rgba(239, 120, 64, 0.08) 0%,
-      transparent 40%
-    ),
-    radial-gradient(
-      circle at 100% 0%,
-      rgba(242, 189, 120, 0.06) 0%,
-      transparent 40%
-    );
-}
-
-body:not(.dark) .mesh-gradient {
-  background: radial-gradient(
-      circle at 0% 0%,
-      rgba(99, 102, 241, 0.05) 0%,
-      transparent 40%
-    ),
-    radial-gradient(
-      circle at 100% 0%,
-      rgba(168, 85, 247, 0.05) 0%,
-      transparent 40%
-    );
-}
-
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   Animations
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-.animate-float {
-  animation: float 5s ease-in-out infinite;
-}
-
-/* Editorial portfolio redesign */
-body.dark { background: #100e0d; color: #f7f2ec; }
-.dark .mesh-gradient { background: radial-gradient(circle at 50% 110%, rgba(205, 132, 76, .18), transparent 36%), #100e0d; }
-.hero-stage { background: #141211; }
-.hero-grid { background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px); background-size: 46px 46px; mask-image: linear-gradient(to bottom, black, transparent 88%); }
-.hero-horizon { background: radial-gradient(ellipse 55% 70% at 50% 100%, rgba(228, 150, 81, .68), rgba(120, 70, 43, .28) 32%, transparent 70%); filter: blur(18px); opacity: .9; }
-.hero-frame { border: 1px solid rgba(242, 120, 65, .35); }
-.hero-frame::before, .hero-frame::after { content: ""; position: absolute; width: 6px; height: 6px; background: #ef7840; }
-.hero-frame::before { left: -3px; top: -3px; box-shadow: calc(100% + 0px) 0 #ef7840; }
-.hero-frame::after { right: -3px; bottom: -3px; box-shadow: calc(-100% + 0px) 0 #ef7840; }
-.hero-script { font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-weight: 400; color: #f2b795; letter-spacing: -.1em; }
-.hero-pill { padding: 6px 11px; border-radius: 999px; background: #ef7840; color: #1c1511; font-size: 9px; font-weight: 700; box-shadow: 0 4px 18px rgba(0,0,0,.25); }
-.hero-pill-light { background: #f7f2ec; color: #201b18; }
-.hero-pill-warm { background: #f4e776; color: #292518; }
-.hero-cta { background: rgba(16,14,13,.88); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 8px 25px rgba(0,0,0,.25); }
-.dark .glass-card { background: #181514; border-color: rgba(255,255,255,.09); box-shadow: none; }
-.dark .glass-card:hover { border-color: rgba(239,120,64,.45); transform: translateY(-3px); }
-.dark .text-accent-primary, .dark .group-hover\:text-accent-primary:hover { color: #ef7840; }
-.dark .bg-accent-primary { background-color: #ef7840; }
-.dark .border-accent-primary\/20 { border-color: rgba(239,120,64,.2); }
-@media (max-width: 767px) { .hero-stage { min-height: 570px; } }
