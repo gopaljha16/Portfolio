@@ -1,565 +1,483 @@
-"use client";
+﻿"use client";
 
-import React, { useEffect, useState } from "react";
-import { motion as motionBase, AnimatePresence } from "framer-motion";
+import Image, { StaticImageData } from "next/image";
+import { motion, useScroll, useSpring } from "framer-motion";
 import {
+  ArrowDownRight,
+  ArrowUpRight,
   Github,
   Linkedin,
-  Twitter,
   Mail,
-  ArrowUpRight,
-  MessageSquare,
-  BadgeCheck,
-  BriefcaseBusiness,
-  Clock3,
-  MapPin,
-  Code2,
-  Globe,
-  Cloud,
-  Bot,
-  Layers,
   Sparkles,
 } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import ClickEffect from "@/components/ClickEffect";
-import FeatureCard from "@/components/FeatureCard";
-import ProductCard from "@/components/ProductCard";
-import TechStack from "@/components/TechStack";
-import Footer from "@/components/Footer";
-import Image from "next/image";
+import Codexa from "@/images/Codexa.png";
+import Elevare from "@/images/Elevare.png";
+import Lynkr from "@/images/lynkr-landing.png";
+import Quibly from "@/images/Quibly-landing.png";
+import ConsoleMe from "@/images/consoleme-landing.png";
+import Elyra from "@/images/elyra-preview.svg";
 
-// Project images
-import CodexaImage from "@/images/Codexa.png";
-import ElevareImage from "@/images/Elevare.png";
-import LynkrImage from "@/images/lynkr-landing.png";
-import QuiblyImage from "@/images/Quibly-landing.png";
-import ConsoleMeImage from "@/images/consoleme-landing.png";
-import ElyraImage from "@/images/elyra-preview.svg";
-
-const motion = motionBase as any;
-
-type ViewTransitionDocument = Document & {
-  startViewTransition?: (callback: () => void) => {
-    ready: Promise<void>;
-  };
+type Project = {
+  title: string;
+  description: string;
+  image: StaticImageData;
+  href?: string;
+  tags: string[];
+  status?: string;
 };
+const projects: Project[] = [
+  {
+    title: "Console Me",
+    description:
+      "A polished product landing experience built for a clear, conversion-led first impression.",
+    image: ConsoleMe,
+    href: "https://gopaldev.in/",
+    tags: ["Product", "UI", "Live"],
+  },
+  {
+    title: "Elyra",
+    description:
+      "A refined full-stack product experience currently in active development.",
+    image: Elyra,
+    tags: ["Full stack", "In progress"],
+    status: "Building now",
+  },
+  {
+    title: "Quibly",
+    description:
+      "A real-time community platform for chat, voice, and presence.",
+    image: Quibly,
+    href: "https://quiblyy.vercel.app/",
+    tags: ["WebSocket", "Chat", "Voice"],
+  },
+  {
+    title: "Codexa",
+    description:
+      "A coding and DSA learning platform for contests, interview preparation, and practice.",
+    image: Codexa,
+    href: "https://codexa.live",
+    tags: ["EdTech", "DSA", "Platform"],
+  },
+  {
+    title: "Elevare",
+    description:
+      "An AI resume builder for ATS-friendly resumes and professional portfolios.",
+    image: Elevare,
+    href: "https://elevare-seven.vercel.app/",
+    tags: ["AI", "Resume", "SaaS"],
+  },
+  {
+    title: "Lynkr",
+    description:
+      "A flexible profile link page with custom slugs, URL shortening, and QR generation.",
+    image: Lynkr,
+    href: "https://lynkr-iota.vercel.app/",
+    tags: ["Utility", "QR", "Links"],
+  },
+];
+const reveal = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } };
 
 export default function Home() {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as "dark" | "light";
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.body.className = savedTheme;
-    } else {
-      document.body.className = "dark";
-    }
-    setIsLoaded(true);
-  }, []);
-
-  const applyTheme = (newTheme: "dark" | "light") => {
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    document.body.className = newTheme;
-  };
-
-  const toggleTheme = (event?: React.MouseEvent<HTMLButtonElement>) => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    const viewTransitionDocument = document as ViewTransitionDocument;
-
-    if (!event || !viewTransitionDocument.startViewTransition) {
-      applyTheme(newTheme);
-      return;
-    }
-
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
-    const endRadius = Math.hypot(
-      Math.max(x, window.innerWidth - x),
-      Math.max(y, window.innerHeight - y)
-    );
-
-    const transition = viewTransitionDocument.startViewTransition(() => {
-      applyTheme(newTheme);
-    });
-
-    transition.ready.then(() => {
-      document.documentElement.animate(
-        {
-          clipPath: [
-            `circle(0px at ${x}px ${y}px)`,
-            `circle(${endRadius}px at ${x}px ${y}px)`,
-          ],
-        },
-        {
-          duration: 720,
-          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
-          pseudoElement: "::view-transition-new(root)",
-        }
-      );
-    });
-  };
-
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 25 });
   return (
-    <div
-      className={`relative min-h-screen selection:bg-accent-primary/30 overflow-x-hidden ${theme}`}
-    >
-      <div className="mesh-gradient" />
-      <ClickEffect />
-
-      <AnimatePresence>
-        {!isLoaded && (
-          <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-white dark:bg-[#030303] flex items-center justify-center"
-          >
-            <motion.div
-              animate={{ scale: [0.95, 1, 0.95], opacity: [0.5, 1, 0.5] }}
-              transition={{
-                repeat: Infinity,
-                duration: 1.5,
-                ease: "easeInOut",
-              }}
-              className="text-black dark:text-white font-heading text-4xl font-black tracking-tighter"
-            >
-              GJ<span className="text-accent-primary">.</span>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <Navbar toggleTheme={toggleTheme} currentTheme={theme} />
-
-      <main className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 pt-24 md:pt-28 space-y-28 md:space-y-36">
+    <main className="min-h-screen bg-[#10100f] text-[#f6f2ea] selection:bg-[#e87840] selection:text-white">
+      <motion.div
+        className="fixed inset-x-0 top-0 z-[70] h-[2px] origin-left bg-[#ed7941]"
+        style={{ scaleX: progress }}
+      />
+      <div className="pointer-events-none fixed inset-0 -z-0 bg-[radial-gradient(circle_at_82%_12%,rgba(235,119,62,.12),transparent_20%),radial-gradient(circle_at_16%_48%,rgba(255,245,220,.045),transparent_22%)]" />
+      <Nav />
+      <div className="relative z-10 mx-auto max-w-[1400px] px-4 pb-8 pt-24 sm:px-7 md:pt-28 lg:px-10">
         <Hero />
-
-        {/* ── About ── */}
-        <section id="about" className="space-y-10">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-6 md:gap-8 items-stretch">
-            <div className="glass-card rounded-[2rem] p-7 md:p-10 border border-black/5 dark:border-white/10 space-y-5">
-              <p className="text-[10px] font-black uppercase tracking-[0.35em] text-accent-primary">
-                About Me
-              </p>
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-black dark:text-white leading-[1.05]">
-                Full-stack engineer building fast, scalable, and user-first
-                products.
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300 text-base md:text-lg leading-relaxed max-w-3xl">
-                I work across frontend, backend, DevOps, and AI integrations. I
-                focus on clean architecture, strong product thinking, and
-                shipping features that users actually love.
-              </p>
-              <div className="flex flex-wrap gap-3 pt-2">
-                {["Product Engineering", "System Design", "AI + Web3"].map(
-                  (tag) => (
-                    <span
-                      key={tag}
-                      className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/15 text-gray-700 dark:text-gray-200"
-                    >
-                      {tag}
-                    </span>
-                  )
-                )}
-              </div>
-            </div>
-
-            <div className="glass-card rounded-[2rem] p-7 md:p-8 border border-black/5 dark:border-white/10 space-y-4">
-              <h3 className="text-lg font-bold tracking-tight text-black dark:text-white">
-                Quick Snapshot
-              </h3>
-              <div className="grid grid-cols-1 gap-3">
-                <SnapshotItem
-                  icon={<BadgeCheck size={16} />}
-                  label="Projects Built"
-                  value="10+"
-                />
-                <SnapshotItem
-                  icon={<BriefcaseBusiness size={16} />}
-                  label="Domains"
-                  value="EdTech, AI, SaaS, Web3"
-                />
-                <SnapshotItem
-                  icon={<Clock3 size={16} />}
-                  label="Typical Response"
-                  value="Within 24 hours"
-                />
-                <SnapshotItem
-                  icon={<MapPin size={16} />}
-                  label="Location"
-                  value="India (Remote Worldwide)"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Experience ── */}
-        <section id="experience" className="space-y-10">
-          <div className="space-y-4 text-center">
-            <p className="text-[10px] font-black uppercase tracking-[0.35em] text-accent-primary">
-              Professional Experience
-            </p>
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-black dark:text-white">
-              Experience
-            </h2>
-            <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
-              A track record of building robust software and delivering
-              impactful products.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-5 md:gap-6 max-w-5xl mx-auto">
-            <ExperienceCard
-              role="Freelance Full-Stack Developer"
-              company="Self-Employed"
-              employmentType="Freelance"
-              duration="Aug 2025 - Feb 2026"
-              location="Remote"
-              highlights={[
-                "Delivered end-to-end web products from planning to live deployment for client and personal builds.",
-                "Shipped an e-commerce platform with product catalog, checkout flow, admin panel, and production hosting.",
-                "Built ad-tech and SaaS solutions with responsive frontend, scalable backend APIs, and deployment pipelines.",
-                "Handled maintenance, feature iteration, and performance improvements after launch.",
-              ]}
-            />
-          </div>
-        </section>
-
-        {/* ── Projects ── */}
-        <section id="products" className="space-y-10 md:space-y-12">
-          <div className="space-y-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              className="flex items-center gap-2 text-accent-secondary font-black text-[10px] uppercase tracking-[0.3em] justify-center md:justify-start"
-            >
-              <Sparkles size={14} /> Projects
-            </motion.div>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-7xl font-bold tracking-tighter text-black dark:text-white text-center md:text-left"
-            >
-              My <span className="italic font-light">Projects</span>
-            </motion.h2>
-            <p className="text-gray-500 dark:text-gray-400 max-w-2xl text-center md:text-left">
-              Selected products designed for scale, speed, and a strong user
-              experience.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            <ProductCard
-              title="Console Me"
-              tagline="Completed product build with a polished landing experience and production-ready UI."
-              image={ConsoleMeImage}
-              color="from-emerald-600/20 to-teal-600/20"
-              link="https://gopaldev.in/"
-              tags={["Completed", "Product", "UI"]}
-            />
-            <ProductCard
-              title="Elyra"
-              tagline="Currently active project. Building a refined product experience with modern full-stack architecture."
-              image={ElyraImage}
-              color="from-fuchsia-600/20 to-rose-600/20"
-              link="#"
-              tags={["Active", "WIP", "Full Stack"]}
-              active={true}
-            />
-            <ProductCard
-              title="Quibly"
-              tagline="Real-time communication platform for communities, similar to Discord."
-              image={QuiblyImage}
-              color="from-cyan-600/30 to-blue-600/30"
-              link="https://quiblyy.vercel.app/"
-              tags={["Realtime", "Chat", "Voice", "WebSocket"]}
-            />
-            <ProductCard
-              title="Codexa"
-              tagline="Coding and DSA learning platform with contests, interview prep, and interactive problem-solving."
-              image={CodexaImage}
-              color="from-indigo-600/20 to-violet-600/20"
-              link="https://codexa.live"
-              tags={["Coding", "DSA", "Contests"]}
-            />
-            <ProductCard
-              title="Elevare"
-              tagline="AI resume builder that helps create ATS-friendly resumes and professional portfolios."
-              image={ElevareImage}
-              color="from-purple-600/20 to-pink-600/20"
-              link="https://elevare-seven.vercel.app/"
-              tags={["AI", "Resume", "Portfolio"]}
-            />
-            <ProductCard
-              title="Lynkr"
-              tagline="Linktree-style profile with custom slug, built-in URL shortener, and QR code generation."
-              image={LynkrImage}
-              color="from-emerald-600/20 to-teal-600/20"
-              link="https://lynkr-iota.vercel.app/"
-              tags={["Links", "Shortener", "QR"]}
-            />
-          </div>
-        </section>
-
-        {/* ── Services ── */}
-        <section id="services" className="space-y-12 md:space-y-16 relative">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-black/5 dark:border-white/5 pb-12">
-            <div className="space-y-4">
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                className="flex items-center gap-2 text-accent-primary font-black text-[10px] uppercase tracking-[0.3em]"
-              >
-                <Layers size={14} /> Domain
-              </motion.div>
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                className="text-4xl md:text-6xl font-bold tracking-tight text-black dark:text-white"
-              >
-                Core <span className="text-accent-primary">Capabilities</span>
-              </motion.h2>
-            </div>
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              className="text-gray-500 dark:text-gray-400 max-w-sm font-medium leading-relaxed"
-            >
-              Solving complex architectural challenges with modern engineering
-              paradigms.
-            </motion.p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 md:gap-6">
-            <FeatureCard
-              icon={<Code2 className="w-6 h-6" />}
-              title="Full-Stack Engineering"
-              description="High-throughput systems using MERN and Next.js with sub-second response times."
-            />
-            <FeatureCard
-              icon={<Globe className="w-6 h-6" />}
-              title="Web3 Architectures"
-              description="Secure dApps and smart contracts on Ethereum, Solana, and Polygon."
-            />
-            <FeatureCard
-              icon={<Cloud className="w-6 h-6" />}
-              title="Infrastructure & Ops"
-              description="Automated CI/CD pipelines, Dockerized workloads, and distributed messaging systems."
-            />
-            <FeatureCard
-              icon={<Bot className="w-6 h-6" />}
-              title="GenAI Solutions"
-              description="Custom LLM workflows, RAG systems, and AI-driven process automation."
-            />
-          </div>
-        </section>
-
-        {/* ── Tech Stack ── */}
-        <section
-          id="stack"
-          className="py-20 md:py-24 border-y border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.005] rounded-[2rem]"
-        >
-          <TechStack />
-        </section>
-
-        {/* ── Vision ── */}
-        <section className="relative group">
-          <div className="absolute inset-0 bg-accent-primary/5 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="glass-card rounded-[2rem] md:rounded-[3rem] p-8 md:p-20 relative overflow-hidden border-black/5 dark:border-white/5">
-            <div className="max-w-4xl space-y-12 relative z-10">
-              <h2 className="text-[10px] font-black text-accent-primary uppercase tracking-[0.5em]">
-                Vision
-              </h2>
-              <p className="text-2xl md:text-5xl font-bold leading-[1.1] text-black dark:text-white">
-                I engineer{" "}
-                <span className="text-gray-400">scalable digital products</span>{" "}
-                that bridge complex logic with human experience. Focused on{" "}
-                <span className="underline decoration-accent-primary/50 underline-offset-8">
-                  systems
-                </span>{" "}
-                and{" "}
-                <span className="underline decoration-accent-primary/50 underline-offset-8">
-                  speed
-                </span>
-                .
-              </p>
-              <div className="flex gap-4 items-center pt-6">
-                <div className="w-12 h-px bg-black/10 dark:bg-white/10" />
-                <span className="text-gray-500 uppercase tracking-widest text-[10px] font-black">
-                  Building for impact
-                </span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Contact ── */}
-        <section id="contact" className="py-16 md:py-24">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="relative overflow-hidden rounded-[2.5rem] border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/[0.02] backdrop-blur-xl"
-          >
-            <div className="absolute -top-24 -left-24 w-72 h-72 bg-accent-primary/20 blur-3xl rounded-full" />
-            <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-accent-secondary/20 blur-3xl rounded-full" />
-
-            <div className="relative z-10 p-8 md:p-14 grid grid-cols-1 lg:grid-cols-[1.35fr_1fr] gap-10 items-center">
-              <div className="space-y-6">
-                <p className="text-[10px] font-black uppercase tracking-[0.35em] text-accent-primary">
-                  Ready to collaborate
-                </p>
-                <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-black dark:text-white leading-[1]">
-                  Let&apos;s build your next
-                  <span className="text-accent-primary italic"> product</span>.
-                </h2>
-                <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
-                  Open to freelance, full-time, and product consulting work.
-                  Tell me your idea, timeline, and goals.
-                </p>
-
-                <div className="flex flex-wrap gap-4">
-                  <a
-                    href="mailto:gopaljha1677@gmail.com"
-                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-black text-white dark:bg-white dark:text-black text-[11px] font-black uppercase tracking-[0.16em] hover:opacity-90 transition-opacity"
-                  >
-                    <MessageSquare size={16} />
-                    Start a Conversation
-                  </a>
-                  <a
-                    href="https://www.linkedin.com/in/gopal-jha-229a2b243/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-black/15 dark:border-white/20 text-[11px] font-black uppercase tracking-[0.16em] text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
-                  >
-                    Connect on LinkedIn
-                    <ArrowUpRight size={16} />
-                  </a>
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-black/25 p-6 md:p-7">
-                <p className="text-xs uppercase tracking-[0.25em] font-black text-gray-500 dark:text-gray-400">
-                  Quick links
-                </p>
-                <div className="mt-5 grid grid-cols-1 gap-3">
-                  <SocialButton
-                    icon={<Github size={18} />}
-                    label="GitHub"
-                    href="https://github.com/gopaljha16"
-                  />
-                  <SocialButton
-                    icon={<Linkedin size={18} />}
-                    label="LinkedIn"
-                    href="https://www.linkedin.com/in/gopal-jha-229a2b243/"
-                  />
-                  <SocialButton
-                    icon={<Twitter size={18} />}
-                    label="X"
-                    href="https://x.com/Gopaljha04"
-                  />
-                  <SocialButton
-                    icon={<Mail size={18} />}
-                    label="Email"
-                    href="mailto:gopaljha1677@gmail.com"
-                  />
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </section>
-      </main>
-
-      <Footer />
-    </div>
+        <Work />
+        <About />
+        <Capabilities />
+        <Contact />
+        <Footer />
+      </div>
+    </main>
   );
 }
 
-/* ── Sub-components ──────────────────────────── */
-
-const SocialButton: React.FC<{
-  icon: React.ReactNode;
-  label: string;
-  href: string;
-}> = ({ icon, label, href }) => (
-  <motion.a
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-    whileHover={{ y: -2 }}
-    className="glass px-4 py-3 rounded-xl flex items-center justify-between gap-3 font-bold uppercase tracking-widest text-[10px] transition-all border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 dark:text-white"
-  >
-    <span className="flex items-center gap-3">
-      {icon}
-      <span>{label}</span>
-    </span>
-    <ArrowUpRight size={14} />
-  </motion.a>
-);
-
-const SnapshotItem: React.FC<{
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-}> = ({ icon, label, value }) => (
-  <div className="rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] px-4 py-3.5 flex items-start gap-3">
-    <span className="text-accent-primary pt-0.5">{icon}</span>
-    <span className="space-y-1">
-      <span className="block text-[10px] font-black uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">
-        {label}
-      </span>
-      <span className="block text-sm font-bold text-black dark:text-white">
-        {value}
-      </span>
-    </span>
-  </div>
-);
-
-const ExperienceCard: React.FC<{
-  role: string;
-  company: string;
-  employmentType: string;
-  duration: string;
-  location: string;
-  highlights: string[];
-}> = ({ role, company, employmentType, duration, location, highlights }) => (
-  <div className="glass-card rounded-[1.5rem] p-6 md:p-8 border border-black/5 dark:border-white/10 space-y-6 md:space-y-8">
-    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-5">
-      <div className="space-y-1.5">
-        <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-black dark:text-white">
-          {role}
-        </h3>
-        <p className="text-base font-semibold text-accent-primary">{company}</p>
+function Nav() {
+  return (
+    <nav className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-7">
+      <div className="mx-auto flex max-w-[1400px] items-center justify-between rounded-full border border-white/10 bg-[#111110]/80 px-5 py-3 backdrop-blur-xl">
+        <a href="#top" className="text-sm font-bold tracking-[-.06em]">
+          Gopal<span className="text-[#ed7941]">.</span>
+        </a>
+        <div className="hidden items-center gap-7 md:flex">
+          {["Work", "About", "Capabilities"].map((item) => (
+            <a
+              key={item}
+              href={"#" + item.toLowerCase()}
+              className="text-[10px] font-bold uppercase tracking-[.16em] text-white/45 transition-colors hover:text-white"
+            >
+              {item}
+            </a>
+          ))}
+        </div>
+        <a
+          href="#contact"
+          className="inline-flex items-center gap-2 rounded-full bg-[#f6f2ea] px-4 py-2 text-[10px] font-extrabold uppercase tracking-[.12em] text-[#171412] transition-transform hover:scale-105"
+        >
+          Let&apos;s talk <ArrowUpRight size={13} />
+        </a>
       </div>
-      <div className="flex flex-wrap gap-2 pt-1 md:pt-0">
-        {[employmentType, duration, location].map((badge) => (
-          <span
-            key={badge}
-            className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.14em] border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-gray-700 dark:text-gray-300"
-          >
-            {badge}
+    </nav>
+  );
+}
+
+function Hero() {
+  return (
+    <section
+      id="top"
+      className="relative overflow-hidden rounded-[28px] border border-white/[.09] bg-[#171614] px-5 pb-8 pt-16 sm:px-9 md:min-h-[680px] md:px-14 md:pt-24"
+    >
+      <div className="absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(255,255,255,.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.035)_1px,transparent_1px)] [background-size:52px_52px] [mask-image:linear-gradient(to_bottom,black,transparent_75%)]" />
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+        className="relative z-10"
+      >
+        <motion.div
+          variants={reveal}
+          className="flex items-center justify-between text-[10px] font-bold uppercase tracking-[.2em] text-white/45"
+        >
+          <span>Gopal Jha — Full-stack Engineer</span>
+          <span className="hidden sm:block">India / Available worldwide</span>
+        </motion.div>
+        <motion.h1
+          variants={reveal}
+          transition={{ duration: 0.7 }}
+          className="mt-14 max-w-6xl text-[clamp(4rem,11vw,10rem)] font-semibold leading-[.78] tracking-[-.09em]"
+        >
+          Making the web
+          <br />
+          <span className="font-serif font-normal italic text-[#eeae85]">
+            feel effortless.
           </span>
+        </motion.h1>
+        <motion.div
+          variants={reveal}
+          className="mt-12 grid gap-8 border-t border-white/10 pt-6 md:grid-cols-[1fr_1.15fr] md:items-end"
+        >
+          <p className="max-w-sm text-sm leading-6 text-white/58">
+            I turn ambitious ideas into fast, dependable products — pairing
+            thoughtful interfaces with scalable systems and practical AI.
+          </p>
+          <div className="flex flex-wrap items-center gap-4 md:justify-end">
+            <a
+              href="#work"
+              className="inline-flex items-center gap-3 rounded-full bg-[#ed7941] px-2 py-2 pr-5 text-xs font-bold text-white"
+            >
+              <span className="grid h-8 w-8 place-items-center rounded-full bg-[#18120f]">
+                <ArrowDownRight size={16} />
+              </span>
+              Explore selected work
+            </a>
+            <span className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.13em] text-white/45">
+              <span className="h-2 w-2 rounded-full bg-[#ee7940] shadow-[0_0_15px_#ee7940]" />
+              Available for opportunities
+            </span>
+          </div>
+        </motion.div>
+      </motion.div>
+      <motion.div
+        animate={{ y: [0, -9, 0] }}
+        transition={{ duration: 4, repeat: Infinity }}
+        className="absolute right-[12%] top-[35%] hidden h-20 w-20 rotate-12 rounded-[23px] border border-[#ec7841]/50 bg-[#ec7841]/10 shadow-[0_0_80px_rgba(236,120,65,.22)] md:block"
+      />
+    </section>
+  );
+}
+
+function Work() {
+  return (
+    <section id="work" className="pt-24 md:pt-36">
+      <SectionHeader
+        index="01"
+        eyebrow="Selected work"
+        title={
+          <>
+            Built with intent.
+            <br />
+            <span className="text-white/35">Shipped for people.</span>
+          </>
+        }
+        copy="A selection of products spanning real-time communities, AI tools, developer education, and useful web utilities."
+      />
+      <div className="mt-12 grid gap-4 md:grid-cols-2">
+        {projects.map((project, index) => (
+          <ProjectCard key={project.title} project={project} index={index} />
         ))}
       </div>
-    </div>
+    </section>
+  );
+}
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  return (
+    <motion.article
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-70px" }}
+      variants={reveal}
+      transition={{ duration: 0.55, delay: (index % 2) * 0.07 }}
+      className={
+        "group relative overflow-hidden rounded-[24px] border border-white/[.09] bg-[#181715] " +
+        (index === 0 ? "md:col-span-2" : "")
+      }
+    >
+      <div
+        className={
+          "relative overflow-hidden bg-[#0e0e0d] p-3 " +
+          (index === 0 ? "h-[290px] md:h-[430px]" : "h-[260px] md:h-[300px]")
+        }
+      >
+        <Image
+          src={project.image}
+          alt={project.title + " project preview"}
+          fill
+          className="object-contain p-3 transition duration-700 ease-out group-hover:scale-[1.035]"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0e0e0d]/75 via-transparent to-transparent" />
+        <span className="absolute left-5 top-5 rounded-full border border-white/15 bg-black/35 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[.14em] backdrop-blur-md">
+          0{index + 1}
+        </span>
+        {project.status && (
+          <span className="absolute right-5 top-5 inline-flex items-center gap-2 rounded-full bg-[#ee7940] px-3 py-1.5 text-[9px] font-bold uppercase tracking-[.12em] text-white">
+            <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+            {project.status}
+          </span>
+        )}
+      </div>
+      <div className="flex flex-col gap-5 p-5 sm:p-6 md:flex-row md:items-end md:justify-between">
+        <div>
+          <h3 className="text-2xl font-semibold tracking-[-.05em]">
+            {project.title}
+          </h3>
+          <p className="mt-2 max-w-xl text-sm leading-6 text-white/52">
+            {project.description}
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-[9px] font-bold uppercase tracking-[.13em] text-white/38"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+        {project.href ? (
+          <a
+            href={project.href}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-white/15 px-4 py-2.5 text-[10px] font-bold uppercase tracking-[.12em] transition hover:border-[#ed7941] hover:bg-[#ed7941] md:self-auto"
+          >
+            View project <ArrowUpRight size={14} />
+          </a>
+        ) : (
+          <span className="text-[10px] font-bold uppercase tracking-[.12em] text-white/35">
+            In development
+          </span>
+        )}
+      </div>
+    </motion.article>
+  );
+}
 
-    <div className="h-px w-full bg-gradient-to-r from-transparent via-black/10 dark:via-white/10 to-transparent opacity-50" />
-
-    <ul className="space-y-3.5">
-      {highlights.map((item) => (
-        <li
-          key={item}
-          className="flex items-start gap-4 text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed"
+function About() {
+  const facts = [
+    ["10+", "Projects built"],
+    ["4", "Core domains"],
+    ["24h", "Typical response"],
+  ];
+  return (
+    <section
+      id="about"
+      className="grid gap-4 pt-24 md:grid-cols-[1.2fr_.8fr] md:pt-36"
+    >
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={reveal}
+        className="rounded-[24px] border border-white/[.09] bg-[#e9dfd2] p-7 text-[#191512] sm:p-10"
+      >
+        <p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#b55227]">
+          About me
+        </p>
+        <h2 className="mt-6 max-w-2xl text-4xl font-semibold leading-[.95] tracking-[-.07em] md:text-6xl">
+          Full-stack engineering, with a product mind.
+        </h2>
+        <p className="mt-8 max-w-xl text-sm leading-6 text-black/60">
+          I work across frontend, backend, DevOps, and AI integrations. The
+          focus stays the same: clean architecture, clear product thinking, and
+          features people genuinely enjoy using.
+        </p>
+      </motion.div>
+      <div className="grid grid-cols-3 gap-4">
+        {facts.map(([number, label], i) => (
+          <motion.div
+            key={label}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.08 }}
+            className="flex min-h-[170px] flex-col justify-between rounded-[24px] border border-white/[.09] bg-[#181715] p-5"
+          >
+            <span className="text-3xl font-semibold tracking-[-.06em] text-[#ed7941]">
+              {number}
+            </span>
+            <span className="text-[10px] font-bold uppercase leading-4 tracking-[.12em] text-white/45">
+              {label}
+            </span>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
+function Capabilities() {
+  const items = [
+    [
+      "01",
+      "Full-stack Engineering",
+      "Modern React and Next.js products supported by scalable APIs and thoughtful architecture.",
+    ],
+    [
+      "02",
+      "AI & Automation",
+      "Practical LLM workflows, RAG systems, and product integrations that create real utility.",
+    ],
+    [
+      "03",
+      "Infrastructure & Ops",
+      "Reliable releases, Dockerized workloads, CI/CD, and cloud-native systems built to last.",
+    ],
+  ];
+  return (
+    <section id="capabilities" className="pt-24 md:pt-36">
+      <SectionHeader
+        index="02"
+        eyebrow="How I can help"
+        title={
+          <>
+            End-to-end
+            <br />
+            <span className="font-serif font-normal italic text-[#eeae85]">
+              product thinking.
+            </span>
+          </>
+        }
+        copy="From first interface to production release, I build the pieces that turn a good idea into a reliable product."
+      />
+      <div className="mt-10 border-t border-white/10">
+        {items.map(([number, title, copy]) => (
+          <motion.div
+            key={number}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="grid gap-4 border-b border-white/10 py-7 sm:grid-cols-[70px_1fr_auto] sm:items-center"
+          >
+            <span className="text-xs font-bold text-[#ed7941]">{number}</span>
+            <h3 className="text-2xl font-semibold tracking-[-.05em] sm:text-3xl">
+              {title}
+            </h3>
+            <p className="max-w-sm text-sm leading-6 text-white/48">{copy}</p>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
+function Contact() {
+  return (
+    <section id="contact" className="pt-24 md:pt-36">
+      <motion.div
+        initial={{ opacity: 0, y: 22 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="relative overflow-hidden rounded-[28px] bg-[#ed7941] p-7 text-white sm:p-12"
+      >
+        <Sparkles className="absolute right-8 top-8 opacity-50" />
+        <p className="text-[10px] font-bold uppercase tracking-[.18em] text-white/65">
+          Have an idea?
+        </p>
+        <h2 className="mt-5 max-w-3xl text-5xl font-semibold leading-[.88] tracking-[-.08em] md:text-7xl">
+          Let&apos;s make it useful.
+        </h2>
+        <p className="mt-7 max-w-md text-sm leading-6 text-white/75">
+          Open to freelance, full-time, and product consulting work. Tell me
+          what you&apos;re building.
+        </p>
+        <a
+          href="mailto:gopaljha1677@gmail.com"
+          className="mt-9 inline-flex items-center gap-3 rounded-full bg-[#171412] px-5 py-3 text-xs font-bold transition-transform hover:scale-105"
         >
-          <span className="w-2 h-2 rounded-full bg-accent-primary mt-[0.4rem] shrink-0 shadow-[0_0_8px_#6366f1]" />
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
+          Start a conversation <ArrowUpRight size={16} />
+        </a>
+      </motion.div>
+    </section>
+  );
+}
+function SectionHeader({
+  index,
+  eyebrow,
+  title,
+  copy,
+}: {
+  index: string;
+  eyebrow: string;
+  title: React.ReactNode;
+  copy: string;
+}) {
+  return (
+    <div className="grid gap-7 md:grid-cols-[90px_1.15fr_.85fr] md:items-end">
+      <div className="text-xs font-bold text-[#ed7941]">({index})</div>
+      <div>
+        <p className="mb-4 text-[10px] font-bold uppercase tracking-[.2em] text-white/43">
+          {eyebrow}
+        </p>
+        <h2 className="text-4xl font-semibold leading-[.9] tracking-[-.07em] md:text-6xl">
+          {title}
+        </h2>
+      </div>
+      <p className="max-w-sm text-sm leading-6 text-white/48">{copy}</p>
+    </div>
+  );
+}
+function Footer() {
+  return (
+    <footer className="flex flex-col gap-5 py-10 text-[10px] font-bold uppercase tracking-[.14em] text-white/35 sm:flex-row sm:items-center sm:justify-between">
+      <span>© {new Date().getFullYear()} Gopal Jha</span>
+      <div className="flex gap-5">
+        <a
+          href="https://github.com"
+          target="_blank"
+          rel="noreferrer"
+          className="hover:text-white"
+        >
+          <Github size={16} />
+        </a>
+        <a
+          href="https://www.linkedin.com/in/gopal-jha-229a2b243/"
+          target="_blank"
+          rel="noreferrer"
+          className="hover:text-white"
+        >
+          <Linkedin size={16} />
+        </a>
+        <a href="mailto:gopaljha1677@gmail.com" className="hover:text-white">
+          <Mail size={16} />
+        </a>
+      </div>
+    </footer>
+  );
+}
