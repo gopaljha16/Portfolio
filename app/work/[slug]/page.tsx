@@ -6,6 +6,7 @@ import { caseStudies, profile } from "@/lib/data";
 import { projectJsonLd, JsonLd } from "@/lib/seo";
 import { Bento, Swatch, Tile } from "@/components/Bento";
 import { CaseImage, CaseTitle, FadeIn, NextProject } from "@/components/CaseStudy";
+import { LazyHydrate } from "@/components/LazyHydrate";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -127,15 +128,17 @@ export default async function CaseStudyPage({ params }: Props) {
         <h2 id="highlights" className="mb-6 font-display text-2xl font-semibold tracking-tight md:mb-8 md:text-3xl">
           What it does
         </h2>
-        <Bento>
-          {study.highlights.map((h) => (
-            <Tile key={h.title} className={"col-span-2 flex flex-col gap-3 p-6 md:p-7 " + highlightSpan}>
-              <Swatch color={project.color} className="size-3" />
-              <h3 className="font-display text-xl font-semibold tracking-tight">{h.title}</h3>
-              <p className="text-[15px] leading-relaxed text-muted">{h.copy}</p>
-            </Tile>
-          ))}
-        </Bento>
+        <LazyHydrate estimate={700}>
+          <Bento>
+            {study.highlights.map((h) => (
+              <Tile key={h.title} className={"col-span-2 flex flex-col gap-3 p-6 md:p-7 " + highlightSpan}>
+                <Swatch color={project.color} className="size-3" />
+                <h3 className="font-display text-xl font-semibold tracking-tight">{h.title}</h3>
+                <p className="text-[15px] leading-relaxed text-muted">{h.copy}</p>
+              </Tile>
+            ))}
+          </Bento>
+        </LazyHydrate>
       </section>
 
       <section aria-labelledby="stack" className="mt-20 grid gap-6 md:mt-28 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-12">
@@ -158,7 +161,9 @@ export default async function CaseStudyPage({ params }: Props) {
         </dl>
       </section>
 
-      <NextProject project={next} />
+      <LazyHydrate estimate={400}>
+        <NextProject project={next} />
+      </LazyHydrate>
     </article>
   );
 }

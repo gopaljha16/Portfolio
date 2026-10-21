@@ -5,6 +5,8 @@ import { Experience } from "@/components/Experience";
 import { Skills } from "@/components/Skills";
 import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
+import { Faq } from "@/components/Faq";
+import { LazyHydrate } from "@/components/LazyHydrate";
 import { getGitHubStats } from "@/lib/github";
 import { homeJsonLd, JsonLd } from "@/lib/seo";
 
@@ -21,17 +23,34 @@ function timeAgo(iso: string) {
 
 export default async function Home() {
   const github = await getGitHubStats();
+  // Below the hero, each section ships full HTML but only starts its JavaScript as it nears the screen.
   return (
     <>
       <JsonLd data={homeJsonLd()} />
       <Hero />
       <div className="mx-auto max-w-[1240px] px-3 sm:px-6">
-        <Glance github={github} lastPush={timeAgo(github.lastPush)} />
-        <Work />
-        <Experience />
-        <Skills />
-        <About />
-        <Contact />
+        {/* Sits right at the fold: wakes as it enters the screen, so it stays out of the first load. */}
+        <LazyHydrate estimate={900} rootMargin="0px">
+          <Glance github={github} lastPush={timeAgo(github.lastPush)} />
+        </LazyHydrate>
+        <LazyHydrate estimate={6400}>
+          <Work />
+        </LazyHydrate>
+        <LazyHydrate estimate={2000}>
+          <Experience />
+        </LazyHydrate>
+        <LazyHydrate estimate={3600}>
+          <Skills />
+        </LazyHydrate>
+        <LazyHydrate estimate={3200}>
+          <About />
+        </LazyHydrate>
+        <LazyHydrate estimate={1200}>
+          <Faq />
+        </LazyHydrate>
+        <LazyHydrate estimate={900}>
+          <Contact />
+        </LazyHydrate>
       </div>
     </>
   );

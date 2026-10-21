@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m as motion } from "framer-motion";
 import { Check, Copy, Github, Linkedin, Twitter } from "lucide-react";
 import { profile } from "@/lib/data";
 import { Bento, Tile } from "./Bento";
@@ -66,7 +66,7 @@ const socials = [
 
 export function Contact() {
   return (
-    <section id="contact" aria-labelledby="contact-title" className="scroll-mt-24 pt-24 md:pt-36">
+    <section id="contact" aria-labelledby="contact-title" className="pt-24 md:pt-36">
       <Bento>
         <Tile bare className="col-span-2 bg-ink text-inverse md:col-span-12">
           <div aria-hidden className="product-stripe h-2" />

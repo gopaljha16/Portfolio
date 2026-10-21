@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { m as motion, useInView, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Github } from "lucide-react";
 import { inkOn, profile, projects } from "@/lib/data";
 import type { GitHubStats } from "@/lib/github";
@@ -18,6 +18,9 @@ function describeGap(minutes: number) {
   return parts.join(" ") + (minutes > 0 ? " ahead of you" : " behind you");
 }
 
+// Built once: creating an Intl formatter is far costlier than using one, and the clock ticks every second.
+const timeFormat = new Intl.DateTimeFormat("en-GB", { timeZone: profile.timeZone, hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
+
 function Clock() {
   const [now, setNow] = useState<Date | null>(null);
   useEffect(() => {
@@ -26,11 +29,7 @@ function Clock() {
     return () => clearInterval(id);
   }, []);
 
-  const [hh, mm] = now
-    ? new Intl.DateTimeFormat("en-GB", { timeZone: profile.timeZone, hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
-        .format(now)
-        .split(":")
-    : ["--", "--"];
+  const [hh, mm] = now ? timeFormat.format(now).split(":") : ["--", "--"];
   // India is UTC+5:30. Compare it with the visitor's own offset.
   const gap = now ? describeGap(330 + now.getTimezoneOffset()) : "";
 

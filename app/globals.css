@@ -9,7 +9,7 @@
   --line: rgb(18 20 27 / 0.09);
   --ink: #12141b;
   --muted: #565d6d;
-  --faint: #8a90a0;
+  --faint: #626979;
   --inverse: #ffffff;
   /* Language bar orange; takes a deeper step on the dark surface (validated). */
   --lang-orange: #f07a12;
@@ -23,7 +23,7 @@
   --line: rgb(255 255 255 / 0.075);
   --ink: #eceef4;
   --muted: #9ba2b2;
-  --faint: #6b7182;
+  --faint: #838a9a;
   --inverse: #12141b;
   --lang-orange: #e2690a;
   color-scheme: dark;
@@ -42,10 +42,8 @@
   --font-sans: var(--font-funnel-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Smooth scrolling comes from Lenis (components/Providers), so no CSS scroll-behavior here. */
-html {
-  scroll-padding-top: 6rem;
-}
+/* Smooth scrolling comes from Lenis (components/Providers), so no CSS scroll-behavior here.
+   Sections carry their own top padding to clear the fixed nav, so in-page jumps land them at the very top. */
 
 body {
   margin: 0;
@@ -123,7 +121,108 @@ body {
   mix-blend-mode: normal;
 }
 
+/* Before an in-page jump, every section is laid out at its real height (see revealAllSections). */
+html.show-all [data-lazy-section] {
+  content-visibility: visible !important;
+}
+
+/* Without scroll-timeline support the progress bar simply stays hidden. */
+.scroll-progress {
+  transform: scaleX(0);
+}
+
+/* Hero wall resting pose; the scroll animation below takes over where supported. */
+.hero-wall {
+  transform: translate(-50%, -50%) rotateX(22deg) rotateZ(-14deg);
+}
+
+/* Scroll-driven hero and progress bar: native CSS, no JavaScript on the main thread. */
+@supports (animation-timeline: scroll()) {
+  @keyframes wall-flatten {
+    to {
+      transform: translate(-50%, -50%) rotateX(4deg) rotateZ(-14deg) scale(1.18);
+      opacity: 0.25;
+    }
+  }
+  @keyframes copy-lift {
+    to {
+      transform: translateY(-140px);
+      opacity: 0;
+    }
+  }
+  @keyframes progress-grow {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  .hero-wall {
+    animation: wall-flatten linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 100svh;
+  }
+  .hero-copy {
+    animation: copy-lift linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 60svh;
+  }
+  .scroll-progress {
+    animation: progress-grow linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
+/* Hero entrance, in CSS so it starts with the HTML instead of waiting for JavaScript. */
+@keyframes rise {
+  from {
+    transform: translateY(55%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes wall-in {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.anim-rise {
+  animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.anim-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.anim-wall-in {
+  animation: wall-in 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .hero-wall,
+  .hero-copy {
+    animation: none;
+  }
+  .anim-rise,
+  .anim-fade-up,
+  .anim-wall-in {
+    animation: none;
+  }
   .wall-col {
     animation: none;
   }

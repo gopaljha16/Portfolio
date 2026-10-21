@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, LayoutGroup, motion, useInView, useReducedMotion, type Transition } from "framer-motion";
+import { AnimatePresence, LayoutGroup, m as motion, useInView, useReducedMotion, type Transition } from "framer-motion";
 import { Check, GitCommitHorizontal, RotateCcw } from "lucide-react";
 import { inkOn, profile, projects, toolbox } from "@/lib/data";
 

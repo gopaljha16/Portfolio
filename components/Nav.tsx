@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } from "framer-motion";
+import { AnimatePresence, m as motion } from "framer-motion";
 import { Command, Menu, X } from "lucide-react";
 import { projects, profile } from "@/lib/data";
-import { OPEN_COMMAND_MENU } from "./CommandMenu";
+import { OPEN_COMMAND_MENU, SECTION_HYDRATED } from "@/lib/events";
 import { ThemeToggle } from "./ThemeToggle";
 
 const sections = [
@@ -28,20 +28,34 @@ export function Mark({ size = 18 }: { size?: number }) {
   );
 }
 
+/**
+ * The section crossing the middle of the screen. An IntersectionObserver never forces layout;
+ * it re-attaches whenever a lazily hydrated section wakes up and replaces its elements.
+ */
 function useActiveSection(enabled: boolean) {
   const [active, setActive] = useState<string | null>(null);
   useEffect(() => {
     if (!enabled) return setActive(null);
+    const ids = ["top", "glance", ...sections.map((s) => s.id)];
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) if (entry.isIntersecting) setActive(entry.target.id);
       },
       { rootMargin: "-45% 0px -50% 0px" },
     );
-    ["top", "glance", ...sections.map((s) => s.id)]
-      .map((id) => document.getElementById(id))
-      .forEach((el) => el && observer.observe(el));
-    return () => observer.disconnect();
+    const observeAll = () => {
+      observer.disconnect();
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      }
+    };
+    observeAll();
+    window.addEventListener(SECTION_HYDRATED, observeAll);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener(SECTION_HYDRATED, observeAll);
+    };
   }, [enabled]);
   return active;
 }
@@ -52,24 +66,27 @@ export function Nav() {
   const active = useActiveSection(onHome);
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const { scrollY, scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30 });
+  const openRef = useRef(open);
+  openRef.current = open;
 
   // Get out of the way while reading down the page; come back on any scroll up.
-  useMotionValueEvent(scrollY, "change", (y) => {
-    const prev = scrollY.getPrevious() ?? 0;
-    setHidden(y > 240 && y > prev && !open);
-  });
+  useEffect(() => {
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setHidden(y > 240 && y > last && !openRef.current);
+      last = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const href = (id: string) => (onHome ? `#${id}` : `/#${id}`);
 
   return (
     <>
-      <motion.div
-        aria-hidden
-        className="product-stripe fixed inset-x-0 top-0 z-[60] h-[3px] origin-left"
-        style={{ scaleX: progress }}
-      />
+      {/* Grows with scroll through a CSS scroll timeline (.scroll-progress): no JavaScript per frame. */}
+      <div aria-hidden className="scroll-progress product-stripe fixed inset-x-0 top-0 z-[60] h-[3px] origin-left" />
       <motion.header
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: hidden ? -90 : 0, opacity: 1 }}

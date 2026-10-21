@@ -38,7 +38,7 @@ function DemoHeader({
 export function Skills() {
   const { frontend, backend, cloud, ai } = skillGroups;
   return (
-    <section id="skills" aria-labelledby="skills-title" className="scroll-mt-24 pt-24 md:pt-40">
+    <section id="skills" aria-labelledby="skills-title" className="pt-24 md:pt-40">
       <SectionHead
         id="skills-title"
         title="What I work with"

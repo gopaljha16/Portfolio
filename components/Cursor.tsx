@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
+import { AnimatePresence, m as motion, useMotionValue, useSpring } from "framer-motion";
 
 /**
  * A label that follows the pointer over anything marked with data-cursor="…".

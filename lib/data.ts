@@ -27,8 +27,9 @@ export const profile = {
     linkedin: "https://www.linkedin.com/in/gopal-jha-229a2b243/",
     x: "https://x.com/Gopaljha04",
   },
+  /** Meta description: kept under 160 characters so search results show it whole. */
   description:
-    "Gopal Jha is a full-stack engineer in Hyderabad, India. He builds real-time apps, AI tools and coding platforms like Codexa, Quibly and Elevare, from database to deploy.",
+    "Gopal Jha is a full-stack engineer in Hyderabad, India, building real-time apps, AI tools and coding platforms like Codexa, Quibly and Elevare.",
 };
 
 export type Domain = "AI" | "Real-time" | "Learning" | "Social" | "Tools";
@@ -654,3 +655,34 @@ export const githubFallback = {
   other: 15,
   lastPush: "2026-09-24T00:00:00Z",
 };
+
+/**
+ * Questions people (and answer engines) ask, answered in full sentences that name Gopal,
+ * so each answer stands on its own when quoted. Rendered on the page and as FAQPage data.
+ */
+export const faq = [
+  {
+    q: "Who is Gopal Jha?",
+    a: "Gopal Jha is a full-stack engineer based in Hyderabad, India. He designs, builds and ships complete web products on his own, from the database to the deploy. His live products include Codexa, Quibly, Elevare, Lynkr and Console Me.",
+  },
+  {
+    q: "What has Gopal Jha built?",
+    a: "Five live products: Codexa, a coding and DSA platform with live contests and AI mock interviews; Quibly, a Discord-style community platform with voice and video; Elevare, an AI resume builder; Lynkr, a link-in-bio page with analytics; and Console Me, a video matching app. He also published Revueon, an AI code review extension, on the VS Code Marketplace.",
+  },
+  {
+    q: "What experience does Gopal Jha have?",
+    a: "Gopal Jha completed a six-month Full Stack Developer internship at Coder Army, from April to October 2026, and worked as a freelance full-stack developer on Fiverr from October to December 2025. He has been shipping his own products since his first commits in February 2024.",
+  },
+  {
+    q: "What tech stack does Gopal Jha use?",
+    a: "React, Next.js and TypeScript on the frontend; Node.js, Express, PostgreSQL, MongoDB, Prisma, Redis, Kafka and Socket.IO on the backend; Docker, Kubernetes, Terraform, ArgoCD and GitHub Actions for infrastructure; and Gemini and OpenAI for AI features.",
+  },
+  {
+    q: "Where is Gopal Jha based?",
+    a: "Gopal Jha is based in Hyderabad, India, and works remotely with teams and clients worldwide on Indian Standard Time (UTC+5:30).",
+  },
+  {
+    q: "Is Gopal Jha available for work?",
+    a: "Yes. Gopal Jha is open to full-time roles, freelance projects and product consulting. Email gopaljha1677@gmail.com and expect a reply within a day.",
+  },
+];

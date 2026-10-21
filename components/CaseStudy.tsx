@@ -3,25 +3,20 @@
 import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { m as motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import type { Project } from "@/lib/data";
+import { inkOn, type Project } from "@/lib/data";
 
-const ease = [0.22, 1, 0.36, 1] as const;
+// The entrances on this page are CSS (see .anim-rise and .anim-fade-up in globals.css), so the title
+// and the screenshot paint with the HTML instead of waiting for JavaScript. Only the parallax uses framer.
 
 export function CaseTitle({ name }: { name: string }) {
-  const reduce = useReducedMotion();
   return (
     <h1 className="font-display text-[clamp(3.75rem,12vw,10rem)] font-bold leading-[0.85] tracking-[-0.055em]">
       <span className="inline-block overflow-hidden pb-[0.08em] align-bottom">
-        <motion.span
-          className="inline-block"
-          initial={reduce ? false : { y: "105%" }}
-          animate={{ y: 0 }}
-          transition={{ duration: 0.9, ease, delay: 0.1 }}
-        >
+        <span className="anim-rise inline-block" style={{ animationDelay: "0.1s" }}>
           {name}
-        </motion.span>
+        </span>
       </span>
     </h1>
   );
@@ -29,14 +24,9 @@ export function CaseTitle({ name }: { name: string }) {
 
 export function FadeIn({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, ease, delay }}
-      className={className}
-    >
+    <div className={"anim-fade-up " + className} style={{ animationDelay: `${delay}s` }}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
@@ -48,13 +38,10 @@ export function CaseImage({ project }: { project: Project }) {
   const y = useTransform(scrollYProgress, [0, 1], reduce ? ["0%", "0%"] : ["8%", "-8%"]);
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial={{ opacity: 0, scale: 0.97 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 1, ease, delay: 0.35 }}
-      className="dot-field relative mt-12 overflow-hidden rounded-[28px] px-5 pt-10 sm:px-12 sm:pt-16 md:mt-16 md:px-20 md:pt-20"
-      style={{ backgroundColor: project.color }}
+      className="anim-fade-up dot-field relative mt-12 overflow-hidden rounded-[28px] px-5 pt-10 sm:px-12 sm:pt-16 md:mt-16 md:px-20 md:pt-20"
+      style={{ backgroundColor: project.color, animationDelay: "0.3s" }}
     >
       <motion.div style={{ y }} className="overflow-hidden rounded-t-[14px] shadow-[0_40px_80px_-30px_rgb(0_0_0/0.6)] ring-1 ring-black/10">
         <Image
@@ -65,7 +52,7 @@ export function CaseImage({ project }: { project: Project }) {
           className="h-auto w-full"
         />
       </motion.div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -74,8 +61,8 @@ export function NextProject({ project }: { project: Project }) {
     <Link
       href={`/work/${project.slug}`}
       data-cursor={`Read about ${project.name}`}
-      className="group relative mt-24 block overflow-hidden rounded-[28px] p-6 text-[#12141b] sm:p-10 md:mt-32 md:p-14"
-      style={{ background: project.color }}
+      className="group relative mt-24 block overflow-hidden rounded-[28px] p-6 sm:p-10 md:mt-32 md:p-14"
+      style={{ background: project.color, color: inkOn(project) }}
     >
       <p className="text-sm font-medium">Next case study</p>
       <div className="mt-6 flex items-end justify-between gap-6">

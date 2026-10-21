@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
+import { m as motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 
 /** Leans its child toward the pointer while hovered, then springs back. */
 export function Magnetic({

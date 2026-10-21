@@ -6,7 +6,7 @@ import Link from "next/link";
 import {
   AnimatePresence,
   animate,
-  motion,
+  m as motion,
   useInView,
   useMotionValue,
   useReducedMotion,
@@ -25,7 +25,8 @@ const story =
   "I'm Gopal, a full-stack engineer in Hyderabad. I made my first commits in February 2024. Today I design, build and ship whole products on my own: real-time platforms, AI tools and the cloud infrastructure underneath them. Whatever the layer, I care about the same three things: clean architecture, clear product thinking, and features people actually enjoy using.";
 
 function Word({ progress, range, children }: { progress: MotionValue<number>; range: [number, number]; children: string }) {
-  const opacity = useTransform(progress, range, [0.16, 1]);
+  // Unlit words stay at half strength: dim enough to read as unlit, bright enough to pass contrast for large text.
+  const opacity = useTransform(progress, range, [0.5, 1]);
   return <motion.span style={{ opacity }}>{children}</motion.span>;
 }
 
@@ -90,7 +91,7 @@ function MilestoneItem({ m, showYear }: { m: Milestone; showYear: boolean }) {
   return (
     <li className="relative pl-12 md:pl-16">
       {showYear && (
-        <p aria-hidden className="mb-6 font-display text-[clamp(3rem,6vw,4.5rem)] font-bold leading-none tracking-[-0.05em] text-faint/30">
+        <p aria-hidden className="mb-6 font-display text-[clamp(3rem,6vw,4.5rem)] font-bold leading-none tracking-[-0.05em] text-faint">
           {m.year}
         </p>
       )}
@@ -206,7 +207,7 @@ function Timeline() {
 
 export function About() {
   return (
-    <section id="about" aria-labelledby="about-title" className="scroll-mt-24 pt-24 md:pt-40">
+    <section id="about" aria-labelledby="about-title" className="pt-24 md:pt-40">
       <SectionHead id="about-title" title="About me" intro="The short version first, then the whole road." />
 
       <ScrollLitText text={story} />

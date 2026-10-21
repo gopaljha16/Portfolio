@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m as motion } from "framer-motion";
 import { Award } from "lucide-react";
 import { experience, startedAlongside, type Role } from "@/lib/data";
 import { Bento, RevealWords, SectionHead, Tile } from "./Bento";
@@ -204,7 +204,7 @@ function RoleCard({ role }: { role: Role }) {
 
 export function Experience() {
   return (
-    <section id="experience" aria-labelledby="experience-title" className="scroll-mt-24 pt-24 md:pt-40">
+    <section id="experience" aria-labelledby="experience-title" className="pt-24 md:pt-40">
       <SectionHead
         id="experience-title"
         title="Experience"

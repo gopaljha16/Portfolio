@@ -1,11 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import {
   AnimatePresence,
-  motion,
+  m as motion,
   useMotionValue,
   useReducedMotion,
   useScroll,
@@ -218,6 +219,8 @@ function Preview({ item, eager = false }: { item: ArchiveItem; eager?: boolean }
 
 function Archive() {
   const [active, setActive] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const x = useSpring(useMotionValue(0), { stiffness: 260, damping: 28, mass: 0.6 });
   const y = useSpring(useMotionValue(0), { stiffness: 260, damping: 28, mass: 0.6 });
 
@@ -318,6 +321,9 @@ function Archive() {
         ))}
       </ul>
 
+      {/* Portalled to <body>: the section uses content-visibility, which would pin "fixed" to the section. */}
+      {mounted &&
+        createPortal(
       <motion.div aria-hidden style={{ x, y }} className="pointer-events-none fixed left-0 top-0 z-40 hidden md:block">
         <AnimatePresence>
           {active !== null && (
@@ -343,7 +349,9 @@ function Archive() {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.div>
+      </motion.div>,
+          document.body,
+        )}
     </div>
   );
 }
@@ -354,7 +362,7 @@ export function Work() {
   const { scrollYProgress } = useScroll({ target: container, offset: ["start start", "end end"] });
 
   return (
-    <section id="work" aria-labelledby="work-title" className="scroll-mt-24 pt-24 md:pt-40">
+    <section id="work" aria-labelledby="work-title" className="pt-24 md:pt-40">
       <SectionHead
         id="work-title"
         title="Selected work"

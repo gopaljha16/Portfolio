@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment } from "react";
-import { motion, type HTMLMotionProps, type Variants } from "framer-motion";
+import { m as motion, type HTMLMotionProps, type Variants } from "framer-motion";
 
 export const tileVariants: Variants = {
   hidden: { opacity: 0, y: 22, scale: 0.97 },

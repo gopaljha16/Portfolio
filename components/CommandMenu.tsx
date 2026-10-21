@@ -2,14 +2,14 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m as motion } from "framer-motion";
 import { useLenis } from "lenis/react";
 import { ArrowUpRight, Copy, CornerDownLeft, Hash, Moon, Search } from "lucide-react";
 import { caseStudies, profile } from "@/lib/data";
 import { toggleTheme } from "@/lib/theme";
 import { Swatch } from "./Bento";
 
-export const OPEN_COMMAND_MENU = "open-command-menu";
+import { OPEN_COMMAND_MENU, revealAllSections } from "@/lib/events";
 
 const socialNames = { github: "GitHub", linkedin: "LinkedIn", x: "X" };
 
@@ -39,7 +39,8 @@ export function CommandMenu() {
     (id: string) => {
       const el = document.getElementById(id);
       if (pathname === "/" && el) {
-        if (lenis) lenis.scrollTo(el, { offset: -80 });
+        revealAllSections();
+        if (lenis) lenis.scrollTo(el);
         else el.scrollIntoView({ behavior: "smooth" });
       } else router.push(`/#${id}`);
     },

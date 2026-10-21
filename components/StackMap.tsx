@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m as motion, useInView, useReducedMotion } from "framer-motion";
 import { alsoComfortableWith, projects, toolbox, toolboxProjects } from "@/lib/data";
 import { Swatch } from "./Bento";
 
