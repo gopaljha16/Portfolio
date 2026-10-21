@@ -1,24 +1,130 @@
 ﻿@import "tailwindcss";
 
-@theme {
-    --font-sans: Arial, Helvetica, sans-serif;
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg: #e7eaf0;
+  --surface: #ffffff;
+  --surface-2: #f2f4f8;
+  --line: rgb(18 20 27 / 0.09);
+  --ink: #12141b;
+  --muted: #565d6d;
+  --faint: #8a90a0;
+  --inverse: #ffffff;
+  /* Language bar orange; takes a deeper step on the dark surface (validated). */
+  --lang-orange: #f07a12;
+  color-scheme: light;
 }
 
-* {
-    box-sizing: border-box;
+.dark {
+  --bg: #0d0f15;
+  --surface: #161922;
+  --surface-2: #1f232e;
+  --line: rgb(255 255 255 / 0.075);
+  --ink: #eceef4;
+  --muted: #9ba2b2;
+  --faint: #6b7182;
+  --inverse: #12141b;
+  --lang-orange: #e2690a;
+  color-scheme: dark;
 }
 
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-inverse: var(--inverse);
+  --font-display: var(--font-funnel-display), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-funnel-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Smooth scrolling comes from Lenis (components/Providers), so no CSS scroll-behavior here. */
 html {
-    scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
 }
 
 body {
-    margin: 0;
-    background: #10100f;
-    font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
-    background: #ed7941;
-    color: white;
+  background: #8b5cf6;
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* The six product colors, as hard stops. Used by the logo, progress bar and contact tile. */
+.product-stripe {
+  /* background-image, not the shorthand: the shorthand would reset background-clip and break bg-clip-text. */
+  background-image: linear-gradient(
+    90deg,
+    #ff8a1f 0 16.66%,
+    #8b5cf6 16.66% 33.33%,
+    #e9479a 33.33% 50%,
+    #5b8cff 50% 66.66%,
+    #22a06b 66.66% 83.33%,
+    #f43f5e 83.33% 100%
+  );
+}
+
+/* The same six colors running top to bottom, for the timeline line. */
+.product-stripe-v {
+  background-image: linear-gradient(
+    180deg,
+    #ff8a1f 0 16.66%,
+    #8b5cf6 16.66% 33.33%,
+    #e9479a 33.33% 50%,
+    #5b8cff 50% 66.66%,
+    #22a06b 66.66% 83.33%,
+    #f43f5e 83.33% 100%
+  );
+}
+
+/* Hero wall: each column holds its items twice, so moving it by half loops seamlessly. */
+@keyframes wall-scroll {
+  to {
+    transform: translateY(-50%);
+  }
+}
+.wall-col {
+  animation: wall-scroll 70s linear infinite;
+  will-change: transform;
+}
+
+/* Faint dot grid for demo stages and illustrations; follows the theme's ink. */
+.dot-grid {
+  background-image: radial-gradient(color-mix(in oklab, var(--ink) 13%, transparent) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* Dotted texture on the colored project fields. */
+.dot-field {
+  background-image: radial-gradient(rgb(255 255 255 / 0.22) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+
+/* Theme switch: the new theme grows out of the toggle as a circle (see ThemeToggle). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wall-col {
+    animation: none;
+  }
 }
