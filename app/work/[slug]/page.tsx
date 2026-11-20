@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { buildNotes } from "@/lib/build-notes";
 import { caseStudies, profile } from "@/lib/data";
 import { projectJsonLd, JsonLd } from "@/lib/seo";
+import { MessageTrace } from "@/components/MessageTrace";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -72,7 +73,7 @@ export default async function CaseStudyPage({ params }: Props) {
         <Image src={project.image} alt={`${project.name} product screenshot`} sizes="(max-width: 1340px) 92vw, 1216px" preload />
       </figure>
 
-      {note && (
+      {project.slug === "quibly" ? <MessageTrace /> : note && (
         <section id="how-built" className="case-build" aria-labelledby="case-build-title">
           <header>
             <p className="portfolio-kicker">How it’s built</p>

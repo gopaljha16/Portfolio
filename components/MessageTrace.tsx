@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { AppWindow, Database, RadioTower } from "lucide-react";
 import { quiblyBuild } from "@/lib/build-notes";
 
@@ -12,12 +11,12 @@ export function MessageTrace() {
   const { title, detail } = quiblyBuild.steps[active];
 
   return (
-    <section className="message-trace" aria-labelledby="message-trace-title">
+    <section id="how-built" className="message-trace" aria-labelledby="case-build-title">
       <header className="trace-header">
-        <p>Inside Quibly</p>
-        <Link href="/work/quibly">Case study</Link>
+        <p>How it’s built</p>
       </header>
-      <h2 id="message-trace-title">{quiblyBuild.title}</h2>
+      <h2 id="case-build-title">{quiblyBuild.title}</h2>
+      <p className="trace-intro">{quiblyBuild.intro}</p>
       <ol className="trace-stages" data-step={active}>
         {quiblyBuild.steps.map((step, index) => {
           const Icon = icons[index];
