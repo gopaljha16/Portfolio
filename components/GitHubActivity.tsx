@@ -26,7 +26,6 @@ export function GitHubActivity({ activity }: { activity: Activity | null }) {
                 <p><strong>{activity.total.toLocaleString("en-IN")}</strong> {activity.total === 1 ? "contribution" : "contributions"}</p>
                 <p className="contribution-period">
                   {periodFormat.formatRange(new Date(activity.days[0].date), new Date(activity.days[activity.days.length - 1].date))}
-                  {activity.source === "account" && " · Public + private"}
                   {activity.source === "profile" && " · GitHub profile"}
                   {activity.source === "snapshot" && " · Saved snapshot"}
                 </p>
