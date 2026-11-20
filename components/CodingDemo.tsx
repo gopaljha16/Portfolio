@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type CSSProperties, type FormEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import { FileCode2, Play, RotateCcw } from "lucide-react";
 
 const items = [2, 5, 8, 12, 16];
@@ -53,6 +53,19 @@ export function CodingDemo() {
   const [target, setTarget] = useState(String(initialTarget));
   const [result, setResult] = useState({ target: initialTarget, index: find(items, initialTarget) });
   const [replay, setReplay] = useState(0);
+  const [typing, setTyping] = useState(false);
+  const figure = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!figure.current) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      setTyping(true);
+      observer.disconnect();
+    }, { threshold: 0.25 });
+    observer.observe(figure.current);
+    return () => observer.disconnect();
+  }, []);
 
   function run(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -61,7 +74,7 @@ export function CodingDemo() {
   }
 
   return (
-    <figure className="coding-demo" aria-labelledby="coding-demo-title">
+    <figure ref={figure} className="coding-demo" aria-labelledby="coding-demo-title">
       <figcaption id="coding-demo-title">
         <span>Try a Codexa-style exercise</span>
         <span>Binary search</span>
@@ -69,12 +82,15 @@ export function CodingDemo() {
       <div className="code-editor">
         <div className="code-toolbar">
           <span><FileCode2 size={16} aria-hidden="true" />binary-search.js</span>
-          <button type="button" className="code-replay" onClick={() => setReplay((key) => key + 1)} aria-label="Replay typing">
+          <button type="button" className="code-replay" onClick={() => {
+            setTyping(true);
+            setReplay((key) => key + 1);
+          }} aria-label="Replay typing">
             <RotateCcw size={15} aria-hidden="true" />
             Replay
           </button>
         </div>
-        <pre key={replay} aria-label="JavaScript binary search function"><code>
+        <pre key={replay} data-typing={typing} aria-label="JavaScript binary search function"><code>
           {lines.map(({ timing, tokens }, lineNumber) => (
             <span className="code-line" key={lineNumber}>
               <span className="code-line-number" aria-hidden="true">{lineNumber + 1}</span>

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { buildNotes } from "@/lib/build-notes";
 import { caseStudies, profile } from "@/lib/data";
 import { projectJsonLd, JsonLd } from "@/lib/seo";
+import { CodingDemo } from "@/components/CodingDemo";
 import { MessageTrace } from "@/components/MessageTrace";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -90,6 +91,12 @@ export default async function CaseStudyPage({ params }: Props) {
             ))}
           </ol>
         </section>
+      )}
+
+      {project.slug === "codexa" && (
+        <div className="case-coding-demo">
+          <CodingDemo />
+        </div>
       )}
 
       <section className="portfolio-section portfolio-section-split" aria-labelledby="overview">
