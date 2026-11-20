@@ -20,6 +20,13 @@ const sans = localFont({
   display: "swap",
 });
 
+const editorial = localFont({
+  src: "./fonts/instrument-serif-latin-400-normal.woff2",
+  variable: "--font-instrument-serif",
+  display: "swap",
+  adjustFontFallback: "Times New Roman",
+});
+
 const title = `${profile.name} | Full-Stack Engineer in ${profile.city}, ${profile.country}`;
 
 export const metadata: Metadata = {
@@ -75,8 +82,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8f9f6" },
-    { media: "(prefers-color-scheme: dark)", color: "#131a16" },
+    { media: "(prefers-color-scheme: light)", color: "#f5f2ea" },
+    { media: "(prefers-color-scheme: dark)", color: "#151621" },
   ],
 };
 
@@ -87,7 +94,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${display.variable} ${sans.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${display.variable} ${sans.variable} ${editorial.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

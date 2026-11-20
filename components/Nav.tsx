@@ -31,7 +31,7 @@ export function Nav() {
         }}
       >
         <Link href="/" className="site-wordmark" aria-label="Gopal Jha home" onClick={() => setOpen(false)}>
-          gj<span>.</span>
+          GJ
         </Link>
         <ul id="main-nav-links" className="site-nav-links" data-open={open}>
           {sections.map(({ id, label }) => (
