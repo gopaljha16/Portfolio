@@ -13,13 +13,6 @@ const geist = localFont({
   display: "swap",
 });
 
-const editorial = localFont({
-  src: "./fonts/instrument-serif-latin-400-normal.woff2",
-  variable: "--font-instrument-serif",
-  display: "swap",
-  adjustFontFallback: "Times New Roman",
-});
-
 const title = `${profile.name} | Full-Stack Engineer in ${profile.city}, ${profile.country}`;
 
 export const metadata: Metadata = {
@@ -84,7 +77,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable} ${editorial.variable}`} suppressHydrationWarning>
+    <html lang="en" className={geist.variable} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

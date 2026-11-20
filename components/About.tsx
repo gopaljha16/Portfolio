@@ -43,10 +43,8 @@ export function About({ github }: { github: GitHubStats }) {
             </ol>
           </details>
         </div>
-        <div className="about-career">
-          <Experience />
-          <Skills />
-        </div>
+        <Experience />
+        <Skills />
       </div>
     </section>
   );

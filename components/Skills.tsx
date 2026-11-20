@@ -12,9 +12,9 @@ export function Skills() {
   const groups = Object.keys(skillGroups) as (keyof typeof skillGroups)[];
 
   return (
-    <section id="skills" className="about-subsection" aria-labelledby="skills-title">
+    <section id="skills" className="about-subsection skills-card" aria-labelledby="skills-title">
       <h3 id="skills-title">Technical stack</h3>
-      <dl className="skill-list">
+      <dl className="skill-list skill-grid">
         {groups.map((key) => {
           const group = skillGroups[key];
           const example = examples[key];
@@ -22,7 +22,9 @@ export function Skills() {
             <div key={key} className="skill-row">
               <dt>{group.name}</dt>
               <dd>
-                <p>{group.skills.join(" · ")}</p>
+                <ul className="skill-tags">
+                  {group.skills.map((skill) => <li key={skill}>{skill}</li>)}
+                </ul>
                 <Link href={example.href} className="portfolio-text-link">{example.name}</Link>
               </dd>
             </div>

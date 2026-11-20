@@ -32,7 +32,7 @@ function ProjectEntry({ project, featured = false }: { project: Project; feature
         <Image
           src={project.image}
           alt={`${project.name} product screenshot`}
-          sizes={featured ? "(max-width: 767px) 92vw, (max-width: 1340px) 58vw, 760px" : "(max-width: 767px) 30vw, 228px"}
+          sizes={featured ? "(max-width: 767px) 90vw, 550px" : "(max-width: 560px) 90vw, (max-width: 1060px) 46vw, 470px"}
         />
       </div>
     </article>

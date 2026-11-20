@@ -71,7 +71,7 @@ export default async function CaseStudyPage({ params }: Props) {
       </header>
 
       <figure className="case-preview">
-        <Image src={project.image} alt={`${project.name} product screenshot`} sizes="(max-width: 1340px) 92vw, 1216px" preload />
+        <Image src={project.image} alt={`${project.name} product screenshot`} sizes="(max-width: 1060px) 90vw, 972px" preload />
       </figure>
 
       {project.slug === "quibly" ? <MessageTrace /> : note && (
