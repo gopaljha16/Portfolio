@@ -27,11 +27,7 @@ export function Hero() {
   return (
     <section id="top" className={`site-shell portfolio-cover ${accent.variable}`} aria-labelledby="hero-title">
       <div className="hero-introduction">
-        <h1 id="hero-title">
-          Hi, I’m{" "}
-          <span className="intro-monogram" aria-hidden="true"><span>GJ</span></span>{" "}
-          {profile.name}.
-        </h1>
+        <h1 id="hero-title">Hi, I’m {profile.name}.</h1>
         <div className="hero-role-line">
           <p>{profile.role}</p>
           <a className="availability" href="#contact"><span aria-hidden="true" />Open to work</a>

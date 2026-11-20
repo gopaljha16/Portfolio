@@ -98,30 +98,6 @@ body {
   gap: 0.75rem;
 }
 
-.site-wordmark,
-.site-nav-actions {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 0.55rem;
-}
-
-.site-mark {
-  display: grid;
-  width: 2.2rem;
-  height: 2.2rem;
-  flex: none;
-  place-items: center;
-  border: 1px solid var(--line);
-  border-radius: 0.75rem;
-  background: var(--surface);
-  color: var(--ink);
-  font-size: 0.875rem;
-  font-weight: 750;
-  letter-spacing: -0.055em;
-  box-shadow: var(--card-shadow);
-}
-
 .site-email {
   min-width: 0;
   overflow: hidden;
@@ -141,7 +117,9 @@ body {
 }
 
 .site-nav-actions {
+  display: flex;
   flex: none;
+  align-items: center;
   gap: 0.3rem;
 }
 
@@ -259,30 +237,6 @@ body {
   font-weight: 640;
   letter-spacing: -0.047em;
   line-height: 1.12;
-}
-
-.intro-monogram {
-  display: inline-grid;
-  width: 0.92em;
-  height: 0.92em;
-  margin-inline: 0.07em;
-  place-items: center;
-  border: 2px solid var(--surface);
-  border-radius: 0.28em;
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-weight: 750;
-  font-size: 0.9em;
-  letter-spacing: -0.09em;
-  line-height: 1;
-  text-indent: -0.07em;
-  vertical-align: 0.05em;
-  transform: rotate(-7deg);
-  box-shadow: var(--card-shadow);
-}
-
-.intro-monogram > span {
-  font-size: 0.66em;
 }
 
 .hero-role-line {

@@ -9,12 +9,13 @@ import { OPEN_COMMAND_MENU } from "@/lib/events";
 import { ThemeToggle } from "./ThemeToggle";
 
 const sections = [
+  { id: "top", label: "Home" },
   { id: "work", label: "Work" },
   { id: "about", label: "About" },
   { id: "contact", label: "Contact" },
 ] as const;
 
-type Section = "top" | (typeof sections)[number]["id"];
+type Section = (typeof sections)[number]["id"];
 
 export function Nav() {
   const [open, setOpen] = useState(false);
@@ -25,7 +26,6 @@ export function Nav() {
 
   useEffect(() => {
     if (pathname !== "/") return;
-    const sectionIds = ["top", ...sections.map(({ id }) => id)];
     let observer: IntersectionObserver | undefined;
 
     function observeSections() {
@@ -36,7 +36,7 @@ export function Nav() {
         if (active) setSection(active.target.id as Section);
       }, { rootMargin: `-90px 0px -${bottom}px 0px` });
 
-      for (const id of sectionIds) {
+      for (const { id } of sections) {
         const element = document.getElementById(id);
         if (element) observer.observe(element);
       }
@@ -65,10 +65,7 @@ export function Nav() {
           if (open && event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setOpen(false);
         }}
       >
-        <div className="site-wordmark">
-          <Link href="/" className="site-mark" aria-label="Gopal Jha home" onClick={() => setOpen(false)}>GJ</Link>
-          <a href={`mailto:${profile.email}`} className="site-email">{profile.email}</a>
-        </div>
+        <a href={`mailto:${profile.email}`} className="site-email">{profile.email}</a>
         <div id="main-nav-menu" className="site-menu-panel" data-open={open}>
           <ul id="main-nav-links" className="site-nav-links">
             {sections.map(({ id, label }) => (
