@@ -1,38 +1,25 @@
-﻿import { Hero } from "@/components/Hero";
-import { Glance } from "@/components/Glance";
+import { Hero } from "@/components/Hero";
 import { Work } from "@/components/Work";
-import { Experience } from "@/components/Experience";
-import { Skills } from "@/components/Skills";
+import { GitHubActivity } from "@/components/GitHubActivity";
 import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
 import { getGitHubStats } from "@/lib/github";
+import { getGitHubActivity } from "@/lib/github-activity";
 import { homeJsonLd, JsonLd } from "@/lib/seo";
 
-// Rebuild at most once a day, which keeps the GitHub numbers fresh.
 export const revalidate = 86400;
 
-function timeAgo(iso: string) {
-  const days = Math.round((Date.now() - new Date(iso).getTime()) / 86_400_000);
-  const rtf = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
-  if (days < 7) return rtf.format(-days, "day");
-  if (days < 60) return rtf.format(-Math.round(days / 7), "week");
-  return rtf.format(-Math.round(days / 30), "month");
-}
-
 export default async function Home() {
-  const github = await getGitHubStats();
+  const [github, activity] = await Promise.all([getGitHubStats(), getGitHubActivity()]);
+
   return (
     <>
       <JsonLd data={homeJsonLd()} />
       <Hero />
-      <div className="mx-auto max-w-[1240px] px-3 sm:px-6">
-        <Glance github={github} lastPush={timeAgo(github.lastPush)} />
-        <Work />
-        <Experience />
-        <Skills />
-        <About />
-        <Contact />
-      </div>
+      <Work />
+      <GitHubActivity activity={activity} />
+      <About github={github} />
+      <Contact />
     </>
   );
 }

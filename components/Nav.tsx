@@ -1,182 +1,119 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } from "framer-motion";
 import { Command, Menu, X } from "lucide-react";
-import { projects, profile } from "@/lib/data";
-import { OPEN_COMMAND_MENU } from "./CommandMenu";
+import { profile } from "@/lib/data";
+import { OPEN_COMMAND_MENU } from "@/lib/events";
 import { ThemeToggle } from "./ThemeToggle";
 
 const sections = [
+  { id: "top", label: "Home" },
   { id: "work", label: "Work" },
-  { id: "experience", label: "Experience" },
-  { id: "skills", label: "Skills" },
+  { id: "github", label: "GitHub activity" },
   { id: "about", label: "About" },
   { id: "contact", label: "Contact" },
-];
+] as const;
 
-/** Six small squares in the product colors: a bento, as a logo. */
-export function Mark({ size = 18 }: { size?: number }) {
-  return (
-    <span aria-hidden className="grid shrink-0 grid-cols-3 gap-[2px]" style={{ width: size, height: (size * 2) / 3 }}>
-      {projects.map((p) => (
-        <span key={p.slug} className="rounded-[1.5px]" style={{ background: p.color }} />
-      ))}
-    </span>
-  );
-}
-
-function useActiveSection(enabled: boolean) {
-  const [active, setActive] = useState<string | null>(null);
-  useEffect(() => {
-    if (!enabled) return setActive(null);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) if (entry.isIntersecting) setActive(entry.target.id);
-      },
-      { rootMargin: "-45% 0px -50% 0px" },
-    );
-    ["top", "glance", ...sections.map((s) => s.id)]
-      .map((id) => document.getElementById(id))
-      .forEach((el) => el && observer.observe(el));
-    return () => observer.disconnect();
-  }, [enabled]);
-  return active;
-}
+type Section = (typeof sections)[number]["id"];
 
 export function Nav() {
-  const pathname = usePathname();
-  const onHome = pathname === "/";
-  const active = useActiveSection(onHome);
   const [open, setOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const { scrollY, scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30 });
+  const [section, setSection] = useState<Section>("top");
+  const pathname = usePathname();
+  const toggle = useRef<HTMLButtonElement>(null);
+  const activeSection = pathname.startsWith("/work/") ? "work" : pathname === "/" ? section : null;
 
-  // Get out of the way while reading down the page; come back on any scroll up.
-  useMotionValueEvent(scrollY, "change", (y) => {
-    const prev = scrollY.getPrevious() ?? 0;
-    setHidden(y > 240 && y > prev && !open);
-  });
+  useEffect(() => {
+    if (pathname !== "/") return;
+    let observer: IntersectionObserver | undefined;
 
-  const href = (id: string) => (onHome ? `#${id}` : `/#${id}`);
+    function observeSections() {
+      observer?.disconnect();
+      const bottom = Math.max(0, window.innerHeight - 160);
+      observer = new IntersectionObserver((entries) => {
+        const active = entries.find((entry) => entry.isIntersecting);
+        if (active) setSection(active.target.id as Section);
+      }, { rootMargin: `-90px 0px -${bottom}px 0px` });
+
+      for (const { id } of sections) {
+        const element = document.getElementById(id);
+        if (element) observer.observe(element);
+      }
+    }
+
+    observeSections();
+    window.addEventListener("resize", observeSections, { passive: true });
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener("resize", observeSections);
+    };
+  }, [pathname]);
 
   return (
-    <>
-      <motion.div
-        aria-hidden
-        className="product-stripe fixed inset-x-0 top-0 z-[60] h-[3px] origin-left"
-        style={{ scaleX: progress }}
-      />
-      <motion.header
-        initial={{ y: -40, opacity: 0 }}
-        animate={{ y: hidden ? -90 : 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 260, damping: 30 }}
-        className="fixed inset-x-0 top-3 z-50 px-3 sm:top-4 sm:px-6"
+    <header className="site-header">
+      <nav
+        aria-label="Main"
+        className="site-shell site-nav"
+        onKeyDown={(event) => {
+          if (event.key === "Escape" && open) {
+            setOpen(false);
+            toggle.current?.focus();
+          }
+        }}
+        onBlur={(event) => {
+          if (open && event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+        }}
       >
-        <nav aria-label="Main" className="mx-auto flex max-w-[1240px] items-center justify-between rounded-full border border-line bg-surface/80 py-1.5 pl-4 pr-1.5 backdrop-blur-xl">
-          <Link href="/" className="flex items-center gap-2.5 font-display text-[15px] font-semibold tracking-tight">
-            <Mark />
-            {profile.name}
-          </Link>
-
-          <ul className="hidden items-center gap-1 lg:flex">
-            {sections.map((s) => (
-              <li key={s.id} className="relative">
-                {active === s.id && (
-                  <motion.span
-                    layoutId="nav-active"
-                    className="absolute inset-0 rounded-full bg-surface-2"
-                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                  />
-                )}
+        <a href={`mailto:${profile.email}`} className="site-email">{profile.email}</a>
+        <div id="main-nav-menu" className="site-menu-panel" data-open={open}>
+          <ul id="main-nav-links" className="site-nav-links">
+            {sections.map(({ id, label }) => (
+              <li key={id}>
                 <Link
-                  href={href(s.id)}
-                  className={
-                    "relative block rounded-full px-4 py-2 text-sm transition-colors " +
-                    (active === s.id ? "text-ink" : "text-muted hover:text-ink")
-                  }
+                  href={`/#${id}`}
+                  aria-current={activeSection === id ? "location" : undefined}
+                  onClick={() => {
+                    setSection(id);
+                    setOpen(false);
+                  }}
                 >
-                  {s.label}
+                  {label}
                 </Link>
               </li>
             ))}
           </ul>
-
-          <div className="flex items-center gap-1">
-            <button
-              type="button"
-              onClick={() => window.dispatchEvent(new Event(OPEN_COMMAND_MENU))}
-              aria-label="Open command menu"
-              className="hidden h-9 items-center gap-1.5 rounded-full px-3 text-sm text-muted transition-colors hover:bg-surface-2 hover:text-ink sm:flex"
-            >
-              <Command size={14} />K
-            </button>
-            <ThemeToggle />
-            <a
-              href={`mailto:${profile.email}`}
-              className="hidden rounded-full bg-ink px-4 py-2 text-sm font-medium text-inverse transition-transform hover:scale-[1.03] active:scale-[0.98] sm:block"
-            >
-              Email me
-            </a>
-            <button
-              type="button"
-              onClick={() => setOpen((o) => !o)}
-              aria-expanded={open}
-              aria-label={open ? "Close menu" : "Open menu"}
-              className="grid size-9 place-items-center rounded-full text-ink hover:bg-surface-2 lg:hidden"
-            >
-              {open ? <X size={18} /> : <Menu size={18} />}
-            </button>
-          </div>
-        </nav>
-
-        <AnimatePresence>
-          {open && (
-            <motion.ul
-              initial={{ opacity: 0, y: -8, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-              className="mx-auto mt-2 grid max-w-[1240px] grid-cols-2 gap-1 rounded-[22px] border border-line bg-surface/95 p-2 backdrop-blur-xl lg:hidden"
-            >
-              {sections.map((s) => (
-                <li key={s.id}>
-                  <Link
-                    href={href(s.id)}
-                    onClick={() => setOpen(false)}
-                    className="block rounded-2xl px-4 py-3 font-display text-lg font-medium hover:bg-surface-2"
-                  >
-                    {s.label}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setOpen(false);
-                    window.dispatchEvent(new Event(OPEN_COMMAND_MENU));
-                  }}
-                  className="flex w-full items-center gap-2 rounded-2xl px-4 py-3 text-left font-display text-lg font-medium hover:bg-surface-2"
-                >
-                  <Command size={16} /> Jump anywhere
-                </button>
-              </li>
-              <li className="col-span-2">
-                <a
-                  href={`mailto:${profile.email}`}
-                  className="block rounded-2xl bg-ink px-4 py-3 text-center font-medium text-inverse"
-                >
-                  Email me
-                </a>
-              </li>
-            </motion.ul>
-          )}
-        </AnimatePresence>
-      </motion.header>
-    </>
+          <button
+            type="button"
+            className="site-command"
+            onClick={() => {
+              setOpen(false);
+              toggle.current?.focus();
+              window.dispatchEvent(new Event(OPEN_COMMAND_MENU));
+            }}
+            aria-label="Open command menu"
+            aria-keyshortcuts="Control+K Meta+K"
+          >
+            <Command size={16} aria-hidden="true" />
+            <span>Quick jump</span>
+          </button>
+        </div>
+        <div className="site-nav-actions">
+          <ThemeToggle />
+          <button
+            ref={toggle}
+            type="button"
+            className="site-icon-button site-menu-toggle"
+            aria-controls="main-nav-menu"
+            aria-expanded={open}
+            aria-label={open ? "Close navigation" : "Open navigation"}
+            onClick={() => setOpen((previous) => !previous)}
+          >
+            {open ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
+          </button>
+        </div>
+      </nav>
+    </header>
   );
 }
