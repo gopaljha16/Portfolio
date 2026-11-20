@@ -1,20 +1,21 @@
 ﻿import type { Metadata, Viewport } from "next";
-import { Funnel_Display, Funnel_Sans } from "next/font/google";
-import "lenis/dist/lenis.css";
+import localFont from "next/font/local";
 import "./globals.css";
 import { profile } from "@/lib/data";
 import { Providers } from "@/components/Providers";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 
-const display = Funnel_Display({
-  subsets: ["latin"],
+const display = localFont({
+  src: "./fonts/funnel-display-latin-wght-normal.woff2",
+  weight: "300 800",
   variable: "--font-funnel-display",
   display: "swap",
 });
 
-const sans = Funnel_Sans({
-  subsets: ["latin"],
+const sans = localFont({
+  src: "./fonts/funnel-sans-latin-wght-normal.woff2",
+  weight: "300 800",
   variable: "--font-funnel-sans",
   display: "swap",
 });
@@ -74,8 +75,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#e7eaf0" },
-    { media: "(prefers-color-scheme: dark)", color: "#0d0f15" },
+    { media: "(prefers-color-scheme: light)", color: "#f8f9f6" },
+    { media: "(prefers-color-scheme: dark)", color: "#131a16" },
   ],
 };
 
