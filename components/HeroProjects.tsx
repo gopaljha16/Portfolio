@@ -5,55 +5,41 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/data";
 
-type Preview = Pick<Project, "slug" | "name" | "image" | "domains" | "summary">;
+type Preview = Pick<Project, "slug" | "name" | "image" | "domains">;
 
 export function HeroProjects({ projects }: { projects: Preview[] }) {
   const [active, setActive] = useState(0);
   const project = projects[active];
 
   return (
-    <div className="cover-gallery" data-project={project.slug}>
-      <div className="cover-topline">
-        <p id="cover-projects-label">Featured projects</p>
-        <span>{project.domains.join(" / ")}</span>
+    <section className="overview-card featured-overview" aria-labelledby="featured-overview-title">
+      <h2 id="featured-overview-title" className="overview-label">Featured work</h2>
+      <div id="featured-project-details" aria-live="polite" className="featured-project-details">
+        <div className="featured-art">
+          <Image
+            key={project.slug}
+            src={project.image}
+            alt={`${project.name} product screenshot`}
+            sizes="(max-width: 560px) 88vw, (max-width: 780px) 44vw, 285px"
+            placeholder="blur"
+          />
+        </div>
+        <div className="featured-caption">
+          <div><p>{project.name}</p><span>{project.domains.join(" / ")}</span></div>
+          <Link href={`/work/${project.slug}`} className="portfolio-text-link" aria-label={`Read the ${project.name} case study`}>
+            Case study
+          </Link>
+        </div>
       </div>
-      <ul className="cover-project-picker" aria-labelledby="cover-projects-label">
+      <ul className="overview-picker" aria-labelledby="featured-overview-title">
         {projects.map((preview, index) => (
           <li key={preview.slug}>
-            <button
-              type="button"
-              aria-controls="cover-project-preview"
-              aria-pressed={index === active}
-              onClick={() => setActive(index)}
-            >
+            <button type="button" aria-controls="featured-project-details" aria-pressed={index === active} onClick={() => setActive(index)}>
               {preview.name}
             </button>
           </li>
         ))}
       </ul>
-      <div id="cover-project-preview" className="cover-preview">
-        {projects.map((preview, index) => {
-          const position = (index - active + projects.length) % projects.length;
-          return (
-            <figure className="cover-sheet" key={preview.slug} data-position={position} aria-hidden={position !== 0}>
-              <Image
-                src={preview.image}
-                alt={`${preview.name} product screenshot`}
-                sizes="(max-width: 760px) 75vw, (max-width: 1340px) 48vw, 640px"
-                placeholder="blur"
-                preload={index === 0}
-              />
-              <figcaption>{preview.name}</figcaption>
-            </figure>
-          );
-        })}
-      </div>
-      <div className="cover-project-detail" aria-live="polite">
-        <p>{project.summary}</p>
-        <Link href={`/work/${project.slug}`} className="cover-case-link" aria-label={`Read the ${project.name} case study`}>
-          Case study
-        </Link>
-      </div>
-    </div>
+    </section>
   );
 }

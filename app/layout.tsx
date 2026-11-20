@@ -6,17 +6,10 @@ import { Providers } from "@/components/Providers";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 
-const display = localFont({
-  src: "./fonts/funnel-display-latin-wght-normal.woff2",
-  weight: "300 800",
-  variable: "--font-funnel-display",
-  display: "swap",
-});
-
-const sans = localFont({
-  src: "./fonts/funnel-sans-latin-wght-normal.woff2",
-  weight: "300 800",
-  variable: "--font-funnel-sans",
+const geist = localFont({
+  src: "./fonts/Geist-Variable.woff2",
+  weight: "100 900",
+  variable: "--font-geist",
   display: "swap",
 });
 
@@ -81,20 +74,17 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f5f2ea" },
-    { media: "(prefers-color-scheme: dark)", color: "#151621" },
-  ],
+  themeColor: "#f6f5f3",
 };
 
-// Runs before paint so the saved (or system) theme never flashes the wrong colors.
-const themeScript = `(function(){try{var t=localStorage.getItem("theme");var d=t?t==="dark":matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.classList.toggle("dark",d)}catch(e){}})()`;
+// Apply any saved dark theme before paint.
+const themeScript = `(function(){try{document.documentElement.classList.toggle("dark",localStorage.getItem("theme")==="dark")}catch(e){}})()`;
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${display.variable} ${sans.variable} ${editorial.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${geist.variable} ${editorial.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

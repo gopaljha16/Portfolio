@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Command, Menu, X } from "lucide-react";
+import { profile } from "@/lib/data";
 import { OPEN_COMMAND_MENU } from "@/lib/events";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -64,46 +65,49 @@ export function Nav() {
           if (open && event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setOpen(false);
         }}
       >
-        <Link href="/" className="site-wordmark" aria-label="Gopal Jha home" onClick={() => setOpen(false)}>
-          <span className="site-mark" aria-hidden="true">GJ</span>
-          <span className="site-brand-name">Gopal Jha</span>
-        </Link>
-        <ul id="main-nav-links" className="site-nav-links" data-open={open}>
-          {sections.map(({ id, label }) => (
-            <li key={id}>
-              <Link
-                href={`/#${id}`}
-                aria-current={activeSection === id ? "location" : undefined}
-                onClick={() => {
-                  setSection(id);
-                  setOpen(false);
-                }}
-              >
-                {label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <div className="site-nav-actions">
+        <div className="site-wordmark">
+          <Link href="/" className="site-mark" aria-label="Gopal Jha home" onClick={() => setOpen(false)}>GJ</Link>
+          <a href={`mailto:${profile.email}`} className="site-email">{profile.email}</a>
+        </div>
+        <div id="main-nav-menu" className="site-menu-panel" data-open={open}>
+          <ul id="main-nav-links" className="site-nav-links">
+            {sections.map(({ id, label }) => (
+              <li key={id}>
+                <Link
+                  href={`/#${id}`}
+                  aria-current={activeSection === id ? "location" : undefined}
+                  onClick={() => {
+                    setSection(id);
+                    setOpen(false);
+                  }}
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
           <button
             type="button"
-            className="site-icon-button site-command"
+            className="site-command"
             onClick={() => {
               setOpen(false);
+              toggle.current?.focus();
               window.dispatchEvent(new Event(OPEN_COMMAND_MENU));
             }}
             aria-label="Open command menu"
             aria-keyshortcuts="Control+K Meta+K"
           >
             <Command size={16} aria-hidden="true" />
-            <kbd aria-hidden="true">K</kbd>
+            <span>Quick jump</span>
           </button>
+        </div>
+        <div className="site-nav-actions">
           <ThemeToggle />
           <button
             ref={toggle}
             type="button"
             className="site-icon-button site-menu-toggle"
-            aria-controls="main-nav-links"
+            aria-controls="main-nav-menu"
             aria-expanded={open}
             aria-label={open ? "Close navigation" : "Open navigation"}
             onClick={() => setOpen((previous) => !previous)}
