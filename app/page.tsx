@@ -2,7 +2,6 @@ import { Hero } from "@/components/Hero";
 import { Work } from "@/components/Work";
 import { GitHubActivity } from "@/components/GitHubActivity";
 import { About } from "@/components/About";
-import { Faq } from "@/components/Faq";
 import { Contact } from "@/components/Contact";
 import { getGitHubStats } from "@/lib/github";
 import { getGitHubActivity } from "@/lib/github-activity";
@@ -20,9 +19,6 @@ export default async function Home() {
       <Work />
       <GitHubActivity activity={activity} />
       <About github={github} />
-      <div className="site-shell">
-        <Faq />
-      </div>
       <Contact />
     </>
   );

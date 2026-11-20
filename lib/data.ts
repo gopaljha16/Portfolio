@@ -658,7 +658,7 @@ export const githubFallback = {
 
 /**
  * Questions people (and answer engines) ask, answered in full sentences that name Gopal,
- * so each answer stands on its own when quoted. Rendered on the page and as FAQPage data.
+ * so each answer stands on its own when quoted. Served to AI assistants in /llms.txt, not shown on the page.
  */
 export const faq = [
   {

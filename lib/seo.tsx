@@ -1,4 +1,4 @@
-import { caseStudies, experience, faq, profile, skillGroups, toolbox, type Project } from "./data";
+import { caseStudies, experience, profile, skillGroups, toolbox, type Project } from "./data";
 
 const personId = `${profile.url}/#person`;
 const websiteId = `${profile.url}/#website`;
@@ -84,14 +84,6 @@ export function homeJsonLd() {
           position: i + 1,
           url: `${profile.url}/work/${p.slug}`,
           name: p.name,
-        })),
-      },
-      {
-        "@type": "FAQPage",
-        mainEntity: faq.map((f) => ({
-          "@type": "Question",
-          name: f.q,
-          acceptedAnswer: { "@type": "Answer", text: f.a },
         })),
       },
     ],
