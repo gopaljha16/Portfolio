@@ -3,15 +3,15 @@ import { experience } from "@/lib/data";
 
 export function Experience() {
   return (
-    <section id="experience" className="site-shell portfolio-section portfolio-section-split" aria-labelledby="experience-title">
-      <header className="portfolio-section-heading"><h2 id="experience-title">Experience</h2></header>
+    <section id="experience" className="about-subsection" aria-labelledby="experience-title">
+      <h3 id="experience-title">Experience</h3>
       <div className="experience-list">
         {experience.map((role) => (
           <article key={role.company} className="experience-entry">
             <header>
               <div>
                 <p className="portfolio-kicker">{role.company}</p>
-                <h3>{role.role}</h3>
+                <h4>{role.role}</h4>
               </div>
               <p className="entry-meta">{role.period} · {role.place}</p>
             </header>

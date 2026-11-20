@@ -1,7 +1,5 @@
 import { Hero } from "@/components/Hero";
 import { Work } from "@/components/Work";
-import { Experience } from "@/components/Experience";
-import { Skills } from "@/components/Skills";
 import { About } from "@/components/About";
 import { Faq } from "@/components/Faq";
 import { Contact } from "@/components/Contact";
@@ -18,8 +16,6 @@ export default async function Home() {
       <JsonLd data={homeJsonLd()} />
       <Hero />
       <Work />
-      <Experience />
-      <Skills />
       <About github={github} />
       <div className="site-shell">
         <Faq />
