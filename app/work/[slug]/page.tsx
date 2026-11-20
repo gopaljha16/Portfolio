@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { buildNotes } from "@/lib/build-notes";
 import { caseStudies, profile } from "@/lib/data";
 import { projectJsonLd, JsonLd } from "@/lib/seo";
 
@@ -33,6 +34,7 @@ export default async function CaseStudyPage({ params }: Props) {
   const project = find((await params).slug);
   if (!project?.study) notFound();
   const { study } = project;
+  const note = buildNotes[project.slug];
   const next = caseStudies[(caseStudies.indexOf(project) + 1) % caseStudies.length];
 
   const facts = [
@@ -56,6 +58,7 @@ export default async function CaseStudyPage({ params }: Props) {
           <div className="portfolio-actions">
             {project.href && <a href={project.href} className="portfolio-button portfolio-button-primary">Live site</a>}
             {project.repo && <a href={project.repo} className="portfolio-button portfolio-button-plain">Source on GitHub</a>}
+            {note && <a href="#how-built" className="portfolio-text-link case-build-jump">Build notes</a>}
           </div>
         </div>
         <dl className="case-facts">
@@ -66,8 +69,27 @@ export default async function CaseStudyPage({ params }: Props) {
       </header>
 
       <figure className="case-preview">
-        <Image src={project.image} alt={`${project.name} product screenshot`} sizes="(max-width: 1250px) 92vw, 1136px" preload />
+        <Image src={project.image} alt={`${project.name} product screenshot`} sizes="(max-width: 1340px) 92vw, 1216px" preload />
       </figure>
+
+      {note && (
+        <section id="how-built" className="case-build" aria-labelledby="case-build-title">
+          <header>
+            <p className="portfolio-kicker">How it’s built</p>
+            <h2 id="case-build-title">{note.title}</h2>
+            <p>{note.intro}</p>
+          </header>
+          <ol className="build-steps">
+            {note.steps.map(({ label, title, detail }) => (
+              <li key={label}>
+                <p className="portfolio-kicker">{label}</p>
+                <h3>{title}</h3>
+                <p>{detail}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
 
       <section className="portfolio-section portfolio-section-split" aria-labelledby="overview">
         <header className="portfolio-section-heading"><h2 id="overview">Overview</h2></header>

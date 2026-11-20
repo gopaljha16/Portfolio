@@ -1,29 +1,38 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
+import { buildNotes } from "@/lib/build-notes";
 import { archive, caseStudies, profile, projects, type Project } from "@/lib/data";
 
 function ProjectEntry({ project, featured = false }: { project: Project; featured?: boolean }) {
+  const caseStudy = `/work/${project.slug}`;
+  const note = buildNotes[project.slug];
+
   return (
     <article className={featured ? "project-entry project-entry-featured" : "project-entry"}>
       <div className="project-copy">
-        <p className="project-meta">{project.domains.join(" / ")} <span>{project.year}</span></p>
-        <h3>{project.name}</h3>
-        <p className="project-summary">{project.summary}</p>
-        <p className="project-tools">{project.features.join(" · ")}</p>
-        <div className="project-links">
-          <Link href={`/work/${project.slug}`} className="portfolio-text-link" aria-label={`${project.name} case study`}>
-            Case study
-          </Link>
-          {project.href && <a href={project.href} aria-label={`${project.name} live site`}>Live site</a>}
-          {project.repo && <a href={project.repo} aria-label={`${project.name} source code`}>Source</a>}
+        <div className="project-identity">
+          <p className="project-meta">{project.domains.join(" / ")} · {project.year}</p>
+          <h3><Link href={caseStudy} aria-label={`${project.name} case study`}>{project.name}</Link></h3>
+        </div>
+        <div className="project-description">
+          <p className="project-summary">{project.summary}</p>
+          <div className="project-links">
+            {note && (
+              <Link href={`${caseStudy}#how-built`} className="portfolio-text-link" aria-label={`${project.name} build notes`}>
+                Build notes
+              </Link>
+            )}
+            {project.href && <a href={project.href} aria-label={`${project.name} live site`}>Live site</a>}
+            {project.repo && <a href={project.repo} aria-label={`${project.name} source code`}>Source</a>}
+          </div>
         </div>
       </div>
       <div className="project-preview">
         <Image
           src={project.image}
           alt={`${project.name} product screenshot`}
-          sizes={featured ? "(max-width: 767px) 92vw, (max-width: 1250px) 55vw, 740px" : "(max-width: 767px) 92vw, 560px"}
+          sizes={featured ? "(max-width: 767px) 92vw, (max-width: 1340px) 58vw, 760px" : "(max-width: 767px) 30vw, 228px"}
         />
       </div>
     </article>
@@ -71,7 +80,7 @@ export function Work() {
       </header>
 
       <ProjectEntry project={featured} featured />
-      <div className="project-grid">
+      <div className="project-index">
         {otherProjects.map((project) => <ProjectEntry key={project.slug} project={project} />)}
       </div>
       {inDevelopment.map((project) => (
