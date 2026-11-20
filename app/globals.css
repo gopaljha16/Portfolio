@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -16,8 +16,6 @@
   --accent-ink: #fff;
   --diagram: #eef3ed;
   --diagram-grid: #dde7dc;
-  /* Language bar orange; takes a deeper step on the dark surface (validated). */
-  --lang-orange: #f07a12;
   color-scheme: light;
 }
 
@@ -35,7 +33,6 @@
   --accent-ink: #15271c;
   --diagram: #1a2820;
   --diagram-grid: #26382d;
-  --lang-orange: #e2690a;
   color-scheme: dark;
 }
 
@@ -100,7 +97,7 @@ body {
   font-family: var(--font-display);
   font-size: 2rem;
   font-weight: 750;
-  letter-spacing: -0.07em;
+  letter-spacing: -0.045em;
   line-height: 1;
 }
 
@@ -163,7 +160,7 @@ body {
   grid-template-columns: minmax(0, 1.27fr) minmax(0, 1fr);
   align-items: center;
   gap: clamp(2.5rem, 7vw, 6rem);
-  padding-block: clamp(4rem, 10vw, 8.25rem) clamp(4rem, 8vw, 6.75rem);
+  padding-block: clamp(3.5rem, 8vw, 6rem) clamp(3.5rem, 7vw, 5rem);
 }
 
 .portfolio-kicker {
@@ -179,7 +176,7 @@ body {
   font-family: var(--font-display);
   font-size: clamp(3.65rem, 8.6vw, 7.5rem);
   font-weight: 700;
-  letter-spacing: -0.078em;
+  letter-spacing: -0.033em;
   line-height: 0.98;
 }
 
@@ -326,7 +323,7 @@ body {
 }
 
 .portfolio-section {
-  padding-block: clamp(2.75rem, 6.5vw, 5.5rem);
+  padding-block: clamp(2.75rem, 6vw, 4.375rem);
   border-top: 1px solid var(--line);
 }
 
@@ -343,7 +340,7 @@ body {
   font-family: var(--font-display);
   font-size: clamp(2.125rem, 5vw, 3.75rem);
   font-weight: 650;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.028em;
   line-height: 1.03;
 }
 
@@ -392,7 +389,7 @@ body {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 3.7vw, 2.5rem);
   font-weight: 650;
-  letter-spacing: -0.055em;
+  letter-spacing: -0.025em;
   line-height: 1.03;
 }
 
@@ -538,6 +535,347 @@ body {
   margin-top: 0.25rem;
 }
 
+.portfolio-section-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: clamp(1.5rem, 5vw, 4.5rem);
+}
+
+.portfolio-section-split .portfolio-section-heading {
+  margin-bottom: 0;
+}
+
+.entry-meta {
+  color: var(--faint);
+  font-size: 0.875rem;
+}
+
+.experience-entry + .experience-entry {
+  margin-top: 2rem;
+}
+
+.experience-entry header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.4rem 1.25rem;
+}
+
+.experience-entry h3 {
+  margin-top: 0.25rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.6vw, 1.75rem);
+  font-weight: 650;
+  letter-spacing: -0.022em;
+  line-height: 1.2;
+}
+
+.experience-entry > p,
+.experience-notes,
+.milestone-entry div > p,
+.skill-row dd,
+.case-highlight-list li > p {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.experience-entry > p {
+  margin-block: 0.65rem 0.9rem;
+}
+
+.experience-entry .portfolio-disclosure summary {
+  padding-block: 0.65rem;
+  font-size: 0.9375rem;
+  font-weight: 550;
+}
+
+.experience-notes {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.25rem 0 0.8rem 1.125rem;
+  list-style: disc;
+}
+
+.experience-certificate {
+  padding-bottom: 0.85rem;
+}
+
+.skill-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.5fr);
+  gap: 0.25rem 1.25rem;
+  padding-block: 0.95rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.skill-row:first-child {
+  padding-top: 0;
+}
+
+.skill-row dt {
+  font-weight: 650;
+}
+
+.skill-row .portfolio-text-link {
+  display: inline-block;
+  margin-top: 0.3rem;
+  font-size: 0.9375rem;
+}
+
+.about-content > p,
+.case-prose > p {
+  max-width: 65ch;
+  color: var(--muted);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+.about-content > p + p,
+.case-prose > p + p {
+  margin-top: 1rem;
+}
+
+.github-note {
+  margin-block: 1.4rem;
+  padding: 0.8rem 1rem;
+  border-left: 2px solid var(--accent);
+  background: var(--surface-2);
+}
+
+.github-note > p {
+  margin-top: 0.15rem;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.milestone-entry {
+  display: grid;
+  grid-template-columns: minmax(5rem, 0.75fr) minmax(0, 4fr);
+  gap: 0.25rem 1rem;
+  padding-block: 0.75rem;
+  border-top: 1px solid var(--line);
+}
+
+.milestone-entry h3,
+.case-highlight-list h3 {
+  font-weight: 650;
+}
+
+.contact-panel {
+  padding: clamp(1.5rem, 6vw, 3.75rem);
+  border: 1px solid var(--line);
+  border-radius: 0.625rem;
+  background: var(--diagram);
+}
+
+.contact-panel .portfolio-section-heading {
+  margin-bottom: 0.8rem;
+}
+
+.contact-panel > p {
+  color: var(--muted);
+}
+
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.contact-email {
+  min-width: 0;
+  font-size: clamp(1rem, 3vw, 1.45rem);
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.contact-actions .site-icon-button {
+  border-color: var(--line);
+  background: var(--bg);
+}
+
+.contact-feedback {
+  min-height: 1.4em;
+  margin-top: 0.35rem;
+}
+
+.case-study,
+.missing-page {
+  padding-block: clamp(2.25rem, 6vw, 5rem);
+}
+
+.case-header {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 1.75rem 4rem;
+  margin-block: clamp(2rem, 5vw, 4.5rem) 2.25rem;
+}
+
+.case-header .portfolio-name {
+  font-size: clamp(3rem, 8.2vw, 6.75rem);
+}
+
+.case-facts {
+  border-top: 1px solid var(--line);
+}
+
+.case-facts > div {
+  display: grid;
+  grid-template-columns: minmax(3rem, 0.45fr) minmax(0, 1fr);
+  gap: 0.65rem;
+  padding-block: 0.65rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.9375rem;
+}
+
+.case-facts dt {
+  color: var(--faint);
+}
+
+.case-facts dd {
+  font-weight: 550;
+}
+
+.case-preview {
+  margin-bottom: clamp(2rem, 6vw, 4rem);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 0.625rem;
+  background: var(--diagram);
+}
+
+.case-preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.case-highlight-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 1.75rem;
+}
+
+.case-highlight-list li {
+  padding-block: 0.8rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.case-highlight-list p {
+  margin-top: 0.3rem;
+}
+
+.case-next {
+  padding-block: 1.5rem 0.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.case-next a {
+  font-family: var(--font-display);
+  font-size: 1.625rem;
+  font-weight: 650;
+}
+
+.missing-page {
+  min-height: 65vh;
+}
+
+.missing-page nav {
+  margin-top: 2rem;
+}
+
+.command-dialog {
+  width: min(100% - 2rem, 32rem);
+  max-height: 75vh;
+  margin: min(14vh, 8rem) auto 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 0.625rem;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.command-dialog::backdrop {
+  background: rgb(14 22 17 / 0.6);
+}
+
+body:has(.command-dialog[open]) {
+  overflow: hidden;
+}
+
+.command-search {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-inline: 1rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.command-search input {
+  min-width: 0;
+  flex: 1;
+  padding-block: 1rem;
+  color: var(--ink);
+  outline-offset: -2px;
+}
+
+.command-search input::placeholder {
+  color: var(--faint);
+}
+
+.command-search kbd {
+  padding: 0.125rem 0.3rem;
+  border: 1px solid var(--line);
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.command-results {
+  max-height: min(55vh, 22rem);
+  overflow-y: auto;
+}
+
+.command-results:not(:empty) {
+  padding: 0.375rem;
+}
+
+.command-results li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.625rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.command-results li[aria-selected="true"] {
+  background: var(--surface-2);
+  color: var(--accent);
+}
+
+.command-empty {
+  padding: 1rem;
+  color: var(--muted);
+}
+
+.command-toast[data-visible="true"] {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 60;
+  max-width: calc(100% - 2rem);
+  padding: 0.625rem 0.875rem;
+  border: 1px solid var(--line);
+  border-radius: 0.375rem;
+  background: var(--surface);
+  color: var(--ink);
+}
+
 .site-footer {
   border-top: 1px solid var(--line);
   color: var(--muted);
@@ -580,9 +918,11 @@ body {
   }
 
   .portfolio-hero,
+  .portfolio-section-split,
   .project-entry-featured,
   .project-grid,
-  .archive-entry {
+  .archive-entry,
+  .case-header {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -593,159 +933,10 @@ body {
   }
 }
 
-/* The six product colors, as hard stops. Used by the logo, progress bar and contact tile. */
-.product-stripe {
-  /* background-image, not the shorthand: the shorthand would reset background-clip and break bg-clip-text. */
-  background-image: linear-gradient(
-    90deg,
-    #ff8a1f 0 16.66%,
-    #8b5cf6 16.66% 33.33%,
-    #e9479a 33.33% 50%,
-    #5b8cff 50% 66.66%,
-    #22a06b 66.66% 83.33%,
-    #f43f5e 83.33% 100%
-  );
-}
-
-/* The same six colors running top to bottom, for the timeline line. */
-.product-stripe-v {
-  background-image: linear-gradient(
-    180deg,
-    #ff8a1f 0 16.66%,
-    #8b5cf6 16.66% 33.33%,
-    #e9479a 33.33% 50%,
-    #5b8cff 50% 66.66%,
-    #22a06b 66.66% 83.33%,
-    #f43f5e 83.33% 100%
-  );
-}
-
-/* Hero wall: each column holds its items twice, so moving it by half loops seamlessly. */
-@keyframes wall-scroll {
-  to {
-    transform: translateY(-50%);
-  }
-}
-.wall-col {
-  animation: wall-scroll 70s linear infinite;
-  will-change: transform;
-}
-
-/* Faint dot grid for demo stages and illustrations; follows the theme's ink. */
-.dot-grid {
-  background-image: radial-gradient(color-mix(in oklab, var(--ink) 13%, transparent) 1px, transparent 1px);
-  background-size: 16px 16px;
-}
-
-/* Dotted texture on the colored project fields. */
-.dot-field {
-  background-image: radial-gradient(rgb(255 255 255 / 0.22) 1px, transparent 1px);
-  background-size: 14px 14px;
-}
-
-/* Before an in-page jump, every section is laid out at its real height (see revealAllSections). */
-html.show-all [data-lazy-section] {
-  content-visibility: visible !important;
-}
-
-/* Without scroll-timeline support the progress bar simply stays hidden. */
-.scroll-progress {
-  transform: scaleX(0);
-}
-
-/* Hero wall resting pose; the scroll animation below takes over where supported. */
-.hero-wall {
-  transform: translate(-50%, -50%) rotateX(22deg) rotateZ(-14deg);
-}
-
-/* Scroll-driven hero and progress bar: native CSS, no JavaScript on the main thread. */
-@supports (animation-timeline: scroll()) {
-  @keyframes wall-flatten {
-    to {
-      transform: translate(-50%, -50%) rotateX(4deg) rotateZ(-14deg) scale(1.18);
-      opacity: 0.25;
-    }
-  }
-  @keyframes copy-lift {
-    to {
-      transform: translateY(-140px);
-      opacity: 0;
-    }
-  }
-  @keyframes progress-grow {
-    from {
-      transform: scaleX(0);
-    }
-    to {
-      transform: scaleX(1);
-    }
-  }
-  .hero-wall {
-    animation: wall-flatten linear both;
-    animation-timeline: scroll(root);
-    animation-range: 0 100svh;
-  }
-  .hero-copy {
-    animation: copy-lift linear both;
-    animation-timeline: scroll(root);
-    animation-range: 0 60svh;
-  }
-  .scroll-progress {
-    animation: progress-grow linear both;
-    animation-timeline: scroll(root);
-  }
-}
-
-/* Hero entrance, in CSS so it starts with the HTML instead of waiting for JavaScript. */
-@keyframes rise {
-  from {
-    transform: translateY(55%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-@keyframes wall-in {
-  from {
-    opacity: 0;
-    transform: scale(1.08);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-.anim-rise {
-  animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-.anim-fade-up {
-  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-.anim-wall-in {
-  animation: wall-in 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-wall,
-  .hero-copy {
-    animation: none;
-  }
-  .anim-rise,
-  .anim-fade-up,
-  .anim-wall-in {
-    animation: none;
-  }
-  .wall-col {
-    animation: none;
+@media (max-width: 32rem) {
+  .case-highlight-list,
+  .skill-row,
+  .milestone-entry {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
