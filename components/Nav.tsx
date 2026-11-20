@@ -11,6 +11,7 @@ import { ThemeToggle } from "./ThemeToggle";
 const sections = [
   { id: "top", label: "Home" },
   { id: "work", label: "Work" },
+  { id: "github", label: "GitHub activity" },
   { id: "about", label: "About" },
   { id: "contact", label: "Contact" },
 ] as const;

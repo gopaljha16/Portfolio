@@ -56,12 +56,19 @@ export function CommandMenu() {
   }, [toast]);
 
   const commands = useMemo<Command[]>(() => [
-    ...["Work", "Experience", "Skills", "About", "Contact"].map((label) => ({
-      id: `go-${label.toLowerCase()}`,
+    ...[
+      ["work", "Work"],
+      ["github", "GitHub activity"],
+      ["experience", "Experience"],
+      ["skills", "Skills"],
+      ["about", "About"],
+      ["contact", "Contact"],
+    ].map(([id, label]) => ({
+      id: `go-${id}`,
       group: "Go to" as const,
       label,
       icon: <Hash size={16} />,
-      run: () => router.push(`/#${label.toLowerCase()}`),
+      run: () => router.push(`/#${id}`),
     })),
     ...caseStudies.map((project) => ({
       id: `case-${project.slug}`,
