@@ -20,21 +20,20 @@ const accent = localFont({
 });
 
 export function Hero() {
-  const featured = caseStudies.slice(0, 3).map(({ slug, name, image, domains }) => ({ slug, name, image, domains }));
+  const featured = caseStudies.slice(0, 3).map(({ slug, name, image, domains, summary }) => ({ slug, name, image, domains, summary }));
 
   return (
     <section id="top" className={`portfolio-cover ${geist.variable} ${accent.variable}`} aria-labelledby="hero-title">
       <div className="site-shell cover-inner">
-        <div className="cover-identity">
-          <p>{profile.role} <span aria-hidden="true">/</span> {profile.city}, {profile.country}</p>
-          <a href={profile.links.github} rel="me"><Github size={16} aria-hidden="true" />@{profile.github}</a>
-        </div>
         <div className="cover-masthead">
+          <p className="cover-role">{profile.role}</p>
           <h1 id="hero-title">{profile.name}</h1>
-          <div className="cover-intro">
-            <p><em>I build</em> coding platforms, real-time apps, and the APIs behind them.</p>
-            <a href="#work">Browse all work</a>
+          <p className="cover-intro"><em>I build</em> coding platforms, real-time apps, and the APIs behind them.</p>
+          <div className="cover-identity">
+            <a href={profile.links.github} rel="me"><Github size={17} aria-hidden="true" />@{profile.github}</a>
+            <p>{profile.city}, {profile.country}</p>
           </div>
+          <a href="#work" className="portfolio-button portfolio-button-primary cover-work-link">Browse all work</a>
         </div>
         <HeroProjects projects={featured} />
       </div>
