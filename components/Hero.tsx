@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import Link from "next/link";
 import { experience, featuredProjects, profile } from "@/lib/data";
 import { HeroProjects } from "./HeroProjects";
 
@@ -25,7 +26,7 @@ export function Hero() {
         <p className="hero-summary"><em>I build</em> coding platforms, real-time apps, and the APIs behind them.</p>
         <div className="portfolio-actions hero-actions">
           <a href="#work" className="portfolio-button portfolio-button-primary">View work</a>
-          <a href="#contact" className="portfolio-text-link">Get in touch</a>
+          <Link href="/resume" className="portfolio-text-link">Résumé</Link>
         </div>
       </div>
 

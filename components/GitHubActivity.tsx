@@ -1,5 +1,5 @@
 import { Github } from "lucide-react";
-import { profile } from "@/lib/data";
+import { archive, profile } from "@/lib/data";
 import type { GitHubActivity as Activity } from "@/lib/github-activity";
 import { ContributionCalendar } from "./ContributionCalendar";
 
@@ -9,6 +9,8 @@ const periodFormat = new Intl.DateTimeFormat("en-IN", {
   year: "numeric",
   timeZone: "UTC",
 });
+
+const revueon = archive.find((project) => project.name === "Revueon");
 
 export function GitHubActivity({ activity }: { activity: Activity | null }) {
   return (
@@ -37,6 +39,12 @@ export function GitHubActivity({ activity }: { activity: Activity | null }) {
           <p className="contribution-period">The contribution chart is temporarily unavailable. You can view it on GitHub.</p>
         )}
       </div>
+      {revueon?.repo && (
+        <p className="github-project">
+          <a href={revueon.repo} className="portfolio-text-link">Revueon on GitHub</a>
+          <span>Code review extension for VS Code.</span>
+        </p>
+      )}
     </section>
   );
 }

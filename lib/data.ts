@@ -399,7 +399,7 @@ export const experience: Role[] = [
     color: "#5B8CFF",
     monogram: "CA",
     summary:
-      "Worked across full-stack product development, frontend engineering, backend implementation, Generative AI and technical content creation.",
+      "Built features across the UI and API, prototyped and integrated generative AI, and created technical content for developers.",
     highlights: [
       "Full-stack product development, from the interface down to the API.",
       "Frontend engineering and backend implementation on the same features.",
@@ -419,10 +419,9 @@ export const experience: Role[] = [
     span: [0, 3],
     color: "#22A06B",
     monogram: "fi",
-    summary: "Full-stack builds for clients, from planning to live deployment and the work after launch.",
+    summary: "Shipped a client e-commerce platform with a product catalog, checkout, an admin panel, and production hosting.",
     highlights: [
       "Delivered web products end to end, from planning to live deployment.",
-      "Shipped an e-commerce platform with a product catalog, checkout, admin panel and production hosting.",
       "Built ad-tech and SaaS tools with responsive frontends, scalable APIs and deployment pipelines.",
       "Handled maintenance, new features and performance work after launch.",
     ],
@@ -629,18 +628,6 @@ export const stats = [
   { value: 165, suffix: "", label: "commits to ship Quibly 1.0" },
   { value: 1, suffix: "", label: "extension on the VS Code Marketplace" },
 ];
-
-/** Used when the GitHub API can't be reached at build time. Snapshot from Oct 2026. */
-export const githubFallback = {
-  repos: 70,
-  languages: [
-    { name: "JavaScript", count: 20 },
-    { name: "TypeScript", count: 16 },
-    { name: "CSS", count: 4 },
-  ],
-  other: 15,
-  lastPush: "2026-09-24T00:00:00Z",
-};
 
 /**
  * Questions people (and answer engines) ask, answered in full sentences that name Gopal,

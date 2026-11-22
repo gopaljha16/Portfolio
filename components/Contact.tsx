@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Copy } from "lucide-react";
 import { profile } from "@/lib/data";
 
@@ -27,6 +28,7 @@ export function Contact() {
             <Copy size={18} aria-hidden="true" />
           </button>
         </div>
+        <Link href="/resume" className="portfolio-text-link">View résumé</Link>
         <p className="entry-meta contact-feedback" role="status">{feedback}</p>
       </div>
     </section>

@@ -70,6 +70,13 @@ export function CommandMenu() {
       icon: <Hash size={16} />,
       run: () => router.push(`/#${id}`),
     })),
+    {
+      id: "go-resume",
+      group: "Go to",
+      label: "Résumé",
+      icon: <Hash size={16} />,
+      run: () => router.push("/resume"),
+    },
     ...caseStudies.map((project) => ({
       id: `case-${project.slug}`,
       group: "Case studies" as const,

@@ -3,12 +3,10 @@ import Link from "next/link";
 import { ChevronDown, MapPin } from "lucide-react";
 import HyderabadMap from "@/images/hyderabad-map.png";
 import { milestones, profile } from "@/lib/data";
-import type { GitHubStats } from "@/lib/github";
 import { Experience } from "./Experience";
-import { Glance } from "./Glance";
 import { Skills } from "./Skills";
 
-export function About({ github }: { github: GitHubStats }) {
+export function About() {
   return (
     <section id="about" className="site-shell portfolio-section" aria-labelledby="about-title">
       <header className="portfolio-section-heading"><h2 id="about-title">About me</h2></header>
@@ -32,7 +30,6 @@ export function About({ github }: { github: GitHubStats }) {
               {profile.city}, {profile.country}
             </figcaption>
           </figure>
-          <Glance github={github} />
           <details className="portfolio-disclosure">
             <summary>
               <span>How I got here</span>
@@ -40,7 +37,7 @@ export function About({ github }: { github: GitHubStats }) {
             </summary>
             <ol className="milestone-list">
               {milestones.map((milestone) => {
-                const href = milestone.project === "elyra" ? "#work" : milestone.project ? `/work/${milestone.project}` : milestone.href;
+                const href = milestone.project && milestone.project !== "elyra" ? `/work/${milestone.project}` : milestone.href;
                 return (
                   <li key={milestone.title} className="milestone-entry">
                     <p className="entry-meta">{milestone.date}</p>
