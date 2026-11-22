@@ -104,7 +104,7 @@ export const projects: Project[] = [
     name: "Quibly",
     tagline: "A cleaner way to chat, collaborate and grow your community.",
     summary:
-      "A community platform for channel chat, voice rooms and moderation, in the spirit of Discord.",
+      "A real-time community platform with channel chat, voice rooms and moderation.",
     image: Quibly,
     color: "#8B5CF6",
     ink: "#000000",
@@ -117,7 +117,7 @@ export const projects: Project[] = [
     study: {
       overview: [
         "Quibly is a real-time communication platform for communities: servers and channels, direct messages, voice and video calls, and the moderation tools that keep a busy server healthy.",
-        "The interesting part is underneath. Messages fan out through Socket.IO with a Redis adapter so it scales across servers, Kafka carries events between services, and LiveKit handles voice and video.",
+        "Socket.IO and Redis distribute messages across server instances, Kafka carries events between services, and LiveKit handles voice and video.",
       ],
       highlights: [
         { title: "Real-time messaging", copy: "Channels and direct messages delivered instantly, with reactions, file uploads and link previews." },
@@ -155,9 +155,9 @@ export const projects: Project[] = [
         "Upload an existing resume as a PDF or Word file and Elevare parses it, scores it, and suggests what to fix before a recruiter's software ever sees it.",
       ],
       highlights: [
-        { title: "ATS score", copy: "Checks a resume the way applicant tracking systems do and explains the score." },
+        { title: "ATS checks", copy: "Explains its résumé score and suggests changes for the target job description." },
         { title: "Job-specific tuning", copy: "Optimizes keywords and wording for the exact role you're applying to." },
-        { title: "Import anything", copy: "Reads existing resumes from PDF and Word files." },
+        { title: "Résumé import", copy: "Reads existing résumés from PDF and Word files." },
         { title: "Portfolio generator", copy: "Turns the same content into a portfolio site." },
         { title: "Interview prep", copy: "Practice tools for the interview that comes after the resume works." },
         { title: "PDF export", copy: "Download a clean, print-ready resume." },
@@ -247,6 +247,7 @@ export const projects: Project[] = [
 ];
 
 export const caseStudies = projects.filter((p) => p.study);
+export const featuredProjects = caseStudies.slice(0, 3);
 
 export const inkOn = (p: Pick<Project, "ink">) => p.ink ?? "#12141b";
 

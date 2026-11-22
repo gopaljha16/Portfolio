@@ -34,6 +34,10 @@ export function MessageTrace() {
         <p><strong>{title}</strong></p>
         <p>{detail}</p>
       </div>
+      <div className="case-decision">
+        <h3>{quiblyBuild.decision.title}</h3>
+        <p>{quiblyBuild.decision.detail}</p>
+      </div>
     </section>
   );
 }

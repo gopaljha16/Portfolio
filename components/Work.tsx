@@ -1,30 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
-import { buildNotes } from "@/lib/build-notes";
-import { archive, caseStudies, profile, projects, type Project } from "@/lib/data";
+import { archive, caseStudies, featuredProjects, type Project } from "@/lib/data";
 
 function ProjectEntry({ project, featured = false }: { project: Project; featured?: boolean }) {
   const caseStudy = `/work/${project.slug}`;
-  const note = buildNotes[project.slug];
 
   return (
     <article className={featured ? "project-entry project-entry-featured" : "project-entry"}>
       <div className="project-copy">
         <div className="project-identity">
           <p className="project-meta">{project.domains.join(" / ")} · {project.year}</p>
-          <h3><Link href={caseStudy} aria-label={`${project.name} case study`}>{project.name}</Link></h3>
+          <h3>{project.name}</h3>
         </div>
         <div className="project-description">
           <p className="project-summary">{project.summary}</p>
           <div className="project-links">
-            {note && (
-              <Link href={`${caseStudy}#how-built`} className="portfolio-text-link" aria-label={`${project.name} build notes`}>
-                Build notes
+            <Link href={caseStudy} className="portfolio-text-link" aria-label={`Read the ${project.name} case study`}>
+              Read case study
+            </Link>
+            {project.slug === "quibly" && (
+              <Link href={`${caseStudy}#how-built`} className="portfolio-text-link">
+                Message trace
               </Link>
             )}
-            {project.href && <a href={project.href} aria-label={`${project.name} live site`}>Live site</a>}
-            {project.repo && <a href={project.repo} aria-label={`${project.name} source code`}>Source</a>}
           </div>
         </div>
       </div>
@@ -69,26 +68,33 @@ function ProjectArchive() {
 }
 
 export function Work() {
-  const [featured, ...otherProjects] = caseStudies;
-  const inDevelopment = projects.filter((project) => project.status === "building");
+  const [featured, ...otherFeatured] = featuredProjects;
+  const otherProjects = caseStudies.slice(featuredProjects.length);
 
   return (
     <section id="work" className="site-shell portfolio-section" aria-labelledby="work-title">
       <header className="portfolio-section-heading">
         <h2 id="work-title">Selected work</h2>
-        <a href={profile.links.github} className="portfolio-text-link">More on GitHub</a>
       </header>
 
       <ProjectEntry project={featured} featured />
       <div className="project-index">
-        {otherProjects.map((project) => <ProjectEntry key={project.slug} project={project} />)}
+        {otherFeatured.map((project) => <ProjectEntry key={project.slug} project={project} />)}
       </div>
-      {inDevelopment.map((project) => (
-        <div key={project.slug} className="project-wip">
-          <h3>{project.name}</h3>
-          <p>In development</p>
-        </div>
-      ))}
+      <section className="more-projects" aria-labelledby="more-projects-title">
+        <h3 id="more-projects-title">More projects</h3>
+        <ul>
+          {otherProjects.map((project) => (
+            <li key={project.slug} className="archive-entry">
+              <h4>{project.name}</h4>
+              <p className="project-summary">{project.summary}</p>
+              <Link href={`/work/${project.slug}`} className="portfolio-text-link" aria-label={`Read the ${project.name} case study`}>
+                Read case study
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
       <ProjectArchive />
     </section>
   );

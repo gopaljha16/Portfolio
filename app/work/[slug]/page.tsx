@@ -74,12 +74,25 @@ export default async function CaseStudyPage({ params }: Props) {
         <Image src={project.image} alt={`${project.name} product screenshot`} sizes="(max-width: 1060px) 90vw, 972px" preload />
       </figure>
 
+      <section className="portfolio-section portfolio-section-split" aria-labelledby="overview">
+        <header className="portfolio-section-heading"><h2 id="overview">Overview</h2></header>
+        <div className="case-prose">
+          {study.overview.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+        </div>
+      </section>
+
       {project.slug === "quibly" ? <MessageTrace /> : note && (
         <section id="how-built" className="case-build" aria-labelledby="case-build-title">
           <header>
             <p className="portfolio-kicker">How it’s built</p>
             <h2 id="case-build-title">{note.title}</h2>
             <p>{note.intro}</p>
+            {note.decision && (
+              <div className="case-decision">
+                <h3>{note.decision.title}</h3>
+                <p>{note.decision.detail}</p>
+              </div>
+            )}
           </header>
           <ol className="build-steps">
             {note.steps.map(({ label, title, detail }) => (
@@ -98,13 +111,6 @@ export default async function CaseStudyPage({ params }: Props) {
           <CodingDemo />
         </div>
       )}
-
-      <section className="portfolio-section portfolio-section-split" aria-labelledby="overview">
-        <header className="portfolio-section-heading"><h2 id="overview">Overview</h2></header>
-        <div className="case-prose">
-          {study.overview.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-        </div>
-      </section>
 
       <section className="portfolio-section portfolio-section-split" aria-labelledby="highlights">
         <header className="portfolio-section-heading"><h2 id="highlights">What it does</h2></header>
