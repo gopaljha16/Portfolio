@@ -9,14 +9,13 @@ import { OPEN_COMMAND_MENU } from "@/lib/events";
 import { ThemeToggle } from "./ThemeToggle";
 
 const sections = [
-  { id: "top", label: "Home" },
   { id: "work", label: "Work" },
-  { id: "github", label: "GitHub activity" },
   { id: "about", label: "About" },
   { id: "contact", label: "Contact" },
 ] as const;
 
-type Section = (typeof sections)[number]["id"];
+const sectionIds = ["top", "work", "about", "github", "contact"] as const;
+type Section = (typeof sectionIds)[number];
 
 export function Nav() {
   const [open, setOpen] = useState(false);
@@ -37,7 +36,7 @@ export function Nav() {
         if (active) setSection(active.target.id as Section);
       }, { rootMargin: `-90px 0px -${bottom}px 0px` });
 
-      for (const { id } of sections) {
+      for (const id of sectionIds) {
         const element = document.getElementById(id);
         if (element) observer.observe(element);
       }
@@ -66,7 +65,9 @@ export function Nav() {
           if (open && event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setOpen(false);
         }}
       >
-        <a href={`mailto:${profile.email}`} className="site-email">{profile.email}</a>
+        <Link href="/#top" className="site-name" aria-current={activeSection === "top" ? "location" : undefined}>
+          {profile.name}
+        </Link>
         <div id="main-nav-menu" className="site-menu-panel" data-open={open}>
           <ul id="main-nav-links" className="site-nav-links">
             {sections.map(({ id, label }) => (
@@ -89,11 +90,12 @@ export function Nav() {
             className="site-command"
             onClick={() => {
               setOpen(false);
-              toggle.current?.focus();
+              if (open) toggle.current?.focus();
               window.dispatchEvent(new Event(OPEN_COMMAND_MENU));
             }}
             aria-label="Open command menu"
             aria-keyshortcuts="Control+K Meta+K"
+            title="Quick jump"
           >
             <Command size={16} aria-hidden="true" />
             <span>Quick jump</span>

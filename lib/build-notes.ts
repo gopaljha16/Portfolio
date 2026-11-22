@@ -1,12 +1,17 @@
 export type BuildNote = {
   title: string;
   intro: string;
+  decision?: { title: string; detail: string };
   steps: readonly { label: string; title: string; detail: string }[];
 };
 
 export const quiblyBuild = {
   title: "How a chat message travels",
   intro: "A channel can include people connected to different server instances. Quibly uses the Socket.IO Redis adapter to carry room events across those instances.",
+  decision: {
+    title: "Relay the message across instances",
+    detail: "A room broadcast on one instance reaches its own connections. The Redis adapter carries that event to the other instances so their room members receive it too.",
+  },
   steps: [
     {
       label: "Browser",
@@ -29,7 +34,11 @@ export const quiblyBuild = {
 export const buildNotes: Partial<Record<string, BuildNote>> = {
   codexa: {
     title: "From submission to feedback",
-    intro: "The problem judge connects two parts of Codexa’s practice loop. It gives each submission a result, and that result becomes part of the learner’s progress history.",
+    intro: "A learner needs an answer to two questions after writing a solution. Did it pass, and how does this attempt fit into their progress?",
+    decision: {
+      title: "Keep each judged attempt",
+      detail: "The verdict goes back to the editor for immediate feedback. Saving the attempt also gives the submission history and progress dashboard a record of what the learner tried.",
+    },
     steps: [
       {
         label: "Monaco editor",
@@ -44,14 +53,18 @@ export const buildNotes: Partial<Record<string, BuildNote>> = {
       {
         label: "Progress dashboard",
         title: "Record the attempt",
-        detail: "The submission history feeds the progress heatmap and performance analytics. Live contests also use Socket.IO to update the leaderboard.",
+        detail: "The submission history feeds the progress heatmap and performance analytics.",
       },
     ],
   },
   quibly: quiblyBuild,
   elevare: {
     title: "From an existing résumé to a scored draft",
-    intro: "Elevare accepts the file a user already has. The same imported content can be scored against a job description, edited, or used to generate a portfolio.",
+    intro: "Someone applying for a new role usually starts with an existing résumé. Elevare accepts that file so the first step can be improving a draft.",
+    decision: {
+      title: "Reuse the imported content",
+      detail: "Extract the text at import so the draft can be checked against a job description, revised in the editor, and reused in an export or portfolio.",
+    },
     steps: [
       {
         label: "Import",

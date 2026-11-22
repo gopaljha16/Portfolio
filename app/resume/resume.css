@@ -1,0 +1,130 @@
+.resume-page {
+  max-width: 48rem;
+  padding-block: clamp(1.5rem, 5vw, 3.5rem) 3.5rem;
+}
+
+.resume-actions,
+.resume-entry-heading,
+.resume-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1rem;
+}
+
+.resume-actions,
+.resume-entry-heading {
+  justify-content: space-between;
+}
+
+.resume-actions {
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.resume-actions button {
+  cursor: pointer;
+}
+
+.resume-document {
+  padding: clamp(1rem, 5vw, 2.75rem);
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  background: var(--surface);
+  box-shadow: var(--card-shadow);
+}
+
+.resume-header h1 {
+  font-size: clamp(2.5rem, 6vw, 3.75rem);
+  font-weight: 650;
+  letter-spacing: -0.055em;
+  line-height: 1.05;
+}
+
+.resume-header > p,
+.resume-links {
+  margin-top: 0.5rem;
+}
+
+.resume-links a,
+.resume-entries h3 a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.resume-section {
+  margin-top: 1.4rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.resume-section h2 {
+  margin-bottom: 0.6rem;
+  font-size: 1.125em;
+  font-weight: 650;
+}
+
+.resume-entries,
+.resume-skills {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.resume-entries h3,
+.resume-skills dt {
+  font-weight: 650;
+}
+
+.resume-entries p,
+.resume-skills dd {
+  color: var(--muted);
+}
+
+.resume-entry-heading p {
+  font-size: 0.875em;
+}
+
+@page resume {
+  size: A4;
+  margin: 15mm;
+}
+
+@media print {
+  body:has(.resume-page) {
+    background: #fff;
+  }
+
+  body:has(.resume-page) > :not(main),
+  .resume-actions {
+    display: none;
+  }
+
+  .resume-page {
+    page: resume;
+    width: 100%;
+    max-width: none;
+    padding: 0;
+  }
+
+  .resume-document {
+    --ink: #171513;
+    --muted: #37312c;
+    --accent: #6d2b11;
+    --line: #cbc5be;
+    padding: 0;
+    border: 0;
+    background: #fff;
+    color: var(--ink);
+    box-shadow: none;
+    font-size: 11pt;
+  }
+
+  .resume-header h1 {
+    font-size: 28pt;
+  }
+
+  .resume-section {
+    break-inside: avoid;
+  }
+}

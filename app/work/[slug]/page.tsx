@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { buildNotes } from "@/lib/build-notes";
-import { caseStudies, profile } from "@/lib/data";
+import { caseStudies, getProjectPreview, profile } from "@/lib/data";
 import { projectJsonLd, JsonLd } from "@/lib/seo";
 import { CodingDemo } from "@/components/CodingDemo";
 import { MessageTrace } from "@/components/MessageTrace";
@@ -37,6 +37,8 @@ export default async function CaseStudyPage({ params }: Props) {
   if (!project?.study) notFound();
   const { study } = project;
   const note = buildNotes[project.slug];
+  const preview = getProjectPreview(project);
+  const hasExercise = project.slug === "codexa";
   const next = caseStudies[(caseStudies.indexOf(project) + 1) % caseStudies.length];
 
   const facts = [
@@ -58,6 +60,7 @@ export default async function CaseStudyPage({ params }: Props) {
           <h1 className="portfolio-name">{project.name}</h1>
           <p className="portfolio-intro">{project.summary}</p>
           <div className="portfolio-actions">
+            {hasExercise && <a href="#try-exercise" className="portfolio-button portfolio-button-primary">Try an exercise</a>}
             {project.href && <a href={project.href} className="portfolio-button portfolio-button-primary">Live site</a>}
             {project.repo && <a href={project.repo} className="portfolio-button portfolio-button-plain">Source on GitHub</a>}
             {note && <a href="#how-built" className="portfolio-text-link case-build-jump">Build notes</a>}
@@ -71,8 +74,21 @@ export default async function CaseStudyPage({ params }: Props) {
       </header>
 
       <figure className="case-preview">
-        <Image src={project.image} alt={`${project.name} product screenshot`} sizes="(max-width: 1060px) 90vw, 972px" preload />
+        <Image src={preview.image} alt={preview.alt} sizes="(max-width: 1060px) 90vw, 972px" preload />
+        {preview.caption && (
+          <figcaption>
+            <span>{preview.caption}</span>
+            <a href={preview.image.src} className="portfolio-text-link" target="_blank" rel="noreferrer">View full-size screenshot</a>
+          </figcaption>
+        )}
       </figure>
+
+      <section className="portfolio-section portfolio-section-split" aria-labelledby="overview">
+        <header className="portfolio-section-heading"><h2 id="overview">Overview</h2></header>
+        <div className="case-prose">
+          {study.overview.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+        </div>
+      </section>
 
       {project.slug === "quibly" ? <MessageTrace /> : note && (
         <section id="how-built" className="case-build" aria-labelledby="case-build-title">
@@ -80,6 +96,12 @@ export default async function CaseStudyPage({ params }: Props) {
             <p className="portfolio-kicker">How it’s built</p>
             <h2 id="case-build-title">{note.title}</h2>
             <p>{note.intro}</p>
+            {note.decision && (
+              <div className="case-decision">
+                <h3>{note.decision.title}</h3>
+                <p>{note.decision.detail}</p>
+              </div>
+            )}
           </header>
           <ol className="build-steps">
             {note.steps.map(({ label, title, detail }) => (
@@ -93,18 +115,11 @@ export default async function CaseStudyPage({ params }: Props) {
         </section>
       )}
 
-      {project.slug === "codexa" && (
-        <div className="case-coding-demo">
+      {hasExercise && (
+        <div id="try-exercise" className="case-coding-demo">
           <CodingDemo />
         </div>
       )}
-
-      <section className="portfolio-section portfolio-section-split" aria-labelledby="overview">
-        <header className="portfolio-section-heading"><h2 id="overview">Overview</h2></header>
-        <div className="case-prose">
-          {study.overview.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-        </div>
-      </section>
 
       <section className="portfolio-section portfolio-section-split" aria-labelledby="highlights">
         <header className="portfolio-section-heading"><h2 id="highlights">What it does</h2></header>

@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Project } from "@/lib/data";
+import type { getProjectPreview, Project } from "@/lib/data";
 
-type Preview = Pick<Project, "slug" | "name" | "image" | "domains">;
+type Preview = Pick<Project, "slug" | "name" | "domains"> & { preview: ReturnType<typeof getProjectPreview> };
 
 export function HeroProjects({ projects }: { projects: Preview[] }) {
   const [active, setActive] = useState(0);
@@ -15,20 +15,20 @@ export function HeroProjects({ projects }: { projects: Preview[] }) {
     <section className="overview-card featured-overview" aria-labelledby="featured-overview-title">
       <h2 id="featured-overview-title" className="overview-label">Featured work</h2>
       <div id="featured-project-details" aria-live="polite" className="featured-project-details">
+        <div className="featured-caption">
+          <div><h3>{project.name}</h3><span>{project.domains.join(" / ")}</span></div>
+          <Link href={`/work/${project.slug}`} className="portfolio-text-link" aria-label={`Read the ${project.name} case study`}>
+            Read case study
+          </Link>
+        </div>
         <div className="featured-art">
           <Image
             key={project.slug}
-            src={project.image}
-            alt={`${project.name} product screenshot`}
-            sizes="(max-width: 560px) 88vw, (max-width: 780px) 44vw, 285px"
+            src={project.preview.image}
+            alt={project.preview.alt}
+            sizes="(max-width: 640px) 90vw, (max-width: 1090px) 60vw, 620px"
             placeholder="blur"
           />
-        </div>
-        <div className="featured-caption">
-          <div><p>{project.name}</p><span>{project.domains.join(" / ")}</span></div>
-          <Link href={`/work/${project.slug}`} className="portfolio-text-link" aria-label={`Read the ${project.name} case study`}>
-            Case study
-          </Link>
         </div>
       </div>
       <ul className="overview-picker" aria-labelledby="featured-overview-title">

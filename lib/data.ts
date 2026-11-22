@@ -1,8 +1,11 @@
 import type { StaticImageData } from "next/image";
 import Codexa from "@/images/Codexa.png";
+import CodexaEditor from "@/images/codexa-editor.webp";
 import Elevare from "@/images/Elevare.png";
+import ElevareEditor from "@/images/elevare-editor.webp";
 import Lynkr from "@/images/lynkr-landing.png";
 import Quibly from "@/images/Quibly-landing.png";
+import QuiblyChannels from "@/images/quibly-channels.webp";
 import ConsoleMe from "@/images/consoleme-landing.png";
 import Elyra from "@/images/elyra-preview.svg";
 import CareoraShot from "@/images/careora.png";
@@ -43,6 +46,7 @@ export type Project = {
   tagline: string;
   summary: string;
   image: StaticImageData;
+  preview?: { image: StaticImageData; alt: string; caption: string };
   /** The product's own brand color, taken from its UI. */
   color: string;
   /** Text color on `color`. Dark everywhere except Quibly's violet, where black is the only ink above 4.5:1. */
@@ -71,8 +75,12 @@ export const projects: Project[] = [
     summary:
       "A coding and DSA platform with contests, AI mock interviews and visual explanations of algorithms.",
     image: Codexa,
+    preview: {
+      image: CodexaEditor,
+      alt: "A binary search problem next to Codexa’s JavaScript editor and a successful test run in the console.",
+      caption: "Codexa’s editor and console running a sample binary search exercise.",
+    },
     color: "#FF8A1F",
-    href: "https://codexa.live",
     repo: "https://github.com/gopaljha16/codexa",
     year: 2025,
     status: "live",
@@ -104,8 +112,13 @@ export const projects: Project[] = [
     name: "Quibly",
     tagline: "A cleaner way to chat, collaborate and grow your community.",
     summary:
-      "A community platform for channel chat, voice rooms and moderation, in the spirit of Discord.",
+      "A real-time community platform with channel chat, voice rooms and moderation.",
     image: Quibly,
+    preview: {
+      image: QuiblyChannels,
+      alt: "Quibly’s sample product launch channel with messages, a moderation notice, and voice controls.",
+      caption: "Quibly’s public channel preview uses sample messages to show chat, moderation, and voice controls together.",
+    },
     color: "#8B5CF6",
     ink: "#000000",
     href: "https://quiblyy.vercel.app/",
@@ -117,7 +130,7 @@ export const projects: Project[] = [
     study: {
       overview: [
         "Quibly is a real-time communication platform for communities: servers and channels, direct messages, voice and video calls, and the moderation tools that keep a busy server healthy.",
-        "The interesting part is underneath. Messages fan out through Socket.IO with a Redis adapter so it scales across servers, Kafka carries events between services, and LiveKit handles voice and video.",
+        "Socket.IO and Redis distribute messages across server instances, Kafka carries events between services, and LiveKit handles voice and video.",
       ],
       highlights: [
         { title: "Real-time messaging", copy: "Channels and direct messages delivered instantly, with reactions, file uploads and link previews." },
@@ -141,6 +154,11 @@ export const projects: Project[] = [
     summary:
       "An AI resume builder that scores resumes against ATS checks and turns them into portfolios.",
     image: Elevare,
+    preview: {
+      image: ElevareEditor,
+      alt: "Elevare’s résumé form next to an ATS score, writing suggestions, and the formatted résumé preview.",
+      caption: "Elevare’s demo résumé in the builder, with sample ATS feedback and a live document preview.",
+    },
     color: "#E9479A",
     href: "https://elevare-seven.vercel.app/",
     repo: "https://github.com/gopaljha16/Elevare",
@@ -155,9 +173,9 @@ export const projects: Project[] = [
         "Upload an existing resume as a PDF or Word file and Elevare parses it, scores it, and suggests what to fix before a recruiter's software ever sees it.",
       ],
       highlights: [
-        { title: "ATS score", copy: "Checks a resume the way applicant tracking systems do and explains the score." },
+        { title: "ATS checks", copy: "Explains its résumé score and suggests changes for the target job description." },
         { title: "Job-specific tuning", copy: "Optimizes keywords and wording for the exact role you're applying to." },
-        { title: "Import anything", copy: "Reads existing resumes from PDF and Word files." },
+        { title: "Résumé import", copy: "Reads existing résumés from PDF and Word files." },
         { title: "Portfolio generator", copy: "Turns the same content into a portfolio site." },
         { title: "Interview prep", copy: "Practice tools for the interview that comes after the resume works." },
         { title: "PDF export", copy: "Download a clean, print-ready resume." },
@@ -247,6 +265,11 @@ export const projects: Project[] = [
 ];
 
 export const caseStudies = projects.filter((p) => p.study);
+export const featuredProjects = caseStudies.slice(0, 3);
+
+export function getProjectPreview(project: Pick<Project, "name" | "image" | "preview">) {
+  return project.preview ?? { image: project.image, alt: `${project.name} homepage`, caption: undefined };
+}
 
 export const inkOn = (p: Pick<Project, "ink">) => p.ink ?? "#12141b";
 
@@ -368,21 +391,6 @@ export const skillGroups: Record<"frontend" | "backend" | "cloud" | "ai", SkillG
   },
 };
 
-export const workflow = [
-  {
-    title: "Architect",
-    copy: "Design the data model, the API surface and how the system holds up under load.",
-  },
-  {
-    title: "Develop",
-    copy: "Build the interface and the backend together, so every screen has a real endpoint behind it.",
-  },
-  {
-    title: "Deploy",
-    copy: "Ship through automated pipelines, then keep iterating on what people actually use.",
-  },
-];
-
 export type Role = {
   role: string;
   company: string;
@@ -413,7 +421,7 @@ export const experience: Role[] = [
     color: "#5B8CFF",
     monogram: "CA",
     summary:
-      "Worked across full-stack product development, frontend engineering, backend implementation, Generative AI and technical content creation.",
+      "Built features across the UI and API, prototyped and integrated generative AI, and created technical content for developers.",
     highlights: [
       "Full-stack product development, from the interface down to the API.",
       "Frontend engineering and backend implementation on the same features.",
@@ -433,10 +441,9 @@ export const experience: Role[] = [
     span: [0, 3],
     color: "#22A06B",
     monogram: "fi",
-    summary: "Full-stack builds for clients, from planning to live deployment and the work after launch.",
+    summary: "Shipped a client e-commerce platform with a product catalog, checkout, an admin panel, and production hosting.",
     highlights: [
       "Delivered web products end to end, from planning to live deployment.",
-      "Shipped an e-commerce platform with a product catalog, checkout, admin panel and production hosting.",
       "Built ad-tech and SaaS tools with responsive frontends, scalable APIs and deployment pipelines.",
       "Handled maintenance, new features and performance work after launch.",
     ],
@@ -585,7 +592,7 @@ export const milestones: Milestone[] = [
     date: "Aug 2025",
     year: 2025,
     title: "Codexa",
-    copy: "Rebuilt properly, with live contests, AI mock interviews and payments. Now live at codexa.live.",
+    copy: "Rebuilt the coding platform with live contests, AI mock interviews and payments.",
     project: "codexa",
   },
   {
@@ -644,18 +651,6 @@ export const stats = [
   { value: 1, suffix: "", label: "extension on the VS Code Marketplace" },
 ];
 
-/** Used when the GitHub API can't be reached at build time. Snapshot from Oct 2026. */
-export const githubFallback = {
-  repos: 70,
-  languages: [
-    { name: "JavaScript", count: 20 },
-    { name: "TypeScript", count: 16 },
-    { name: "CSS", count: 4 },
-  ],
-  other: 15,
-  lastPush: "2026-09-24T00:00:00Z",
-};
-
 /**
  * Questions people (and answer engines) ask, answered in full sentences that name Gopal,
  * so each answer stands on its own when quoted. Served to AI assistants in /llms.txt, not shown on the page.
@@ -663,11 +658,11 @@ export const githubFallback = {
 export const faq = [
   {
     q: "Who is Gopal Jha?",
-    a: "Gopal Jha is a full-stack engineer based in Hyderabad, India. He designs, builds and ships complete web products on his own, from the database to the deploy. His live products include Codexa, Quibly, Elevare, Lynkr and Console Me.",
+    a: "Gopal Jha is a full-stack engineer based in Hyderabad, India. He designs, builds and ships complete web products on his own, from the database to the deploy. His projects include Codexa, Quibly, Elevare, Lynkr and Console Me.",
   },
   {
     q: "What has Gopal Jha built?",
-    a: "Five live products: Codexa, a coding and DSA platform with live contests and AI mock interviews; Quibly, a Discord-style community platform with voice and video; Elevare, an AI resume builder; Lynkr, a link-in-bio page with analytics; and Console Me, a video matching app. He also published Revueon, an AI code review extension, on the VS Code Marketplace.",
+    a: "His projects include Codexa, a coding and DSA platform with live contests and AI mock interviews, Quibly, a community platform with voice and video, Elevare, an AI resume builder, Lynkr, a link-in-bio page with analytics, and Console Me, a video matching app. He also published Revueon, an AI code review extension, on the VS Code Marketplace.",
   },
   {
     q: "What experience does Gopal Jha have?",
