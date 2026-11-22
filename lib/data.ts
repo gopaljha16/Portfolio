@@ -1,8 +1,11 @@
 import type { StaticImageData } from "next/image";
 import Codexa from "@/images/Codexa.png";
+import CodexaEditor from "@/images/codexa-editor.webp";
 import Elevare from "@/images/Elevare.png";
+import ElevareEditor from "@/images/elevare-editor.webp";
 import Lynkr from "@/images/lynkr-landing.png";
 import Quibly from "@/images/Quibly-landing.png";
+import QuiblyChannels from "@/images/quibly-channels.webp";
 import ConsoleMe from "@/images/consoleme-landing.png";
 import Elyra from "@/images/elyra-preview.svg";
 import CareoraShot from "@/images/careora.png";
@@ -43,6 +46,7 @@ export type Project = {
   tagline: string;
   summary: string;
   image: StaticImageData;
+  preview?: { image: StaticImageData; alt: string; caption: string };
   /** The product's own brand color, taken from its UI. */
   color: string;
   /** Text color on `color`. Dark everywhere except Quibly's violet, where black is the only ink above 4.5:1. */
@@ -71,8 +75,12 @@ export const projects: Project[] = [
     summary:
       "A coding and DSA platform with contests, AI mock interviews and visual explanations of algorithms.",
     image: Codexa,
+    preview: {
+      image: CodexaEditor,
+      alt: "A binary search problem next to Codexa’s JavaScript editor and a successful test run in the console.",
+      caption: "Codexa’s editor and console running a sample binary search exercise.",
+    },
     color: "#FF8A1F",
-    href: "https://codexa.live",
     repo: "https://github.com/gopaljha16/codexa",
     year: 2025,
     status: "live",
@@ -106,6 +114,11 @@ export const projects: Project[] = [
     summary:
       "A real-time community platform with channel chat, voice rooms and moderation.",
     image: Quibly,
+    preview: {
+      image: QuiblyChannels,
+      alt: "Quibly’s sample product launch channel with messages, a moderation notice, and voice controls.",
+      caption: "Quibly’s public channel preview uses sample messages to show chat, moderation, and voice controls together.",
+    },
     color: "#8B5CF6",
     ink: "#000000",
     href: "https://quiblyy.vercel.app/",
@@ -141,6 +154,11 @@ export const projects: Project[] = [
     summary:
       "An AI resume builder that scores resumes against ATS checks and turns them into portfolios.",
     image: Elevare,
+    preview: {
+      image: ElevareEditor,
+      alt: "Elevare’s résumé form next to an ATS score, writing suggestions, and the formatted résumé preview.",
+      caption: "Elevare’s demo résumé in the builder, with sample ATS feedback and a live document preview.",
+    },
     color: "#E9479A",
     href: "https://elevare-seven.vercel.app/",
     repo: "https://github.com/gopaljha16/Elevare",
@@ -248,6 +266,10 @@ export const projects: Project[] = [
 
 export const caseStudies = projects.filter((p) => p.study);
 export const featuredProjects = caseStudies.slice(0, 3);
+
+export function getProjectPreview(project: Pick<Project, "name" | "image" | "preview">) {
+  return project.preview ?? { image: project.image, alt: `${project.name} homepage`, caption: undefined };
+}
 
 export const inkOn = (p: Pick<Project, "ink">) => p.ink ?? "#12141b";
 
@@ -570,7 +592,7 @@ export const milestones: Milestone[] = [
     date: "Aug 2025",
     year: 2025,
     title: "Codexa",
-    copy: "Rebuilt properly, with live contests, AI mock interviews and payments. Now live at codexa.live.",
+    copy: "Rebuilt the coding platform with live contests, AI mock interviews and payments.",
     project: "codexa",
   },
   {
@@ -636,11 +658,11 @@ export const stats = [
 export const faq = [
   {
     q: "Who is Gopal Jha?",
-    a: "Gopal Jha is a full-stack engineer based in Hyderabad, India. He designs, builds and ships complete web products on his own, from the database to the deploy. His live products include Codexa, Quibly, Elevare, Lynkr and Console Me.",
+    a: "Gopal Jha is a full-stack engineer based in Hyderabad, India. He designs, builds and ships complete web products on his own, from the database to the deploy. His projects include Codexa, Quibly, Elevare, Lynkr and Console Me.",
   },
   {
     q: "What has Gopal Jha built?",
-    a: "Five live products: Codexa, a coding and DSA platform with live contests and AI mock interviews; Quibly, a Discord-style community platform with voice and video; Elevare, an AI resume builder; Lynkr, a link-in-bio page with analytics; and Console Me, a video matching app. He also published Revueon, an AI code review extension, on the VS Code Marketplace.",
+    a: "His projects include Codexa, a coding and DSA platform with live contests and AI mock interviews, Quibly, a community platform with voice and video, Elevare, an AI resume builder, Lynkr, a link-in-bio page with analytics, and Console Me, a video matching app. He also published Revueon, an AI code review extension, on the VS Code Marketplace.",
   },
   {
     q: "What experience does Gopal Jha have?",

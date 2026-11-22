@@ -1,6 +1,6 @@
 import localFont from "next/font/local";
 import Link from "next/link";
-import { experience, featuredProjects, profile } from "@/lib/data";
+import { experience, featuredProjects, getProjectPreview, profile } from "@/lib/data";
 import { HeroProjects } from "./HeroProjects";
 
 const accent = localFont({
@@ -13,7 +13,12 @@ const accent = localFont({
 });
 
 export function Hero() {
-  const featured = featuredProjects.map(({ slug, name, image, domains }) => ({ slug, name, image, domains }));
+  const featured = featuredProjects.map((project) => ({
+    slug: project.slug,
+    name: project.name,
+    domains: project.domains,
+    preview: getProjectPreview(project),
+  }));
 
   return (
     <section id="top" className={`site-shell portfolio-cover ${accent.variable}`} aria-labelledby="hero-title">

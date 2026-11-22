@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Project } from "@/lib/data";
+import type { getProjectPreview, Project } from "@/lib/data";
 
-type Preview = Pick<Project, "slug" | "name" | "image" | "domains">;
+type Preview = Pick<Project, "slug" | "name" | "domains"> & { preview: ReturnType<typeof getProjectPreview> };
 
 export function HeroProjects({ projects }: { projects: Preview[] }) {
   const [active, setActive] = useState(0);
@@ -24,8 +24,8 @@ export function HeroProjects({ projects }: { projects: Preview[] }) {
         <div className="featured-art">
           <Image
             key={project.slug}
-            src={project.image}
-            alt={`${project.name} product screenshot`}
+            src={project.preview.image}
+            alt={project.preview.alt}
             sizes="(max-width: 640px) 90vw, (max-width: 1090px) 60vw, 620px"
             placeholder="blur"
           />

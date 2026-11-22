@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { caseStudies, profile } from "@/lib/data";
+import { caseStudies, getProjectPreview, profile } from "@/lib/data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -16,7 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.8,
-      images: [`${profile.url}/work/${p.slug}/opengraph-image`, `${profile.url}${p.image.src}`],
+      images: [`${profile.url}/work/${p.slug}/opengraph-image`, `${profile.url}${getProjectPreview(p).image.src}`],
     })),
   ];
 }

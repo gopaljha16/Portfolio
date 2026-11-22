@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
-import { archive, caseStudies, featuredProjects, type Project } from "@/lib/data";
+import { archive, caseStudies, featuredProjects, getProjectPreview, type Project } from "@/lib/data";
 
 function ProjectEntry({ project, featured = false }: { project: Project; featured?: boolean }) {
   const caseStudy = `/work/${project.slug}`;
+  const preview = getProjectPreview(project);
 
   return (
     <article className={featured ? "project-entry project-entry-featured" : "project-entry"}>
@@ -29,8 +30,8 @@ function ProjectEntry({ project, featured = false }: { project: Project; feature
       </div>
       <div className="project-preview">
         <Image
-          src={project.image}
-          alt={`${project.name} product screenshot`}
+          src={preview.image}
+          alt={preview.alt}
           sizes={featured ? "(max-width: 767px) 90vw, 550px" : "(max-width: 560px) 90vw, (max-width: 1060px) 46vw, 470px"}
         />
       </div>
