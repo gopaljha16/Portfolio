@@ -368,21 +368,6 @@ export const skillGroups: Record<"frontend" | "backend" | "cloud" | "ai", SkillG
   },
 };
 
-export const workflow = [
-  {
-    title: "Architect",
-    copy: "Design the data model, the API surface and how the system holds up under load.",
-  },
-  {
-    title: "Develop",
-    copy: "Build the interface and the backend together, so every screen has a real endpoint behind it.",
-  },
-  {
-    title: "Deploy",
-    copy: "Ship through automated pipelines, then keep iterating on what people actually use.",
-  },
-];
-
 export type Role = {
   role: string;
   company: string;

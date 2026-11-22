@@ -1,5 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, MapPin } from "lucide-react";
+import HyderabadMap from "@/images/hyderabad-map.png";
 import { milestones, profile } from "@/lib/data";
 import type { GitHubStats } from "@/lib/github";
 import { Experience } from "./Experience";
@@ -18,9 +20,18 @@ export function About({ github }: { github: GitHubStats }) {
             became <Link href="/work/codexa" className="portfolio-text-link">Codexa</Link>.
           </p>
           <p>
-            I’m based in {profile.city} and enjoy working across the application, from the first
-            data model through to deployment.
+            I enjoy working across the application, from the first data model through to deployment.
           </p>
+          <figure className="about-location">
+            <div className="location-image">
+              <Image src={HyderabadMap} alt="" sizes="(max-width: 768px) 90vw, 400px" />
+              <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a>
+            </div>
+            <figcaption className="location-caption">
+              <MapPin size={16} aria-hidden="true" />
+              {profile.city}, {profile.country}
+            </figcaption>
+          </figure>
           <Glance github={github} />
           <details className="portfolio-disclosure">
             <summary>
